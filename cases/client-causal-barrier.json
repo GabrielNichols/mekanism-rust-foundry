@@ -1,0 +1,115 @@
+{
+  "id": "LAB-MEK-CLIENT-CAUSAL-001",
+  "client": true,
+  "integration_level": "real_client_authoritative_menu_revision_and_render_barrier",
+  "actions": [
+    {
+      "role": "server",
+      "action": "setup_player",
+      "expect": [
+        {
+          "pointer": "/target_block",
+          "equals": "minecraft:air"
+        }
+      ]
+    },
+    {
+      "role": "client",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/screen",
+          "equals": "game"
+        },
+        {
+          "pointer": "/hotbar/count",
+          "equals": 2
+        },
+        {
+          "pointer": "/hotbar/item",
+          "equals": "mekanism:enrichment_chamber"
+        }
+      ]
+    },
+    {
+      "role": "client",
+      "action": "aim"
+    },
+    {
+      "role": "client",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/face",
+          "equals": "up"
+        }
+      ]
+    },
+    {
+      "role": "client",
+      "action": "click_use"
+    },
+    {
+      "role": "server",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/target_block",
+          "equals": "mekanism:enrichment_chamber"
+        },
+        {
+          "pointer": "/players/0/hotbar/count",
+          "equals": 1
+        }
+      ]
+    },
+    {
+      "role": "client",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/target_block",
+          "equals": "mekanism:enrichment_chamber"
+        },
+        {
+          "pointer": "/hotbar/count",
+          "equals": 1
+        }
+      ]
+    },
+    {
+      "role": "client",
+      "action": "click_use"
+    },
+    {
+      "role": "client",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/container_screen",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "read",
+      "await_condition": true,
+      "expect": [
+        {
+          "pointer": "/players/0/menu_open",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "action": "causal_pickup",
+      "role": "client"
+    }
+  ]
+}

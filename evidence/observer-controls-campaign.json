@@ -1,0 +1,357 @@
+{
+  "schema": 1,
+  "status": "functional_pass",
+  "scope": "single_administrative_enrichment_chamber_java_reference",
+  "artifact_fingerprint": "75ace3ecd12de6b65a110c5d385aabb1704919797e41fd2b3529f4fe28bc9d6c",
+  "profiles": [
+    {
+      "profile": {
+        "repeats": 1,
+        "scope": "continuous_observer_controls",
+        "tick_rate": 20,
+        "workers": 1
+      },
+      "campaign_wall_ns": 133724245600,
+      "cohorts": [
+        {
+          "repeat": 1,
+          "worker_window_wall_ns": 110934345300,
+          "peak_overlapping_jobs": 1
+        }
+      ],
+      "trials": [
+        {
+          "treatment": "1-absent-continuous",
+          "observer": "absent",
+          "tick_rate": 20,
+          "ticks": 328,
+          "start_ns": 22784211700,
+          "end_ns": 60248529000,
+          "batch_wall_ns": 17394819800,
+          "batch_jvm_cpu_ns": 890625000,
+          "boot_ns": 17765192000,
+          "flush_ns": 110987800,
+          "exit_ns": 646051900,
+          "mod_sha256": {
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-installed-disabled",
+          "observer": "disabled",
+          "tick_rate": 20,
+          "ticks": 328,
+          "start_ns": 60248537500,
+          "end_ns": 96893235600,
+          "batch_wall_ns": 17497307600,
+          "batch_jvm_cpu_ns": 1312500000,
+          "boot_ns": 16894306000,
+          "flush_ns": 108213200,
+          "exit_ns": 687616400,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 1,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-enabled-every-tick",
+          "observer": "every_tick",
+          "tick_rate": 20,
+          "ticks": 328,
+          "start_ns": 96893240200,
+          "end_ns": 133718557000,
+          "batch_wall_ns": 18392713500,
+          "batch_jvm_cpu_ns": 1546875000,
+          "boot_ns": 16195375900,
+          "flush_ns": 114155700,
+          "exit_ns": 695687200,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": true
+        }
+      ]
+    },
+    {
+      "profile": {
+        "repeats": 1,
+        "scope": "continuous_observer_controls",
+        "tick_rate": 100,
+        "workers": 1
+      },
+      "campaign_wall_ns": 140891650900,
+      "cohorts": [
+        {
+          "repeat": 1,
+          "worker_window_wall_ns": 117763057600,
+          "peak_overlapping_jobs": 1
+        }
+      ],
+      "trials": [
+        {
+          "treatment": "1-absent-continuous",
+          "observer": "absent",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 23123173100,
+          "end_ns": 46531647800,
+          "batch_wall_ns": 3724490800,
+          "batch_jvm_cpu_ns": 546875000,
+          "boot_ns": 17334264100,
+          "flush_ns": 449513200,
+          "exit_ns": 1133139400,
+          "mod_sha256": {
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-installed-disabled",
+          "observer": "disabled",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 46531655300,
+          "end_ns": 97787017900,
+          "batch_wall_ns": 3638077900,
+          "batch_jvm_cpu_ns": 515625000,
+          "boot_ns": 45112180200,
+          "flush_ns": 92644400,
+          "exit_ns": 885842600,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 1,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-enabled-every-tick",
+          "observer": "every_tick",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 97787021300,
+          "end_ns": 140886230700,
+          "batch_wall_ns": 4679762900,
+          "batch_jvm_cpu_ns": 1421875000,
+          "boot_ns": 36358810100,
+          "flush_ns": 131782600,
+          "exit_ns": 1058961600,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": true
+        }
+      ]
+    },
+    {
+      "profile": {
+        "repeats": 3,
+        "scope": "continuous_observer_controls",
+        "tick_rate": 100,
+        "workers": 3
+      },
+      "campaign_wall_ns": 306701164800,
+      "cohorts": [
+        {
+          "repeat": 1,
+          "worker_window_wall_ns": 102744183900,
+          "peak_overlapping_jobs": 3
+        },
+        {
+          "repeat": 2,
+          "worker_window_wall_ns": 116274997000,
+          "peak_overlapping_jobs": 3
+        },
+        {
+          "repeat": 3,
+          "worker_window_wall_ns": 39863568500,
+          "peak_overlapping_jobs": 3
+        }
+      ],
+      "trials": [
+        {
+          "treatment": "1-absent-continuous",
+          "observer": "absent",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 47669897500,
+          "end_ns": 148291569500,
+          "batch_wall_ns": 7569938900,
+          "batch_jvm_cpu_ns": 562500000,
+          "boot_ns": 88944211200,
+          "flush_ns": 216988400,
+          "exit_ns": 1503091400,
+          "mod_sha256": {
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-installed-disabled",
+          "observer": "disabled",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 47669936600,
+          "end_ns": 147710793800,
+          "batch_wall_ns": 6565059200,
+          "batch_jvm_cpu_ns": 453125000,
+          "boot_ns": 88201788900,
+          "flush_ns": 87672600,
+          "exit_ns": 2834037000,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 1,
+          "control_handshake": false
+        },
+        {
+          "treatment": "1-enabled-every-tick",
+          "observer": "every_tick",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 47669982600,
+          "end_ns": 150414081400,
+          "batch_wall_ns": 10151455600,
+          "batch_jvm_cpu_ns": 1031250000,
+          "boot_ns": 89693826200,
+          "flush_ns": 88665100,
+          "exit_ns": 934203100,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": true
+        },
+        {
+          "treatment": "2-enabled-every-tick",
+          "observer": "every_tick",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 150414698300,
+          "end_ns": 266445422300,
+          "batch_wall_ns": 4288159500,
+          "batch_jvm_cpu_ns": 843750000,
+          "boot_ns": 107870403100,
+          "flush_ns": 221736100,
+          "exit_ns": 1601271000,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": true
+        },
+        {
+          "treatment": "2-installed-disabled",
+          "observer": "disabled",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 150415128000,
+          "end_ns": 266689695300,
+          "batch_wall_ns": 3699609600,
+          "batch_jvm_cpu_ns": 562500000,
+          "boot_ns": 108449117500,
+          "flush_ns": 227192500,
+          "exit_ns": 1742536200,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 1,
+          "control_handshake": false
+        },
+        {
+          "treatment": "2-absent-continuous",
+          "observer": "absent",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 150415801900,
+          "end_ns": 253077617100,
+          "batch_wall_ns": 5527273700,
+          "batch_jvm_cpu_ns": 875000000,
+          "boot_ns": 90679114000,
+          "flush_ns": 214182700,
+          "exit_ns": 2186797200,
+          "mod_sha256": {
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": false
+        },
+        {
+          "treatment": "3-absent-continuous",
+          "observer": "absent",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 266832609300,
+          "end_ns": 305204042700,
+          "batch_wall_ns": 3527694600,
+          "batch_jvm_cpu_ns": 1203125000,
+          "boot_ns": 31394701500,
+          "flush_ns": 78229600,
+          "exit_ns": 604244100,
+          "mod_sha256": {
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": false
+        },
+        {
+          "treatment": "3-installed-disabled",
+          "observer": "disabled",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 266898644500,
+          "end_ns": 306696177800,
+          "batch_wall_ns": 3516459000,
+          "batch_jvm_cpu_ns": 859375000,
+          "boot_ns": 32313583100,
+          "flush_ns": 88254500,
+          "exit_ns": 579435800,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 1,
+          "control_handshake": false
+        },
+        {
+          "treatment": "3-enabled-every-tick",
+          "observer": "every_tick",
+          "tick_rate": 100,
+          "ticks": 328,
+          "start_ns": 266916131300,
+          "end_ns": 306579425700,
+          "batch_wall_ns": 3903494100,
+          "batch_jvm_cpu_ns": 1453125000,
+          "boot_ns": 32251702300,
+          "flush_ns": 76240700,
+          "exit_ns": 692078500,
+          "mod_sha256": {
+            "bridge.jar": "3e418490ffda4a4f23483d3645176341f94d3121904ff9a6e9dbc76874a5e9a5",
+            "mekanism.jar": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43"
+          },
+          "observer_disabled_markers": 0,
+          "control_handshake": true
+        }
+      ]
+    }
+  ],
+  "terminal_disk_sha256": "9b79f326b1db0efe89dd57513be6e97e60955cc2686d4ec3da8b25f986155d61",
+  "cross_profile_live_checkpoints_exact": true,
+  "qualified": false,
+  "port_equivalence_proven": false,
+  "optimization_proven": false
+}

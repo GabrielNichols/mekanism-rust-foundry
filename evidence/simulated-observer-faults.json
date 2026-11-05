@@ -1,0 +1,720 @@
+{
+  "cases": [
+    {
+      "case": "clean",
+      "diagnostic": null,
+      "expected_error_prefix": null,
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 158800,
+        "p50": 14100,
+        "p95": 14500,
+        "samples": 200
+      }
+    },
+    {
+      "case": "missing_sample",
+      "diagnostic": "capture sample count mismatch",
+      "expected_error_prefix": "capture sample count mismatch",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 28000,
+        "p50": 5900,
+        "p95": 6600,
+        "samples": 200
+      }
+    },
+    {
+      "case": "duplicate_tick",
+      "diagnostic": "tick continuity mismatch",
+      "expected_error_prefix": "tick continuity mismatch",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 23000,
+        "p50": 8400,
+        "p95": 8700,
+        "samples": 200
+      }
+    },
+    {
+      "case": "wrong_phase",
+      "diagnostic": "capture phase mismatch",
+      "expected_error_prefix": "capture phase mismatch",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "before_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 24100,
+        "p50": 8700,
+        "p95": 13500,
+        "samples": 200
+      }
+    },
+    {
+      "case": "wrong_thread",
+      "diagnostic": "capture thread is not owner",
+      "expected_error_prefix": "capture thread is not owner",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": false,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 26200,
+        "p50": 8800,
+        "p95": 14300,
+        "samples": 200
+      }
+    },
+    {
+      "case": "stale_state_relabelled",
+      "diagnostic": "observer sample 1: progress: expected 42, observed 41",
+      "expected_error_prefix": "observer sample 1: progress",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 119500,
+        "p50": 13500,
+        "p95": 24300,
+        "samples": 200
+      }
+    },
+    {
+      "case": "forged_endpoint",
+      "diagnostic": "final state differs from last capture",
+      "expected_error_prefix": "final state differs",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 2,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 21100,
+        "p50": 9000,
+        "p95": 9100,
+        "samples": 200
+      }
+    },
+    {
+      "case": "wrong_measurement_tick",
+      "diagnostic": "measurement tick mismatch",
+      "expected_error_prefix": "measurement tick mismatch",
+      "independent_simulated_world_after_read": {
+        "ore": 1,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 75700,
+        "p50": 11200,
+        "p95": 11500,
+        "samples": 200
+      }
+    },
+    {
+      "case": "inventory_changed_after_read",
+      "diagnostic": "independent post-read world: ore: expected 1, observed 2",
+      "expected_error_prefix": "independent post-read world: ore",
+      "independent_simulated_world_after_read": {
+        "ore": 2,
+        "progress": 43,
+        "tick": "103"
+      },
+      "matched": true,
+      "synthetic_reply": {
+        "measurement": {
+          "batch_wall_ns": "50",
+          "gc_collections": "0",
+          "gc_pause_ms": "0",
+          "heap_used_bytes": "100",
+          "process_cpu_ns": "30",
+          "ticks": [
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "101"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "102"
+            },
+            {
+              "bridge_pre_to_post_ns": "10",
+              "snapshot_ns": "1",
+              "tick": "103"
+            }
+          ]
+        },
+        "state": {
+          "ore": 1,
+          "progress": 43,
+          "tick": "103"
+        },
+        "tick_samples": [
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 41,
+              "tick": "101"
+            },
+            "tick": "101"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 42,
+              "tick": "102"
+            },
+            "tick": "102"
+          },
+          {
+            "owner_thread": true,
+            "phase": "end_server_tick",
+            "state": {
+              "ore": 1,
+              "progress": 43,
+              "tick": "103"
+            },
+            "tick": "103"
+          }
+        ]
+      },
+      "validator_wall_ns": {
+        "max": 75800,
+        "p50": 14500,
+        "p95": 15200,
+        "samples": 200
+      }
+    }
+  ],
+  "optimization_proven": false,
+  "port_equivalence_proven": false,
+  "qualified": false,
+  "schema": 1,
+  "scope": "simulated_world_and_observer",
+  "status": "pass"
+}

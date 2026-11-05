@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "tasks": [
+    {
+      "id": "W1",
+      "title": "Qualify the first Java reference slices",
+      "owner": "Integration reviewer",
+      "depends_on": "Six workstreams",
+      "scope": "Track each finite scope from mapped through reviewed and sealed.",
+      "acceptance": "Preserve existing pilot and controls. Record exact qualification gaps.",
+      "negative_control": "A pilot must not promote the entire family.",
+      "evidence": "Reviewed crosswalk and evidence ledger.",
+      "first_pr": "Link one inventory row to its independent evidence."
+    },
+    {
+      "id": "W1-CAT",
+      "title": "Reconcile one loaded Core object and recipe",
+      "owner": "Reference catalog contributor",
+      "depends_on": "Pinned Core and diagnostic catalog",
+      "scope": "Compare the Enrichment Chamber and one enriching recipe across archive, live catalog and planning.",
+      "acceptance": "Record canonical IDs, type, serializer, profile and unresolved ingredients.",
+      "negative_control": "Missing or rebound live recipe must report drift.",
+      "evidence": "Sanitized profile and bindings.",
+      "first_pr": "Reconcile one Core block and recipe key."
+    },
+    {
+      "id": "W1-PROC",
+      "title": "Design a blocked Basic Enriching Factory lane",
+      "owner": "Processing contributor",
+      "depends_on": "W1-CAT and W1-ENG for live acceptance",
+      "scope": "Draft a two-lane Factory fixture and mark unresolved bindings.",
+      "acceptance": "Specify lane input, progress, output and shared energy debit.",
+      "negative_control": "Perturb transient progress while preserving final totals.",
+      "evidence": "Fixture and first divergence.",
+      "first_pr": "Add a blocked-lane spec and two observation points."
+    },
+    {
+      "id": "W1-ENER",
+      "title": "Draft Heat Generator fuel and idle controls",
+      "owner": "Generation contributor",
+      "depends_on": "W1-CAT Generators profile and W1-ENG typed ledger",
+      "scope": "Pair fueled and unfueled fixtures under a controlled environment.",
+      "acceptance": "Distinguish produced, stored and delivered FE.",
+      "negative_control": "Prevent passive energy from counting as fuel-driven production.",
+      "evidence": "Profile and fuel/buffer checkpoints.",
+      "first_pr": "Write both preconditions and list unresolved hashes."
+    },
+    {
+      "id": "W1-TRANS",
+      "title": "Specify a straight Basic Pressurized Tube line",
+      "owner": "Transport contributor",
+      "depends_on": "W1-CAT registry bindings and W1-ENG typed ledger",
+      "scope": "One source, sink, chemical and straight topology.",
+      "acceptance": "Declare units and source, buffer and sink balance.",
+      "negative_control": "Reject incompatible chemical or terminal.",
+      "evidence": "Topology and balance checkpoints.",
+      "first_pr": "Draw a straight line and specify the incompatible control."
+    },
+    {
+      "id": "W1-LIFE",
+      "title": "Specify a Dynamic Tank lifecycle fixture",
+      "owner": "Lifecycle contributor",
+      "depends_on": "W1-CAT block and port bindings and W1-ENG persistence",
+      "scope": "Draft form, break and reopen steps.",
+      "acceptance": "Declare geometry, membership and independent saved checkpoints.",
+      "negative_control": "Remove a required block and require the unformed state.",
+      "evidence": "Geometry and persistence checklist.",
+      "first_pr": "Document one geometry and broken-boundary condition."
+    },
+    {
+      "id": "W1-ENG",
+      "title": "Add one deterministic worker-evidence control",
+      "owner": "Validator contributor",
+      "depends_on": "Integrator review of shared contracts",
+      "scope": "Draft a synthetic fixture for missing worker evidence.",
+      "acceptance": "Reject an incomplete cohort before timing comparison.",
+      "negative_control": "Remove one required record while keeping the others valid.",
+      "evidence": "Focused RED/GREEN with first rejection path.",
+      "first_pr": "Add one synthetic fixture and one Rust contract test."
+    }
+  ]
+}

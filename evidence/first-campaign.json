@@ -1,0 +1,90 @@
+{
+  "client": {
+    "cursor_count_client": 0,
+    "machine_iron_ore_client": 3,
+    "observations": 22,
+    "target_client": "mekanism:enrichment_chamber",
+    "menu_open_client": true,
+    "menu_open_server": true,
+    "remaining_hotbar_count_server": 1,
+    "cursor_count_server": 0,
+    "ingress": "real_client_keybinding_and_screen_handler_not_os_input",
+    "machine_iron_ore_server": 3,
+    "target_server": "mekanism:enrichment_chamber",
+    "screenshot_sha256": "8a376e29e97b646ad2e665ad70c6c1178a44eec4c909010a0248530f5cc4e5dd"
+  },
+  "runner_sha256": "e1f08eeb3ba99b90642e2bdbb53e00d7c1dd293552ba879b9b9e2ec51669b756",
+  "rust_tests": {
+    "ignored": 0,
+    "passed": 39,
+    "failed": 0,
+    "log": "tdd/25-final-regression.log"
+  },
+  "claims": {
+    "processing_proven": false,
+    "full_validator_qualified": false,
+    "rust_mekanism_gameplay_port_started": false,
+    "optimization_proven": false
+  },
+  "schema": 1,
+  "preserved_failed_attempts": true,
+  "private_evidence_root": ".lab/evidence/acceptance-01",
+  "clippy": {
+    "warnings": 0,
+    "log": "tdd/24-clippy.log"
+  },
+  "horizon_cargo_dependencies": 0,
+  "cargo_workspace_independent": true,
+  "aa": {
+    "exact_trace_hashes_equal": true,
+    "compared_frames_per_attempt": 4,
+    "comparisons": [
+      {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 4
+      },
+      {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 4
+      }
+    ],
+    "independent_fresh_server_attempts": 3
+  },
+  "campaign": {
+    "runs": [
+      {
+        "trace_sha256": "d2f20f204b0c6004d8df8b08de41c153fd72a0228a0b19d699844bb7925d1ded",
+        "status": "functional_pass",
+        "case": "LAB-SERVER-INVENTORY-001",
+        "name": "server-1"
+      },
+      {
+        "trace_sha256": "d2f20f204b0c6004d8df8b08de41c153fd72a0228a0b19d699844bb7925d1ded",
+        "status": "functional_pass",
+        "case": "LAB-SERVER-INVENTORY-001",
+        "name": "server-2"
+      },
+      {
+        "trace_sha256": "d2f20f204b0c6004d8df8b08de41c153fd72a0228a0b19d699844bb7925d1ded",
+        "status": "functional_pass",
+        "case": "LAB-SERVER-INVENTORY-001",
+        "name": "server-3"
+      },
+      {
+        "trace_sha256": "f5636e70dc8ebe14f6595bd9eba4f024b3c9d7e6be287cdd1cb5508020b68942",
+        "status": "functional_pass",
+        "case": "LAB-MEK-PLACEMENT-MENU-001",
+        "name": "client-1"
+      }
+    ],
+    "scope": "one server fixture and one real client keybinding/Screen scenario",
+    "runtime_qualified": false,
+    "optimization_proven": false,
+    "port_equivalence_proven": false,
+    "status": "functional_campaign_pass"
+  },
+  "project": "mek-lab",
+  "date": "2026-11-05"
+}

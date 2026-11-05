@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "status": "diagnostic_complete",
+  "scope": "core_effective_catalog_bootstrap",
+  "artifact_fingerprint": "28fe965d557c469b93ca37f77751388bc19607eb6c083934589b79e8f3636d6c",
+  "profile": {
+    "accelerated_tick_rate": 100,
+    "baseline_tick_rate": 20,
+    "evidence_level": "bootstrap_diagnostic",
+    "repeats": 3,
+    "scope": "core_effective_catalog_bootstrap",
+    "workers": 3
+  },
+  "modules": {
+    "mekanism": "10.7.19",
+    "meklab_bridge": "0.1.0",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.200"
+  },
+  "registry_counts": {
+    "block_entities": 154,
+    "blocks": 200,
+    "chemicals": 65,
+    "fluids": 36,
+    "items": 381,
+    "menus": 71,
+    "recipe_serializers": 30,
+    "recipe_types": 26
+  },
+  "selected_runtime_ids": {
+    "block_entities": [
+      "mekanism:basic_energy_cube",
+      "mekanism:basic_enriching_factory",
+      "mekanism:basic_logistical_transporter",
+      "mekanism:basic_pressurized_tube",
+      "mekanism:basic_universal_cable",
+      "mekanism:crusher",
+      "mekanism:dynamic_tank",
+      "mekanism:dynamic_valve",
+      "mekanism:enrichment_chamber",
+      "mekanism:metallurgic_infuser"
+    ],
+    "blocks": [
+      "mekanism:basic_energy_cube",
+      "mekanism:basic_enriching_factory",
+      "mekanism:basic_logistical_transporter",
+      "mekanism:basic_pressurized_tube",
+      "mekanism:basic_universal_cable",
+      "mekanism:crusher",
+      "mekanism:dynamic_tank",
+      "mekanism:dynamic_valve",
+      "mekanism:enrichment_chamber",
+      "mekanism:metallurgic_infuser"
+    ],
+    "chemicals": [],
+    "fluids": [],
+    "items": [
+      "mekanism:basic_energy_cube",
+      "mekanism:basic_enriching_factory",
+      "mekanism:basic_logistical_transporter",
+      "mekanism:basic_pressurized_tube",
+      "mekanism:basic_universal_cable",
+      "mekanism:crusher",
+      "mekanism:dynamic_tank",
+      "mekanism:dynamic_valve",
+      "mekanism:enrichment_chamber",
+      "mekanism:metallurgic_infuser"
+    ],
+    "menus": [
+      "mekanism:crusher",
+      "mekanism:dynamic_tank",
+      "mekanism:enrichment_chamber",
+      "mekanism:metallurgic_infuser"
+    ],
+    "recipe_serializers": [],
+    "recipe_types": []
+  },
+  "recipe_bindings": 1578,
+  "selected_packs": [
+    "mod_data",
+    "vanilla"
+  ],
+  "resource_namespaces": [
+    "c",
+    "create",
+    "framedblocks",
+    "mekanism",
+    "minecraft",
+    "neoforge",
+    "per-viam-invenire",
+    "projecte"
+  ],
+  "generated_config_sha256": {
+    "config/Mekanism/common.toml": "41850b5f863ea3463cbaf2c194849c18f25971c548bb7ab469f16a3f07e63929",
+    "config/Mekanism/gear.toml": "87c1277f6d6482fe60deea64e73b3de019c65c7b4b7d0ef08c79f0ab3db95173",
+    "config/Mekanism/general.toml": "6a49a2810766c272012bf72aa298364b09a963d3d613515f3a591f3d103ed95d",
+    "config/Mekanism/machine-storage.toml": "029c07fbceff23b8545519a46d192f40cb18d28feea5fc91544e8f6e3e934420",
+    "config/Mekanism/machine-usage.toml": "ecf9f2597282ab1c1287122de664f85eb54b6dcc611c17e70732871f8a9ba35c",
+    "config/Mekanism/startup.toml": "4b1cf299c46ac8b9fb77ba9e8fe79d5594652ab4224f21b4ffc355ba1ade9b08",
+    "config/Mekanism/tiers.toml": "06c76a1a1e2a70d4f56dc3dd9a3d26057ce9f4e64a7cdadf1712e05e5a2c4165",
+    "config/Mekanism/world.toml": "e4f20adff1bedc918445de3d149e5275b7cf642a49ca8bdd3480cf54f6a455a1",
+    "config/fml.toml": "cc59fb1039726fda3ab1eb69b06d9b9aebb7496604ea579cfb735bc5377e7825",
+    "config/neoforge-common.toml": "fe878a2717a145cd890621eac5b3be1e1fd656f7ff9abc6e8d53f670d37474c4",
+    "config/neoforge-server.toml": "b1e3b38d612295f8d9dfa0fbdb538a992b7a1a3b7a766c491b4e9fdf3823396f",
+    "world/serverconfig/readme.txt": "b1022ab932f8f0ea0cf78d9f312e95b85a4f96f59ca430e63f9a435e512d1186"
+  },
+  "timings": [
+    {
+      "tick_rate": 20,
+      "boot_ns": 18408987100,
+      "tick_wall_ns": 253555000,
+      "observer_before_ns": 85650500,
+      "observer_after_ns": 69219900,
+      "flush_ns": 138533800,
+      "exit_ns": 1327227800,
+      "total_ns": 20960615000
+    },
+    {
+      "tick_rate": 100,
+      "boot_ns": 28248858800,
+      "tick_wall_ns": 62261000,
+      "observer_before_ns": 46513200,
+      "observer_after_ns": 42295000,
+      "flush_ns": 105072800,
+      "exit_ns": 1769526600,
+      "total_ns": 30811658900
+    },
+    {
+      "tick_rate": 100,
+      "boot_ns": 28156998000,
+      "tick_wall_ns": 56271300,
+      "observer_before_ns": 51316600,
+      "observer_after_ns": 32888600,
+      "flush_ns": 92950300,
+      "exit_ns": 1712586300,
+      "total_ns": 30657994700
+    },
+    {
+      "tick_rate": 100,
+      "boot_ns": 27965909500,
+      "tick_wall_ns": 72561900,
+      "observer_before_ns": 54005400,
+      "observer_after_ns": 35408100,
+      "flush_ns": 88532900,
+      "exit_ns": 1918088300,
+      "total_ns": 30708896800
+    }
+  ],
+  "cross_profile_catalog_exact": true,
+  "qualified": false,
+  "port_equivalence_proven": false,
+  "optimization_proven": false
+}

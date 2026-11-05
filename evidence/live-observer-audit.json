@@ -1,0 +1,457 @@
+{
+  "schema": 1,
+  "status": "functional_pass",
+  "scope": "live_enrichment_chamber_observer_audit",
+  "profile": {
+    "repeats": 3,
+    "scope": "live_observer_audit",
+    "tick_rate": 100,
+    "workers": 3
+  },
+  "artifact_fingerprint": "067a5b6b652be5e8fb86ba90989bd04c28c71966ccd0217d97c7cb1ac1017696",
+  "runner_sha256": "2a8a793c0a78378e767bed5672d2a0e1249024cea92ca55ba05b9677ddb58f49",
+  "server_processes": 10,
+  "clean_controls": 3,
+  "detected_faults": 6,
+  "campaign_wall_ns": 156540072500,
+  "qualified": false,
+  "port_equivalence_proven": false,
+  "optimization_proven": false,
+  "trials": [
+    {
+      "trial": "1-clean",
+      "fault": "clean",
+      "verdict": {
+        "kind": "accepted"
+      },
+      "expected_verdict": {
+        "kind": "accepted"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 2200,
+        "console_after": 44758400,
+        "console_before": 50610000,
+        "flush": 110589900,
+        "observer_round_trip": 8735100
+      },
+      "boot_ns": 35345673400,
+      "exit_ns": 771114700,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1693280000,
+      "batch_jvm_cpu_ns": 1859375000,
+      "worker_wall_ns": 38711764900
+    },
+    {
+      "trial": "1-stale_snapshot",
+      "fault": "stale_snapshot",
+      "verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "expected_verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 0,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 1800,
+        "console_after": 44373600,
+        "console_before": 49582000,
+        "flush": 123160900,
+        "observer_round_trip": 7936400
+      },
+      "boot_ns": 35458544200,
+      "exit_ns": 756640500,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1693976900,
+      "batch_jvm_cpu_ns": 1500000000,
+      "worker_wall_ns": 38772864300
+    },
+    {
+      "trial": "1-after_read_inventory",
+      "fault": "after_read_inventory",
+      "verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "expected_verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 2,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 2,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "61954693a667e314caf1619bcf2381f8c7e6b121546244ff5331667530980d4e",
+      "timings_ns": {
+        "classification": 2800,
+        "console_after": 55498300,
+        "console_before": 49451400,
+        "flush": 127168700,
+        "observer_round_trip": 11896800
+      },
+      "boot_ns": 34727420300,
+      "exit_ns": 785505600,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1722203300,
+      "batch_jvm_cpu_ns": 2046875000,
+      "worker_wall_ns": 38171473000
+    },
+    {
+      "trial": "2-clean",
+      "fault": "clean",
+      "verdict": {
+        "kind": "accepted"
+      },
+      "expected_verdict": {
+        "kind": "accepted"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 1700,
+        "console_after": 50455000,
+        "console_before": 49407600,
+        "flush": 146450500,
+        "observer_round_trip": 7620500
+      },
+      "boot_ns": 34740754000,
+      "exit_ns": 760571900,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1714881600,
+      "batch_jvm_cpu_ns": 1687500000,
+      "worker_wall_ns": 38190990900
+    },
+    {
+      "trial": "2-stale_snapshot",
+      "fault": "stale_snapshot",
+      "verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "expected_verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 0,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 2100,
+        "console_after": 44531600,
+        "console_before": 49651800,
+        "flush": 117891200,
+        "observer_round_trip": 6877200
+      },
+      "boot_ns": 34672639100,
+      "exit_ns": 814588900,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1707628400,
+      "batch_jvm_cpu_ns": 1375000000,
+      "worker_wall_ns": 38139633400
+    },
+    {
+      "trial": "2-after_read_inventory",
+      "fault": "after_read_inventory",
+      "verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "expected_verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 2,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 2,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "61954693a667e314caf1619bcf2381f8c7e6b121546244ff5331667530980d4e",
+      "timings_ns": {
+        "classification": 2500,
+        "console_after": 49804600,
+        "console_before": 49783500,
+        "flush": 110166900,
+        "observer_round_trip": 15316600
+      },
+      "boot_ns": 35333778100,
+      "exit_ns": 735911700,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1697784400,
+      "batch_jvm_cpu_ns": 1734375000,
+      "worker_wall_ns": 38722319000
+    },
+    {
+      "trial": "3-clean",
+      "fault": "clean",
+      "verdict": {
+        "kind": "accepted"
+      },
+      "expected_verdict": {
+        "kind": "accepted"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 3800,
+        "console_after": 57164000,
+        "console_before": 49871100,
+        "flush": 200508700,
+        "observer_round_trip": 9912200
+      },
+      "boot_ns": 37630753100,
+      "exit_ns": 753726300,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1710286500,
+      "batch_jvm_cpu_ns": 2468750000,
+      "worker_wall_ns": 41121712600
+    },
+    {
+      "trial": "3-stale_snapshot",
+      "fault": "stale_snapshot",
+      "verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "expected_verdict": {
+        "expected": 73,
+        "field": "progress",
+        "kind": "divergence",
+        "observed": 0,
+        "witness": "observer"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 0,
+        "tick": 202
+      },
+      "after": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 1,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "da2d3dce87670c643989d273499384ae2b3166ccd13e67ca337d598f7b094ede",
+      "timings_ns": {
+        "classification": 2400,
+        "console_after": 49990700,
+        "console_before": 49407300,
+        "flush": 110477600,
+        "observer_round_trip": 7671900
+      },
+      "boot_ns": 37474428200,
+      "exit_ns": 886342300,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1694065100,
+      "batch_jvm_cpu_ns": 1953125000,
+      "worker_wall_ns": 40988039400
+    },
+    {
+      "trial": "3-after_read_inventory",
+      "fault": "after_read_inventory",
+      "verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "expected_verdict": {
+        "expected": 1,
+        "field": "ore",
+        "kind": "divergence",
+        "observed": 2,
+        "witness": "post_read_world"
+      },
+      "before": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "observer": {
+        "ore": 1,
+        "progress": 73,
+        "tick": 202
+      },
+      "after": {
+        "ore": 2,
+        "progress": 73,
+        "tick": 202
+      },
+      "persisted": {
+        "ore": 2,
+        "progress": 73
+      },
+      "persisted_nbt_sha256": "61954693a667e314caf1619bcf2381f8c7e6b121546244ff5331667530980d4e",
+      "timings_ns": {
+        "classification": 3500,
+        "console_after": 59467900,
+        "console_before": 49031800,
+        "flush": 182889800,
+        "observer_round_trip": 34173200
+      },
+      "boot_ns": 37711360500,
+      "exit_ns": 773074900,
+      "commanded_ticks": 137,
+      "batch_wall_ns": 1714150400,
+      "batch_jvm_cpu_ns": 1796875000,
+      "worker_wall_ns": 41239529600
+    }
+  ]
+}

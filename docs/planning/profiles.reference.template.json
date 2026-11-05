@@ -1,0 +1,219 @@
+{
+  "schema_version": "0.2-draft",
+  "kind": "reference_profile_template",
+  "executable": false,
+  "status": "pending_artifacts_and_runtime_verification",
+  "qualification_status": "pending",
+  "reference_id": "mekanism-1.21.1-10.7.19.85",
+  "purpose": "behavior_and_semantic_persistence_characterization_before_gameplay_port",
+  "source": {
+    "tag": "v1.21.1-10.7.19.85",
+    "commit": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80",
+    "artifact_identity_is_source_commit": false
+  },
+  "minecraft": {
+    "version": "1.21.1",
+    "server_jar_sha256": null,
+    "client_jar_sha256": null,
+    "assets_manifest_sha256": null
+  },
+  "java": {
+    "major": 21,
+    "vendor": null,
+    "build": null,
+    "distribution_sha256": null,
+    "jvm_args": [],
+    "effective_args_status": "pending"
+  },
+  "neoforge": {
+    "build_version_from_tag": "21.1.200",
+    "minimum_from_tag": "21.1.194",
+    "runtime_candidate": "21.1.259",
+    "candidate_reason": "matches_existing_ATM10_oracle_only",
+    "chosen_runtime": null,
+    "runtime_verified": false,
+    "installer_sha256": null,
+    "resolved_libraries_manifest_sha256": null
+  },
+  "module_artifacts": [
+    {
+      "module": "core",
+      "mod_id": "mekanism",
+      "version": "10.7.19.85",
+      "jar_path": null,
+      "sha256": null,
+      "runtime_loaded": null
+    },
+    {
+      "module": "generators",
+      "mod_id": "mekanismgenerators",
+      "version": "10.7.19.85",
+      "jar_path": null,
+      "sha256": null,
+      "runtime_loaded": null
+    },
+    {
+      "module": "tools",
+      "mod_id": "mekanismtools",
+      "version": "10.7.19.85",
+      "jar_path": null,
+      "sha256": null,
+      "runtime_loaded": null
+    },
+    {
+      "module": "additions",
+      "mod_id": "mekanismadditions",
+      "version": "10.7.19.85",
+      "jar_path": null,
+      "sha256": null,
+      "runtime_loaded": null
+    }
+  ],
+  "module_profiles": [
+    {
+      "id": "core",
+      "modules": [
+        "core"
+      ]
+    },
+    {
+      "id": "core-generators",
+      "modules": [
+        "core",
+        "generators"
+      ]
+    },
+    {
+      "id": "core-tools",
+      "modules": [
+        "core",
+        "tools"
+      ]
+    },
+    {
+      "id": "core-additions",
+      "modules": [
+        "core",
+        "additions"
+      ]
+    },
+    {
+      "id": "all-official",
+      "modules": [
+        "core",
+        "generators",
+        "tools",
+        "additions"
+      ]
+    }
+  ],
+  "selected_module_profile": null,
+  "external_addons": {
+    "baseline_included": false,
+    "separate_profiles_required": true
+  },
+  "dependencies": {
+    "closure_status": "pending",
+    "entries": [],
+    "manifest_sha256": null
+  },
+  "effective_configuration": {
+    "status": "pending_post_load_export",
+    "files_manifest_sha256": null,
+    "datapack_order_sha256": null,
+    "resourcepack_order_sha256": null,
+    "registry_catalog_sha256": null,
+    "recipes_tags_sha256": null
+  },
+  "tooling": {
+    "rust_toolchain": null,
+    "runner_sha256": null,
+    "cargo_lock_sha256": null,
+    "bridge_sha256": null,
+    "protocol_version": null,
+    "schema_sha256": null,
+    "normalization_policy_sha256": null
+  },
+  "execution": {
+    "platforms_proposed": [
+      "windows-x64",
+      "linux-x64"
+    ],
+    "platform_qualified": [],
+    "mode": null,
+    "world_fixture_sha256": null,
+    "seed": null,
+    "scheduler_policy_sha256": null,
+    "limits_status": "pending_calibration",
+    "scratch_required": true,
+    "fresh_required_for_qualification": true
+  },
+  "evidence": {
+    "runtime_discovery": null,
+    "aa_runs": [],
+    "observer_controls": [],
+    "negative_controls": [],
+    "qualification_report": null
+  },
+  "sealing": {
+    "complete": false,
+    "lock_sha256": null,
+    "reject_unresolved_required_fields": true,
+    "rule": "create_a_resolved_immutable_lock_before_execution;template_is_never_a_qualified_lock"
+  },
+  "lab_design": {
+    "instance_profiles_ref": "instance-profiles.template.json",
+    "scenario_catalog_ref": "functional-scenarios.json",
+    "requirements_ref": "requirements.json",
+    "roadmap_ref": "roadmap.json",
+    "selected_topology": null,
+    "selected_ingress": null,
+    "materialized_scenario_sha256": null,
+    "initial_checkpoint_sha256": null,
+    "readiness_contract_sha256": null,
+    "resource_budgets_status": "pending_calibration",
+    "no_implicit_fallback": true
+  },
+  "locking_contract": {
+    "artifact_lock": {
+      "stage": "pre_spawn",
+      "required_before_any_game_process": true,
+      "status": "draft",
+      "sha256": null,
+      "required_resolved_artifacts": [
+        "selected_game_jars",
+        "selected_module_jars",
+        "loader_and_transitive_libraries",
+        "jdk_vendor_build_and_distribution",
+        "bridge_and_runner_builds"
+      ],
+      "missing_or_null_artifact_hash_verdict": "invalid_spec_no_spawn"
+    },
+    "diagnostic_bootstrap": {
+      "allowed_only_with_sealed_artifact_lock": true,
+      "effective_lock_may_be_draft": true,
+      "purpose": "Generate and inspect effective configuration, registries and supported observer/input capabilities in owned scratch.",
+      "may_publish_expected": false,
+      "may_publish_qualification_pass": false,
+      "qualification_credit": false,
+      "result_kind": "diagnostic_discovery_record_only",
+      "must_preserve_provenance": true
+    },
+    "effective_reference_lock": {
+      "stage": "post_bootstrap_review",
+      "status": "draft",
+      "sha256": null,
+      "required_contents": [
+        "post_load_configs",
+        "registry_and_recipe_catalog",
+        "pack_order",
+        "checkpoint_and_seed",
+        "scenario_bindings",
+        "phase_and_ingress_contracts"
+      ],
+      "must_be_sealed_before_qualifying_attempt": true,
+      "qualifying_attempt_rechecks_post_load_effective_state": true,
+      "mismatch_verdict": "infra_error_or_invalid_spec_never_qualification_pass"
+    }
+  }
+}

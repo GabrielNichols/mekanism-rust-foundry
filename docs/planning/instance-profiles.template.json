@@ -1,0 +1,369 @@
+{
+  "schema_version": "0.2-draft",
+  "kind": "automated_instance_profiles_template",
+  "executable": false,
+  "qualification_status": "pending",
+  "reference_profile_ref": "profiles.reference.template.json",
+  "topologies": [
+    {
+      "id": "LAB-UNIT",
+      "processes": [
+        "rust_test"
+      ],
+      "actual_game": false,
+      "real_client_count": 0,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "No game; only code/CLI contracts and probe processes.",
+      "supported_ingress_designs": [
+        "not_applicable"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JS",
+      "processes": [
+        "java_dedicated_reference"
+      ],
+      "actual_game": true,
+      "real_client_count": 0,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Authoritative simulation without certifying client input/GUI/rendering/audio.",
+      "supported_ingress_designs": [
+        "server_fixture",
+        "gametest_fake_player"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JI",
+      "processes": [
+        "java_client_with_integrated_server"
+      ],
+      "actual_game": true,
+      "real_client_count": 1,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Real singleplayer; does not demonstrate physical dedicated/client separation.",
+      "supported_ingress_designs": [
+        "client_event_queue",
+        "client_action_pipeline",
+        "os_input"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JD1",
+      "processes": [
+        "java_dedicated_reference",
+        "java_client_p1"
+      ],
+      "actual_game": true,
+      "real_client_count": 1,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "One real player's flow; does not demonstrate contention between multiple actors.",
+      "supported_ingress_designs": [
+        "client_event_queue",
+        "client_action_pipeline",
+        "os_input"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JD2",
+      "processes": [
+        "java_dedicated_reference",
+        "java_client_p1",
+        "java_client_p2"
+      ],
+      "actual_game": true,
+      "real_client_count": 2,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Two real clients; simultaneous owner/trusted/stranger roles require three real actors or an explicitly sequential variant.",
+      "supported_ingress_designs": [
+        "client_event_queue",
+        "client_action_pipeline",
+        "os_input"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JAA",
+      "processes": [
+        "independent_reference_topology_A",
+        "independent_reference_topology_B"
+      ],
+      "actual_game": true,
+      "real_client_count": null,
+      "base_topology_required": true,
+      "fresh_attempt_minimum": 3,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Wrapper over a base topology; repeatability does not eliminate a shared observation bug.",
+      "supported_ingress_designs": [
+        "inherit_explicit_base_no_fallback"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JOBS",
+      "processes": [
+        "bridge_absent_when_feasible",
+        "bridge_loaded_observation_off",
+        "bridge_observation_on"
+      ],
+      "actual_game": true,
+      "real_client_count": null,
+      "base_topology_required": true,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Wrapper for instrumentation controls; equivalent actions and schedules require independent proof.",
+      "supported_ingress_designs": [
+        "inherit_explicit_base_no_fallback"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JREC",
+      "processes": [
+        "reference_server_with_declared_restart",
+        "reference_real_client_set"
+      ],
+      "actual_game": true,
+      "real_client_count": null,
+      "base_topology_required": true,
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Wrapper for restart/checkpoint/crash; durability is observed, not assumed.",
+      "supported_ingress_designs": [
+        "inherit_explicit_base_no_fallback"
+      ],
+      "ingress_runtime_qualified": []
+    },
+    {
+      "id": "LAB-JR",
+      "processes": [
+        "java_reference_topology",
+        "horizon_candidate_topology"
+      ],
+      "actual_game": true,
+      "real_client_count": null,
+      "availability": "post_preport_gate_only",
+      "status": "planned",
+      "executable": false,
+      "qualified": false,
+      "evidence_ids": [],
+      "proof_limit": "Available only after the pre-port gate; without requiring protocol equality across versions.",
+      "supported_ingress_designs": [
+        "declare_each_backend_ingress_no_fallback"
+      ],
+      "ingress_runtime_qualified": []
+    }
+  ],
+  "ingress_levels": [
+    {
+      "id": "os_input",
+      "proof": "native window input, focus and real client handlers",
+      "fallback_allowed": false
+    },
+    {
+      "id": "client_event_queue",
+      "proof": "same client window/input/Screen event route, consumption witnessed",
+      "fallback_allowed": false
+    },
+    {
+      "id": "client_action_pipeline",
+      "proof": "client gameplay controller and normal network, excluding key/widget dispatch",
+      "fallback_allowed": false
+    },
+    {
+      "id": "protocol_bot",
+      "proof": "server protocol behavior only",
+      "fallback_allowed": false
+    },
+    {
+      "id": "gametest_fake_player",
+      "proof": "in-world component fixture only",
+      "fallback_allowed": false
+    },
+    {
+      "id": "server_fixture",
+      "proof": "administrative fixture or component rule only",
+      "fallback_allowed": false
+    }
+  ],
+  "job_template": {
+    "executable": false,
+    "job_id": null,
+    "scenario_id": null,
+    "topology_id": null,
+    "lock_sha256": null,
+    "freshness": "new_owned_processes_and_world_copy_per_attempt",
+    "attempt_index": null,
+    "world_epoch": null,
+    "seed": null,
+    "instance_bindings": [],
+    "scratch": {
+      "root": null,
+      "server_home": null,
+      "client_homes": [],
+      "temp": null,
+      "evidence": null,
+      "ownership_manifest": null
+    },
+    "artifact_store": {
+      "read_only": true,
+      "paths_by_hash": null
+    },
+    "world_source": {
+      "kind": "new_or_clone_immutable_checkpoint",
+      "checkpoint_sha256": null,
+      "writable_hardlinks_allowed": false
+    },
+    "network": {
+      "bind": "loopback_only",
+      "server_endpoint": null,
+      "control_endpoints": [],
+      "port_ownership_verified": false
+    },
+    "authentication": {
+      "fixture_identity_profile": null,
+      "supported_local_environment_required": true,
+      "production_accounts_or_tokens": false,
+      "bypass_authentication": false
+    },
+    "display": {
+      "mode": null,
+      "viewport": null,
+      "gui_scale": null,
+      "locale": null,
+      "focus_contract": null,
+      "exclusive_desktop_if_os_input": true
+    },
+    "resources": {
+      "memory_reservation_bytes": null,
+      "cpu_admission": null,
+      "gpu_admission": null,
+      "concurrent_jobs": null
+    },
+    "deadlines": {
+      "boot_ms": null,
+      "login_ms": null,
+      "action_ms": null,
+      "save_ms": null,
+      "shutdown_ms": null,
+      "maximum_ticks": null
+    },
+    "session_states": [
+      "validated",
+      "admitted",
+      "materialized",
+      "spawning_server",
+      "server_hello",
+      "modules_verified",
+      "world_ready",
+      "spawning_clients",
+      "client_hello",
+      "login_confirmed",
+      "chunks_applied",
+      "screen_ready",
+      "fixture_verified",
+      "paused_at_barrier",
+      "running",
+      "evidence_finalizing",
+      "graceful_shutdown",
+      "processes_reaped",
+      "result_committed"
+    ],
+    "per_step_witnesses": [
+      "action_id",
+      "requested_and_actual_ingress",
+      "input_consumed_when_requested",
+      "server_applied_or_rejected",
+      "tick_and_phase",
+      "authoritative_state_delta",
+      "each_required_client_applied",
+      "fresh_frame_when_visual"
+    ],
+    "completion": {
+      "all_required_steps_and_witnesses": true,
+      "no_fallback_ingress": true,
+      "trace_complete": true,
+      "atomic_evidence_manifest": true,
+      "final_result": null
+    },
+    "run_mode": null,
+    "artifact_lock_sha256": null,
+    "effective_reference_lock_sha256": null,
+    "bootstrap_may_qualify": false
+  },
+  "proposed_companion_runs": [
+    "LAB-JAA",
+    "LAB-JOBS",
+    "LAB-JREC"
+  ],
+  "additional_actor_policy": "Do not implicitly create a tenth topology. Instantiate an extension of LAB-JD2 with actor_count=3 and its own contract when three simultaneous identities are mandatory; counts are a proposed minimum, not a support limit.",
+  "audio_policy": "Sound events and device delivery are distinct claims. A profile without audio does not qualify device/voice; future Horizon flags follow AGENTS until an allowed, isolated profile exists.",
+  "no_runtime_results": true,
+  "locking_contract": {
+    "artifact_lock": {
+      "stage": "pre_spawn",
+      "required_before_any_game_process": true,
+      "status": "draft",
+      "sha256": null,
+      "required_resolved_artifacts": [
+        "selected_game_jars",
+        "selected_module_jars",
+        "loader_and_transitive_libraries",
+        "jdk_vendor_build_and_distribution",
+        "bridge_and_runner_builds"
+      ],
+      "missing_or_null_artifact_hash_verdict": "invalid_spec_no_spawn"
+    },
+    "diagnostic_bootstrap": {
+      "allowed_only_with_sealed_artifact_lock": true,
+      "effective_lock_may_be_draft": true,
+      "purpose": "Generate and inspect effective configuration, registries and supported observer/input capabilities in owned scratch.",
+      "may_publish_expected": false,
+      "may_publish_qualification_pass": false,
+      "qualification_credit": false,
+      "result_kind": "diagnostic_discovery_record_only",
+      "must_preserve_provenance": true
+    },
+    "effective_reference_lock": {
+      "stage": "post_bootstrap_review",
+      "status": "draft",
+      "sha256": null,
+      "required_contents": [
+        "post_load_configs",
+        "registry_and_recipe_catalog",
+        "pack_order",
+        "checkpoint_and_seed",
+        "scenario_bindings",
+        "phase_and_ingress_contracts"
+      ],
+      "must_be_sealed_before_qualifying_attempt": true,
+      "qualifying_attempt_rechecks_post_load_effective_state": true,
+      "mismatch_verdict": "infra_error_or_invalid_spec_never_qualification_pass"
+    }
+  }
+}

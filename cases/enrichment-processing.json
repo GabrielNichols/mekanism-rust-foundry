@@ -1,0 +1,128 @@
+{
+  "id": "enrichment-processing-v1",
+  "client": false,
+  "integration_level": "server_public_capabilities",
+  "observer_mode": "every_tick",
+  "required_server_capabilities": [
+    "tick_samples_v1",
+    "machine_probe_v1",
+    "neoforge_fe_v1",
+    "nbt_typed_v1",
+    "tick_measurements_v1"
+  ],
+  "require_persisted_machine": true,
+  "actions": [
+    {
+      "role": "server",
+      "action": "setup_machine",
+      "expect": [
+        {
+          "pointer": "/machine/progress",
+          "equals": 0
+        },
+        {
+          "pointer": "/machine/sides/0/energy_capacity",
+          "equals": "8000"
+        },
+        {
+          "pointer": "/machine/sides/2/slots/0/iron_ore_simulated_accepted",
+          "equals": 1
+        },
+        {
+          "pointer": "/machine/chunk_forced",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "insert_input",
+      "args": {
+        "side": "up",
+        "slot": 0,
+        "item": "minecraft:iron_ore",
+        "count": 1
+      },
+      "expect": [
+        {
+          "pointer": "/machine/iron_ore",
+          "equals": 1
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "step",
+      "args": {
+        "ticks": 5
+      },
+      "expect": [
+        {
+          "pointer": "/machine/progress",
+          "equals": 0
+        },
+        {
+          "pointer": "/machine/sides/0/energy",
+          "equals": "0"
+        },
+        {
+          "pointer": "/machine/iron_ore",
+          "equals": 1
+        },
+        {
+          "pointer": "/machine/dust_iron",
+          "equals": 0
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "charge_machine",
+      "args": {
+        "side": "up",
+        "amount": 1000000
+      },
+      "expect": [
+        {
+          "pointer": "/machine/sides/0/energy",
+          "equals": "8000"
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "advance_until",
+      "args": {
+        "max_ticks": 1000,
+        "batch_ticks": 20
+      },
+      "expect": [
+        {
+          "pointer": "/machine/iron_ore",
+          "equals": 0
+        },
+        {
+          "pointer": "/machine/dust_iron",
+          "equals": 2
+        },
+        {
+          "pointer": "/machine/progress",
+          "equals": 0
+        }
+      ]
+    },
+    {
+      "role": "server",
+      "action": "step",
+      "args": {
+        "ticks": 5
+      },
+      "expect": [
+        {
+          "pointer": "/machine/dust_iron",
+          "equals": 2
+        }
+      ]
+    }
+  ]
+}

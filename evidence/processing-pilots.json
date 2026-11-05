@@ -1,0 +1,142 @@
+{
+  "qualified": false,
+  "scope": "Exploratory original-runtime pilots, prior to fresh observer cohort",
+  "reference": {
+    "mekanism_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+    "neoforge": "21.1.200",
+    "mekanism": "10.7.19.85",
+    "minecraft": "1.21.1"
+  },
+  "optimization_proven": false,
+  "port_equivalence_proven": false,
+  "runs": [
+    {
+      "artifact_fingerprint": "28b303dc27be301a4131b7244fe88a13403651de13697d3106d8aacf80468ed1",
+      "runner_sha256": "253aa58426598b71a6a5c1dfe8fabde4157b0814632459ba694307f80991df7e",
+      "status": "functional_pass",
+      "case_sha256": "097b4055b4337eeec5c2976daae98ac20c465388b9b5a07497eb8d70df237373",
+      "trace_sha256": "79daa2f02ceaaddc989e8f1c3cbf1194eecc8f52ef3f84e4440506bbfa20039d",
+      "work": {
+        "advanced_ticks": 210,
+        "analysis_binary_sha256": "811a4276d91eac717855c9273acb410822287f30ce2e300a120d39af6acae777",
+        "dust_extracted": 0,
+        "dust_produced": 2,
+        "energy_consumed_fe": 4000,
+        "energy_received_fe": 8000,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4000,
+        "final_input": 0,
+        "final_output": 2,
+        "fixture_dust_added": 0,
+        "optimization_proven": false,
+        "ore_consumed": 1,
+        "ore_inserted": 1,
+        "reference_runner_sha256": "253aa58426598b71a6a5c1dfe8fabde4157b0814632459ba694307f80991df7e",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "frames": 213,
+      "performance": {
+        "batch_wall_ns": "10517548200",
+        "bridge_pre_to_post_ns": {
+          "p50": 684100,
+          "p95": 1778700,
+          "p99": 2477700
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "301989888",
+        "optimization_proven": false,
+        "process_cpu_ns": "1203125000",
+        "snapshot_ns": {
+          "p50": 617300,
+          "p95": 1800600,
+          "p99": 2557000
+        },
+        "snapshots": 210,
+        "ticks": 210
+      },
+      "attempt": "processing-04",
+      "case": "enrichment-processing-v1"
+    },
+    {
+      "artifact_fingerprint": "3b7f1123bb8f017e133001c2245f2ab01e5df19c83964fc14e4fc7fdfc5f027c",
+      "runner_sha256": "4416cf47b8a741abdd0eac1c9270fdb35d9bc9b504d898ba55becaffd1116199",
+      "status": "functional_pass",
+      "case_sha256": "8eb000544c2038342a8a5933f006f4ac404e743f203311c21ab9a6f0fdec1960",
+      "trace_sha256": "aac73d93fc8d1b74cf472f1720be26bd5e24504be7a4ade5012d5c52d6717122",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "c48c4d89f228874b57ef0dafd9c7e40d64e39966fecdb79326e6ca1b37cdd7da",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "4416cf47b8a741abdd0eac1c9270fdb35d9bc9b504d898ba55becaffd1116199",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "frames": 644,
+      "performance": {
+        "batch_wall_ns": "31836828900",
+        "bridge_pre_to_post_ns": {
+          "p50": 404900,
+          "p95": 2028900,
+          "p99": 11592800
+        },
+        "gc_collections": "1",
+        "gc_pause_ms": "37",
+        "max_sampled_heap_used_bytes": "310096192",
+        "optimization_proven": false,
+        "process_cpu_ns": "2765625000",
+        "snapshot_ns": {
+          "p50": 411300,
+          "p95": 4001000,
+          "p99": 21438300
+        },
+        "snapshots": 635,
+        "ticks": 635
+      },
+      "attempt": "lifecycle-01",
+      "case": "enrichment-lifecycle-v1"
+    },
+    {
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "status": "functional_pass",
+      "case_sha256": "58e6d8529d1c151d022f70d9c974c7fbfa0ae704684f9cbc96607825ad3a5a12",
+      "trace_sha256": "d1a47dedeed637cec556eab780b9f82bdd7dd8231ac699cac6075face1919dd3",
+      "work": null,
+      "frames": 223,
+      "performance": {
+        "batch_wall_ns": "10008848600",
+        "bridge_pre_to_post_ns": {
+          "p50": 1648800,
+          "p95": 3674100,
+          "p99": 6569700
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "299424000",
+        "optimization_proven": false,
+        "process_cpu_ns": "2640625000",
+        "snapshot_ns": {
+          "p50": 621200,
+          "p95": 1411600,
+          "p99": 1952000
+        },
+        "snapshots": 200,
+        "ticks": 200
+      },
+      "attempt": "client-processing-03",
+      "case": "LAB-MEK-CLIENT-PROCESSING-001"
+    }
+  ],
+  "schema": 1
+}

@@ -1,0 +1,11 @@
+{
+  "id": "LAB-SERVER-INVENTORY-001",
+  "client": false,
+  "integration_level": "real_dedicated_server_component_fixture",
+  "actions": [
+    {"role":"server","action":"fixture_barrel","expect":[{"pointer":"/barrel_count","equals":0}]},
+    {"role":"server","action":"insert_barrel","expect":[{"pointer":"/barrel_count","equals":13}]},
+    {"role":"server","action":"step","args":{"ticks":1},"expect":[{"pointer":"/tick","equals":"1"},{"pointer":"/barrel_count","equals":13}]},
+    {"role":"server","action":"read","expect":[{"pointer":"/barrel_count","equals":13}]}
+  ]
+}

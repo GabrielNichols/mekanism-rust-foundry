@@ -1,0 +1,139 @@
+{
+  "schema_version": "0.2-draft",
+  "kind": "scenario_template",
+  "executable": false,
+  "status": "proposed_not_run",
+  "id": "MK-PILOT-ENRICHMENT-001",
+  "capability_ids": [
+    "MK-MAC-001"
+  ],
+  "reference_id": "mekanism-1.21.1-10.7.19.85",
+  "module_profile": "core",
+  "qualification_stage": "pre-port-java-characterization",
+  "comparison_mode": "java_independent_fresh_runs",
+  "integration_level": "real_client_menu_and_machine_with_declared_energy_fixture",
+  "not_qualified_as": [
+    "generator",
+    "cable_network",
+    "multiplayer",
+    "os_input"
+  ],
+  "bindings": {
+    "machine": {
+      "resolve_from_discovery": "registered_enrichment_chamber",
+      "resolved_id": null
+    },
+    "recipe": {
+      "resolve_from_discovery": "valid_loaded_recipe_for_selected_machine",
+      "resolved_id": null
+    },
+    "input": {
+      "resolve_from_discovery": "resolved_recipe_input_with_components_and_typed_amount",
+      "resolved_value": null
+    },
+    "energy": {
+      "resolve_from_discovery": "actual_quantity_representation_unit_capacity_and_supply_method",
+      "resolved_value": null
+    },
+    "tick_budget": null,
+    "world_seed": null,
+    "input_ingress_capability": null,
+    "wall_deadlines": null
+  },
+  "preconditions": [
+    "environment_lock_is_sealed",
+    "all_bindings_resolved",
+    "machine_fixture_placement_confirmed",
+    "loaded_recipe_and_inventory_contract_observable",
+    "energy_unit_and_storage_representation_observable",
+    "safe_tick_barriers_qualified",
+    "fresh_isolated_world"
+  ],
+  "setup": {
+    "mode": "declared_administrative_fixture",
+    "entity_alias": "machine",
+    "placement": {
+      "x": 0,
+      "y": 80,
+      "z": 0
+    },
+    "input_amount": "resolve_from_recipe",
+    "energy_supply": "declared_fixture_adapter_not_generator",
+    "verify_effects": true
+  },
+  "steps": [
+    {
+      "id": "s01",
+      "design_action": "p1: insert input and open the screen with known initial energy",
+      "typed_action_binding": null,
+      "phase_binding": null,
+      "required_server_and_client_witnesses": true
+    },
+    {
+      "id": "s02",
+      "design_action": "clock: advance the window without supply and capture every tick",
+      "typed_action_binding": null,
+      "phase_binding": null,
+      "required_server_and_client_witnesses": true
+    },
+    {
+      "id": "s03",
+      "design_action": "fixture: supply energy through the declared mechanism and record its effect",
+      "typed_action_binding": null,
+      "phase_binding": null,
+      "required_server_and_client_witnesses": true
+    },
+    {
+      "id": "s04",
+      "design_action": "clock: advance to a bounded processing transition",
+      "typed_action_binding": null,
+      "phase_binding": null,
+      "required_server_and_client_witnesses": true
+    },
+    {
+      "id": "s05",
+      "design_action": "p1: extract output through a slot and confirm inventory",
+      "typed_action_binding": null,
+      "phase_binding": null,
+      "required_server_and_client_witnesses": true
+    }
+  ],
+  "required_observables": [
+    "typed_inventory_and_components",
+    "typed_energy_with_unit",
+    "processing_progress_and_selected_recipe",
+    "machine_active_state",
+    "side_configuration",
+    "relevant_persisted_state",
+    "world_effects_and_events",
+    "real_client_input_consumption",
+    "menu_slot_and_cursor_state",
+    "each_required_client_applied"
+  ],
+  "expected": {
+    "origin": "capture_from_pinned_java_after_fresh_aa_qualification",
+    "trace_sha256": null,
+    "numeric_values": null,
+    "auto_update_allowed": false
+  },
+  "family_variants_to_specify": [
+    "normal_processing",
+    "no_energy_and_resume",
+    "output_full_and_resume",
+    "save_reopen_during_processing",
+    "invalid_input_rejected_without_side_effect"
+  ],
+  "required_controls": [
+    "three_independent_fresh_java_runs",
+    "observer_on_off_with_external_observation",
+    "mutate_value_type_unit_presence_order_tick",
+    "partial_or_stale_evidence_rejected"
+  ],
+  "evidence": [],
+  "qualification_status": "pending",
+  "blocking_reason": "template_bindings_actions_observations_and_lock_need_implementation_and_runtime_resolution",
+  "canonical_scenario_ref": "SC-LAB-003",
+  "legacy_id_policy": "MK-PILOT-ENRICHMENT-001 remains a planning alias; SC-LAB-003 is the current functional design. Neither is an executable test.",
+  "topology_ref": "LAB-JD1",
+  "ingress": "client_event_queue"
+}

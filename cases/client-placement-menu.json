@@ -1,0 +1,24 @@
+{
+  "id": "LAB-MEK-PLACEMENT-MENU-001",
+  "client": true,
+  "integration_level": "real_client_keybinding_and_screen_handler_not_os_input",
+  "actions": [
+    {"role":"server","action":"setup_player","expect":[{"pointer":"/target_block","equals":"minecraft:air"}]},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/screen","equals":"game"},{"pointer":"/hotbar/count","equals":2},{"pointer":"/hotbar/item","equals":"mekanism:enrichment_chamber"}]},
+    {"role":"client","action":"aim"},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/face","equals":"up"}]},
+    {"role":"client","action":"click_use"},
+    {"role":"server","action":"read","await_condition":true,"expect":[{"pointer":"/target_block","equals":"mekanism:enrichment_chamber"},{"pointer":"/players/0/hotbar/count","equals":1}]},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/target_block","equals":"mekanism:enrichment_chamber"},{"pointer":"/hotbar/count","equals":1}]},
+    {"role":"client","action":"click_use"},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/container_screen","equals":true}]},
+    {"role":"server","action":"read","await_condition":true,"expect":[{"pointer":"/players/0/menu_open","equals":true}]},
+    {"role":"client","action":"click_slot","args":{"selector":"source"}},
+    {"role":"server","action":"read","await_condition":true,"expect":[{"pointer":"/players/0/cursor/item","equals":"minecraft:iron_ore"},{"pointer":"/players/0/cursor/count","equals":3}]},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/cursor/count","equals":3}]},
+    {"role":"client","action":"click_slot","args":{"selector":"input"}},
+    {"role":"server","action":"read","await_condition":true,"expect":[{"pointer":"/players/0/cursor/count","equals":0},{"pointer":"/players/0/machine_iron_ore","equals":3}]},
+    {"role":"client","action":"read","await_condition":true,"expect":[{"pointer":"/cursor/count","equals":0},{"pointer":"/machine_iron_ore","equals":3}]},
+    {"role":"client","action":"capture"}
+  ]
+}

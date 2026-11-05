@@ -1,0 +1,1859 @@
+{
+  "schema_version": "0.2-draft",
+  "kind": "functional_scenario_design_catalog",
+  "executable": false,
+  "status": "proposed_not_run",
+  "runtime_evidence_count": 0,
+  "scope": "Java reference characterization and Rust validator qualification before gameplay port",
+  "reference": {
+    "tag": "v1.21.1-10.7.19.85",
+    "source_commit": "a00109e4856fd38b9c5b3dd7f22ce4a59cd65a80",
+    "minecraft": "1.21.1",
+    "java_major": 21,
+    "chosen_neoforge": null,
+    "artifact_lock_sha256": null
+  },
+  "required_bindings_for_execution": [
+    "artifact_lock",
+    "runtime_registry_ids",
+    "recipe_components_and_quantities",
+    "resource_units_and_representation",
+    "tick_budget",
+    "phase_contract",
+    "wall_deadlines",
+    "seed",
+    "initial_world_hash",
+    "ingress_capabilities",
+    "observation_capabilities"
+  ],
+  "ingress_levels": [
+    {
+      "id": "os_input",
+      "proof": "native window input, focus and real client handlers",
+      "fallback_allowed": false
+    },
+    {
+      "id": "client_event_queue",
+      "proof": "same client window/input/Screen event route, consumption witnessed",
+      "fallback_allowed": false
+    },
+    {
+      "id": "client_action_pipeline",
+      "proof": "client gameplay controller and normal network, excluding key/widget dispatch",
+      "fallback_allowed": false
+    },
+    {
+      "id": "protocol_bot",
+      "proof": "server protocol behavior only",
+      "fallback_allowed": false
+    },
+    {
+      "id": "gametest_fake_player",
+      "proof": "in-world component fixture only",
+      "fallback_allowed": false
+    },
+    {
+      "id": "server_fixture",
+      "proof": "administrative fixture or component rule only",
+      "fallback_allowed": false
+    }
+  ],
+  "scenario_common_contract": {
+    "status": "design_outline_not_run",
+    "expected_origin": "pinned_Java_observation_before_Rust_gameplay",
+    "expected_trace_sha256": null,
+    "numeric_expected_values": null,
+    "hypotheses_are_not_assumed_truth": true,
+    "fresh_aa_attempts_minimum": 3,
+    "all_required_witnesses_mandatory": true,
+    "missing_witness_verdict": "inconclusive_or_infra_error_not_pass",
+    "unsupported_is_behavioral_red": false,
+    "automatic_golden_update": false
+  },
+  "scenarios": [
+    {
+      "id": "SC-LAB-001",
+      "name": "Player places a machine and opens its menu",
+      "capability_ids": [
+        "MK-MAC-001",
+        "MK-UI-001"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_client_input_server_and_gui",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Administratively set up only terrain, game mode and starting items; the machine under test does not exist in the world before the click.",
+      "bindings": [
+        "machine_item_id",
+        "target_block_face",
+        "player_hotbar_slot",
+        "menu_identity",
+        "tick_deadline"
+      ],
+      "sequence": [
+        "p1: wait for chunks to be applied and select the hotbar item",
+        "p1: aim at the surface and press/release use through the real queue",
+        "barrier: input consumed, placement applied on the server and block replicated",
+        "p1: aim at the placed machine and press/release use",
+        "barrier: menu open on the client and container associated with the same block on the server"
+      ],
+      "server_observables": [
+        "block_state_and_orientation",
+        "player_item_consumption",
+        "block_entity_created",
+        "container_owner_and_target"
+      ],
+      "client_observables": [
+        "input_event_consumed",
+        "rendered_block",
+        "current_screen_menu_identity",
+        "fresh_menu_frame"
+      ],
+      "hypotheses_to_characterize": [
+        "placement uses the action's face/orientation",
+        "opening the menu does not place a second machine"
+      ],
+      "negative_controls": [
+        "directing input to another instance must fail because the witness is missing",
+        "an old screenshot does not satisfy the current-frame requirement",
+        "setBlock fallback must be rejected at this level"
+      ],
+      "completion": "placement and menu have a complete causal chain, characterized inventory delta and current frame; retain the trace and post-action checkpoint",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-MAC-001.R01",
+        "MK-UI-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-MAC-001.R01",
+          "aspects_exercised_by_design": [
+            "Player placement and menu opening with server/client witnesses."
+          ],
+          "remaining_aspects": [
+            "Input/recipe, processing, extraction and rejection/resource variants require other cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-UI-001.R01",
+          "aspects_exercised_by_design": [
+            "Use of the real queue and association of the menu with the server block."
+          ],
+          "remaining_aspects": [
+            "Normal/shift/drag clicks, cursor and complete transactions still require additional cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-002",
+      "name": "Input transfer through real slots",
+      "capability_ids": [
+        "MK-IO-003",
+        "MK-MAC-001",
+        "MK-UI-001"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_client_menu_inventory",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Pilot machine placed by SC-LAB-001 or a labeled fixture; starting items recorded and a valid recipe discovered.",
+      "bindings": [
+        "recipe",
+        "source_slot",
+        "machine_input_slot",
+        "invalid_item",
+        "amount_bound"
+      ],
+      "sequence": [
+        "p1: open the menu and identify slots using the effective layout",
+        "p1: click source and destination through the real Screen",
+        "barrier: server applies the transaction and client confirms slots/cursor",
+        "p1: attempt to insert an incompatible item into the same slot",
+        "barrier: record acceptance/rejection and complete states after the attempt",
+        "p1: close/reopen the menu and compare inventories"
+      ],
+      "server_observables": [
+        "inventory_before_after",
+        "carried_stack",
+        "slot_rules",
+        "menu_transaction_state"
+      ],
+      "client_observables": [
+        "clicked_widget_and_coordinates",
+        "input_consumed",
+        "slot_stacks",
+        "cursor_stack",
+        "fresh_menu_frame"
+      ],
+      "hypotheses_to_characterize": [
+        "an incompatible item does not cause an unaccounted change",
+        "close/reopen does not duplicate the item or cursor stack"
+      ],
+      "negative_controls": [
+        "ACK without server application is insufficient",
+        "changing GUI scale without recalculating the target must expose an error",
+        "direct backend insertion cannot satisfy a slot action"
+      ],
+      "completion": "server and client agree for every click, including the cursor, with the absence/presence of effects identified by Java",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-MAC-001.R01",
+        "MK-IO-003.R01",
+        "MK-UI-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-MAC-001.R01",
+          "aspects_exercised_by_design": [
+            "Input insertion through the Screen and identification of recipe/slots."
+          ],
+          "remaining_aspects": [
+            "Placement is composed with SC-LAB-001; processing and final extraction with SC-LAB-003; variants are not exhausted."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-IO-003.R01",
+          "aspects_exercised_by_design": [
+            "Normal click, cursor, incompatible-item attempt and close/reopen."
+          ],
+          "remaining_aspects": [
+            "Shift-click, drag, split, full inventory and component combinations have not all been specified."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-UI-001.R01",
+          "aspects_exercised_by_design": [
+            "Slot/cursor transaction corroborated by server and client."
+          ],
+          "remaining_aspects": [
+            "Other gestures, layouts and menus remain pending."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-003",
+      "name": "Processing without energy and resumption",
+      "capability_ids": [
+        "MK-MAC-001",
+        "MK-ENE-003"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_machine_processing_with_declared_energy_fixture",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Recipe/input through the real menu; isolated administrative energy source, explicitly making no claim about a cable or generator.",
+      "bindings": [
+        "recipe",
+        "required_typed_input",
+        "energy_representation_unit",
+        "safe_supply",
+        "observation_ticks"
+      ],
+      "sequence": [
+        "p1: insert input and open the screen with known initial energy",
+        "clock: advance the window without supply and capture every tick",
+        "fixture: supply energy through the declared mechanism and record its effect",
+        "clock: advance to a bounded processing transition",
+        "p1: extract output through a slot and confirm inventory"
+      ],
+      "server_observables": [
+        "typed_energy_each_tick",
+        "input_output_each_tick",
+        "recipe_selection",
+        "progress",
+        "active_state"
+      ],
+      "client_observables": [
+        "energy_gauge",
+        "progress_gauge",
+        "output_slot",
+        "player_received_stack"
+      ],
+      "hypotheses_to_characterize": [
+        "lack of energy changes progress/consumption according to the reference",
+        "resumption must not be assumed to reset or preserve progress without observation"
+      ],
+      "negative_controls": [
+        "extra consumption in the trace must diverge",
+        "the same final output with a transient delay must diverge",
+        "a substituted energy unit must be rejected"
+      ],
+      "completion": "no-energy→resumption→output trajectory characterized; no invented rate/quantity",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-MAC-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-MAC-001.R01",
+          "aspects_exercised_by_design": [
+            "No-energy trajectory, declared supply, processing and player extraction of output."
+          ],
+          "remaining_aspects": [
+            "Depends on composition with placement/input and concrete recipes; full output and invalid input require their own cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-004",
+      "name": "Full output blocks processing and clearing it releases processing",
+      "capability_ids": [
+        "MK-MAC-001",
+        "MK-IO-003"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_client_menu_and_machine",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Full-output state constructed through recorded inventory actions or a declared owned checkpoint; sufficient energy observable.",
+      "bindings": [
+        "output_capacity",
+        "recipe",
+        "valid_full_output_stack",
+        "bounded_blocked_ticks"
+      ],
+      "sequence": [
+        "p1: fill the output according to the real menu rules",
+        "p1: insert valid input",
+        "clock: capture resources and progress while blocked",
+        "p1: extract part of the output through a real click",
+        "clock: capture the unblocking and processing transition",
+        "p1: collect products and record the final balance"
+      ],
+      "server_observables": [
+        "output_capacity_and_count",
+        "energy_input_progress_trace",
+        "recipe_remaining_input"
+      ],
+      "client_observables": [
+        "blocked_indicator_if_available",
+        "gauge_and_slots",
+        "withdrawal_visible"
+      ],
+      "hypotheses_to_characterize": [
+        "energy behavior while blocked is observed rather than assumed",
+        "partial output follows the real limit rule"
+      ],
+      "negative_controls": [
+        "omitting blocked ticks must invalidate the trace",
+        "duplicating extraction must change the balance and be detected"
+      ],
+      "completion": "blocking and release have witnesses and complete balances, including transient behavior",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-MAC-001.R01",
+        "MK-IO-003.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-MAC-001.R01",
+          "aspects_exercised_by_design": [
+            "Full-output blocking, partial extraction and resumption with traces."
+          ],
+          "remaining_aspects": [
+            "Does not cover all recipes, quantity boundaries, placement or invalid input."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-IO-003.R01",
+          "aspects_exercised_by_design": [
+            "Output occupancy and extraction through the real menu path."
+          ],
+          "remaining_aspects": [
+            "Drag/shift/split gestures and components are not all exercised."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-005",
+      "name": "Player-controlled redstone modes",
+      "capability_ids": [
+        "MK-IO-002",
+        "MK-MAC-001"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_player_config_and_world_signal",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Machine with known recipe/resources; lever and redstone path built in an original fixture and identified.",
+      "bindings": [
+        "discovered_redstone_modes",
+        "config_widget",
+        "lever_target",
+        "processing_window"
+      ],
+      "sequence": [
+        "p1: choose a redstone mode in the menu",
+        "p1: operate the real lever using use input",
+        "barrier: server signal applied and client state updated",
+        "clock: observe progress/consumption under the signal",
+        "p1: invert the signal and repeat for the discovered modes"
+      ],
+      "server_observables": [
+        "mode",
+        "signal_at_machine",
+        "active_progress_resources"
+      ],
+      "client_observables": [
+        "selected_mode_text_or_widget",
+        "lever_state",
+        "progress_indicator"
+      ],
+      "hypotheses_to_characterize": [
+        "each mode has a real signal→activity table",
+        "a mode change during processing has its own transition"
+      ],
+      "negative_controls": [
+        "a changed signal with the wrong mode must diverge",
+        "a local menu change without server commit does not satisfy the step"
+      ],
+      "completion": "per-mode table and signal transitions captured in Java with widget and machine identity",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-IO-002.R01",
+        "MK-IO-002.R02"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-IO-002.R01",
+          "aspects_exercised_by_design": [
+            "Mode/signal table and lever transitions with server/client observation."
+          ],
+          "remaining_aspects": [
+            "Short pulses and precise alignment to tick boundaries require concrete variants."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-IO-002.R02",
+          "aspects_exercised_by_design": [
+            "Mode/signal change while processing is active, with resources observed."
+          ],
+          "remaining_aspects": [
+            "All pause/reset/consumption states depend on the reference; persistence is outside this design."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-006",
+      "name": "Upgrade installation and removal",
+      "capability_ids": [
+        "MK-REG-004",
+        "MK-MAC-001"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_player_upgrade_menu_processing",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Pilot machine and valid upgrade discovered; fixed configuration profile.",
+      "bindings": [
+        "upgrade_id",
+        "upgrade_count_limit",
+        "install_controls",
+        "recipe",
+        "typed_energy"
+      ],
+      "sequence": [
+        "clock: record baseline processing without an upgrade",
+        "p1: open the upgrades tab and insert the item through real slots",
+        "clock: wait for installation for the discovered duration and observe the count",
+        "clock: process a recipe under the new configuration",
+        "p1: remove the upgrade through the real control and record its return",
+        "clock: observe restoration of configuration and behavior"
+      ],
+      "server_observables": [
+        "upgrade_inventory_and_installed_count",
+        "player_inventory",
+        "processing_rate_and_energy_trace"
+      ],
+      "client_observables": [
+        "upgrade_tab",
+        "installation_progress",
+        "installed_count",
+        "returned_item"
+      ],
+      "hypotheses_to_characterize": [
+        "the upgrade effect depends on effective configuration",
+        "removal during processing follows the real rule"
+      ],
+      "negative_controls": [
+        "the comparator must not ignore an upgrade above the limit",
+        "removing an item without changing the observed module must diverge"
+      ],
+      "completion": "baseline/installation/effect/removal have their own traces and no formula was derived from the future port",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-REG-004.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-REG-004.R01",
+          "aspects_exercised_by_design": [
+            "Upgrade installation/removal through the interface and observation of its effect."
+          ],
+          "remaining_aspects": [
+            "All upgrades/machine types, exceeded limits and configuration combinations require expansion."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-007",
+      "name": "Save and reopen during processing",
+      "capability_ids": [
+        "MK-MAC-001",
+        "MK-IO-001"
+      ],
+      "topology": "LAB-JREC",
+      "base_topology": "LAB-JD1",
+      "integration_level": "real_server_restart_with_client_rejoin",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Machine demonstrably processing; the same world belongs exclusively to the lifecycle scenario.",
+      "bindings": [
+        "mid_process_checkpoint",
+        "durability_ack",
+        "restart_deadlines",
+        "continuation_ticks"
+      ],
+      "sequence": [
+        "clock: pause at the safe phase after processing starts",
+        "server: save and confirm durable flush",
+        "p1/server: disconnect and close gracefully",
+        "runner: start new processes with the owned saved world and identical lock",
+        "p1: reconnect, wait for chunks/menu and observe state",
+        "clock: advance continuation and extract output"
+      ],
+      "server_observables": [
+        "inventory_energy_progress_side_config_before_after",
+        "saved_typed_state",
+        "world_epoch_change",
+        "post_load_trajectory"
+      ],
+      "client_observables": [
+        "rejoin_identity",
+        "reopened_menu",
+        "progress_energy_slots",
+        "final_output"
+      ],
+      "hypotheses_to_characterize": [
+        "actually persisted fields may differ from transient caches",
+        "continuation depends on the original saved state"
+      ],
+      "negative_controls": [
+        "loading an earlier save must fail on hash/state",
+        "restarting without flush ACK cannot satisfy the durable scenario"
+      ],
+      "completion": "restart is real, all old processes are terminated and continuation characterizes persisted state without stale evidence",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-MAC-001.R02",
+        "MK-IO-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-MAC-001.R02",
+          "aspects_exercised_by_design": [
+            "Mid-process checkpoint, flush, new JVM, rejoin and subsequent ticks."
+          ],
+          "remaining_aspects": [
+            "Start/end boundaries and crashes before/after durability still require separate cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-IO-001.R01",
+          "aspects_exercised_by_design": [
+            "Observed preservation of side configuration after restart."
+          ],
+          "remaining_aspects": [
+            "Does not exercise configuration/rotation on all six faces or every mode."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-008",
+      "name": "Placing and removing a cable splits the network",
+      "capability_ids": [
+        "MK-ENE-002",
+        "MK-NET-005"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "two_real_clients_topology_mutation",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Source and consumers at original positions; connecting cable initially absent; quantities/tiers discovered.",
+      "bindings": [
+        "cable_tier",
+        "producer",
+        "consumer_set",
+        "link_position",
+        "rebuild_window"
+      ],
+      "sequence": [
+        "p1: place the real connecting cable",
+        "barrier: topology/connection observed on the server and both clients",
+        "clock: capture distribution to consumers",
+        "p2: break the cable through the mining path",
+        "clock: capture the split and buffer effects",
+        "p1: replace the cable and observe the merge"
+      ],
+      "server_observables": [
+        "nodes_connections",
+        "per_node_buffers",
+        "per_consumer_energy",
+        "drops_on_break",
+        "resource_accounting"
+      ],
+      "client_observables": [
+        "cable_geometry_both_clients",
+        "break_animation",
+        "consumer_menus"
+      ],
+      "hypotheses_to_characterize": [
+        "distribution and retention on split follow the real priority",
+        "reconnection does not duplicate resources"
+      ],
+      "negative_controls": [
+        "the same global balance with a changed per-node distribution must diverge",
+        "stale geometry on p2 must fail the client witness"
+      ],
+      "completion": "formation/split/merge produces authoritative and visual effects on both clients",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-ENE-002.R02"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-ENE-002.R02",
+          "aspects_exercised_by_design": [
+            "Place/remove a cable to separate/reunite nodes with observation from two clients."
+          ],
+          "remaining_aspects": [
+            "Ring topology, merging occupied networks, per-node resources and chunk boundaries require variants."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-009",
+      "name": "Chemical tank with an incompatible resource",
+      "capability_ids": [
+        "MK-CHE-002",
+        "MK-CHE-003",
+        "MK-CHE-004"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_chemical_transfer_and_gui",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Tank and source with observed chemical A; chemical B and container supplied through a declared original fixture; faces/modes identified.",
+      "bindings": [
+        "chemical_A",
+        "chemical_B",
+        "tank_capacity",
+        "transfer_mode",
+        "dropper_contract"
+      ],
+      "sequence": [
+        "p1: connect the tube through the chosen face and transfer A",
+        "p1: open the tank and observe type/quantity",
+        "p1: attempt to transfer B through the same path",
+        "clock: capture rejection or conversion according to the original",
+        "p1: use the Gauge Dropper through the screen and record extraction/insertion"
+      ],
+      "server_observables": [
+        "typed_chemical_id_amount_attributes",
+        "source_destination_balances",
+        "side_configuration",
+        "container_contents"
+      ],
+      "client_observables": [
+        "chemical_gauge",
+        "tooltip_unit",
+        "dropper_cursor_or_inventory_state"
+      ],
+      "hypotheses_to_characterize": [
+        "mixing/rejection depends on the tank rule",
+        "the dropper preserves identity and quantity"
+      ],
+      "negative_controls": [
+        "changing the ID while retaining quantity must diverge",
+        "an empty tank and an absent field must not compare equal"
+      ],
+      "completion": "each attempt has type/unit/quantity and an observed reaction, without normalizing chemicals by display name",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [],
+      "requirement_mapping_status": "pending_case_level_review",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": []
+    },
+    {
+      "id": "SC-LAB-010",
+      "name": "Sorter applies filters with a full destination",
+      "capability_ids": [
+        "MK-NET-001",
+        "MK-NET-002"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_player_filter_configuration_and_logistics",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Layout with source, sorter, branch and two destinations; destinations built in an original fixture; filters not yet configured.",
+      "bindings": [
+        "filter_modes",
+        "filter_item_components",
+        "routing_colors",
+        "destination_capacity",
+        "bounded_transit_ticks"
+      ],
+      "sequence": [
+        "p1: create a filter in the menu with discovered parameters",
+        "p1: insert a batch with matching and nonmatching items",
+        "clock: observe destination selection and transit",
+        "p1: fill the preferred destination through the real inventory",
+        "clock: observe Java blocking/return/alternative route",
+        "p1: change filter order and repeat from reset state"
+      ],
+      "server_observables": [
+        "ordered_filters",
+        "inflight_items",
+        "origin_destination_balances",
+        "route_decisions"
+      ],
+      "client_observables": [
+        "filter_editor_values",
+        "transporter_visuals",
+        "destination_inventories"
+      ],
+      "hypotheses_to_characterize": [
+        "filter order and color can change routing",
+        "item return cannot be assumed lossless without accounting"
+      ],
+      "negative_controls": [
+        "silently sorting filters must be detected",
+        "removing inflight state from the snapshot must invalidate completeness"
+      ],
+      "completion": "configuration, transit and balances account for all items throughout execution",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-NET-002.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-NET-002.R01",
+          "aspects_exercised_by_design": [
+            "Filters and full destination with observed route/transfer."
+          ],
+          "remaining_aspects": [
+            "All item/tag/mod predicates, min/max/fuzzy/invert and overlapping priority require their own cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-011",
+      "name": "Security between the owner and a second player",
+      "capability_ids": [
+        "MK-SEC-001",
+        "MK-SEC-002",
+        "MK-STO-002"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_two_player_permissions",
+      "ingress": "client_event_queue",
+      "setup_provenance": "p1/p2 have distinct fixture aliases and UUIDs; storage owner established through the recorded real action.",
+      "bindings": [
+        "security_modes",
+        "trusted_player_controls",
+        "owned_storage",
+        "frequency_access_rules"
+      ],
+      "sequence": [
+        "p1: configure restricted mode in the menu",
+        "p2: attempt to open and transfer an item through real use",
+        "barrier: record server rejection/acceptance and p2's screen",
+        "p1: add p2 to the applicable trust mechanism",
+        "p2: repeat the action",
+        "p1: revoke access and have p2 repeat with the previously open menu"
+      ],
+      "server_observables": [
+        "owner_trusted_set",
+        "authorization_result",
+        "inventory_mutations",
+        "frequency_membership"
+      ],
+      "client_observables": [
+        "p1_security_screen",
+        "p2_open_or_denial",
+        "menu_close_or_stale_access",
+        "both_player_inventories"
+      ],
+      "hypotheses_to_characterize": [
+        "revocation with an open menu has its own rule",
+        "the same display name does not replace owner identity"
+      ],
+      "negative_controls": [
+        "changing owner/UUID while retaining the display name must diverge",
+        "visual success without server authorization does not pass"
+      ],
+      "completion": "three access states and balances are observed by players and server",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-SEC-001.R01",
+        "MK-SEC-001.R02",
+        "MK-STO-002.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-SEC-001.R01",
+          "aspects_exercised_by_design": [
+            "Owner and second actor switch between stranger/trusted states and attempt real actions."
+          ],
+          "remaining_aspects": [
+            "Three simultaneous identities, all operations and automation require a specific variant."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-SEC-001.R02",
+          "aspects_exercised_by_design": [
+            "Revocation while the second actor had a menu open."
+          ],
+          "remaining_aspects": [
+            "Persistence after restart and other access paths remain pending."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-STO-002.R01",
+          "aspects_exercised_by_design": [
+            "Opening/transfer in personal storage with allowed/denied permission."
+          ],
+          "remaining_aspects": [
+            "All chests/barrels/portable items and automation access are not covered by this single design."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-012",
+      "name": "QIO stores and returns items with components",
+      "capability_ids": [
+        "MK-QIO-001",
+        "MK-QIO-002",
+        "MK-QIO-003"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_qio_dashboard_storage_and_concurrent_clients",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Drive Array and frequency created in a traceable fixture; distinct drives and items available to the player; no unlabeled pre-injected QIO entries.",
+      "bindings": [
+        "drive_limits",
+        "frequency",
+        "item_component_variants",
+        "dashboard_widgets",
+        "withdrawal_schedule"
+      ],
+      "sequence": [
+        "p1: install the drive and associate the dashboard with the frequency",
+        "p1: deposit component variants through the menu",
+        "p2: open the authorized dashboard and check the distinction",
+        "clock: schedule p1/p2 withdrawals in explicit order",
+        "server: save/restart and have clients reconnect",
+        "p1/p2: check the balance and withdraw the remainder"
+      ],
+      "server_observables": [
+        "drive_item_type_counts",
+        "component_keys",
+        "frequency_owner",
+        "transaction_order",
+        "post_load_storage"
+      ],
+      "client_observables": [
+        "search_results_and_counts",
+        "component_tooltips",
+        "withdrawn_inventory_both_players"
+      ],
+      "hypotheses_to_characterize": [
+        "components distinguish types according to the real QIO rule",
+        "concurrent withdrawals follow authoritative order without ghost items"
+      ],
+      "negative_controls": [
+        "merging variants by item ID must diverge",
+        "a stale client count after withdrawal does not satisfy convergence"
+      ],
+      "completion": "drive, dashboard and inventories account for each variant before/after restart",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-QIO-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-QIO-001.R01",
+          "aspects_exercised_by_design": [
+            "Insertion/extraction of items with distinct components in QIO."
+          ],
+          "remaining_aspects": [
+            "Type/quantity limits and all drive tiers still require boundary cases."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-013",
+      "name": "Multiblock forms and invalidates through real construction",
+      "capability_ids": [
+        "MK-STO-003",
+        "MK-UI-001"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_player_multiblock_construction",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Original Dynamic Tank blueprint without a complete structure; player receives materials rather than an already formed controller.",
+      "bindings": [
+        "valid_blueprint",
+        "last_shell_block",
+        "valve_face",
+        "multiblock_observables",
+        "structure_recheck_bound"
+      ],
+      "sequence": [
+        "p1: build the shell according to the blueprint through real placement",
+        "p1: place the final closing block",
+        "clock: observe the unformed→formed transition and capacity",
+        "p2: open the valve/menu and confirm the structure view",
+        "p1: break the designated structural block",
+        "clock: observe invalidation, contents and events on both clients"
+      ],
+      "server_observables": [
+        "formed_state",
+        "dimensions_capacity_controller",
+        "contents",
+        "invalidated_state",
+        "drops"
+      ],
+      "client_observables": [
+        "shell_render_state",
+        "valve_menu",
+        "formation_or_failure_feedback"
+      ],
+      "hypotheses_to_characterize": [
+        "capacity and contents on invalidation follow Java",
+        "final placement must not be replaced with a pre-formed structure"
+      ],
+      "negative_controls": [
+        "removing the formation witness must prevent a pass",
+        "changing dimensions/capacity with the same contents must diverge"
+      ],
+      "completion": "player-caused formation and invalidation have an authoritative trajectory and visual witness",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-STO-003.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-STO-003.R01",
+          "aspects_exercised_by_design": [
+            "Player construction and valid/invalid multiblock transition."
+          ],
+          "remaining_aspects": [
+            "Dimensional limits and adjacent structures are not yet concrete variants."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-014",
+      "name": "Radiation and protection in an isolated area",
+      "capability_ids": [
+        "MK-NUC-002",
+        "MK-EQP-007"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_player_exposure_and_equipment",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Scratch world dedicated to global radiation; declared, bounded test source; p1/p2 with distinct equipment, never a personal world.",
+      "bindings": [
+        "source_creation_method",
+        "hazmat_slots",
+        "measurement_item",
+        "exposure_bound",
+        "damage_and_dose_observers"
+      ],
+      "sequence": [
+        "p1/p2: equip protection through real slots according to the variants",
+        "p1/p2: approach the area through real movement",
+        "clock: capture environment, dose and effects over a bounded window",
+        "p1: remove one piece and repeat controlled exposure",
+        "server: save/restart and observe environmental and personal persistence"
+      ],
+      "server_observables": [
+        "environmental_radiation_field",
+        "personal_dose_effects",
+        "equipment_components",
+        "health_and_damage_events",
+        "global_saved_data"
+      ],
+      "client_observables": [
+        "measurement_reading",
+        "armor_slots",
+        "health_hud",
+        "warnings_effects"
+      ],
+      "hypotheses_to_characterize": [
+        "partial protection may be nonlinear",
+        "persistence/decay must not be assumed"
+      ],
+      "negative_controls": [
+        "omitting personal dose while retaining environmental dose must invalidate the profile",
+        "normalizing health/dose with a global tolerance must be prohibited"
+      ],
+      "completion": "exposure and protection are measured with a declared RNG/tick profile and isolated global state",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [],
+      "requirement_mapping_status": "pending_case_level_review",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": []
+    },
+    {
+      "id": "SC-LAB-015",
+      "name": "Equipment consumes a resource and switches mode",
+      "capability_ids": [
+        "MK-EQP-001",
+        "MK-EQP-003",
+        "MK-EQP-005",
+        "MK-UI-002"
+      ],
+      "topology": "LAB-JI",
+      "integration_level": "integrated_real_player_keybind_equipment",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Equipment/installable module and resource supplied in starting inventory; player installs/equips; mode discovered at runtime.",
+      "bindings": [
+        "equipment_profile",
+        "module_controls",
+        "mode_keybinding",
+        "resource_unit",
+        "movement_window"
+      ],
+      "sequence": [
+        "p1: install the module and equip through the real path",
+        "p1: trigger the mode keybind and confirm HUD/server",
+        "p1: perform the bounded movement/use action",
+        "clock: capture position, resource and effects",
+        "p1: repeat without the resource and observe behavior",
+        "p1: open the GUI during use and observe input release"
+      ],
+      "server_observables": [
+        "installed_module_state",
+        "equipment_resource",
+        "movement_effects",
+        "active_mode",
+        "input_release"
+      ],
+      "client_observables": [
+        "keybinding_consumed",
+        "mode_hud",
+        "resource_gauge",
+        "camera_movement",
+        "modal_screen"
+      ],
+      "hypotheses_to_characterize": [
+        "opening the GUI interacts with use/flight according to the original",
+        "lack of resource has a real effect on the mode"
+      ],
+      "negative_controls": [
+        "a keybind consumed by another screen must prevent the change claim",
+        "a client-only mode without server confirmation does not pass"
+      ],
+      "completion": "mode, input, resources and movement are correlated in the real integrated instance",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [],
+      "requirement_mapping_status": "pending_case_level_review",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": []
+    },
+    {
+      "id": "SC-LAB-016",
+      "name": "Tool from Mekanism Tools breaks a block and loses durability",
+      "capability_ids": [
+        "MK-TOL-001",
+        "MK-TOL-002",
+        "MK-WOR-006"
+      ],
+      "topology": "LAB-JD1",
+      "module_profile": "core-tools",
+      "integration_level": "real_player_mining_and_drops",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Test blocks and tool with discovered components; survival mode; no direct calls to server loot/break methods.",
+      "bindings": [
+        "paxel_material",
+        "tool_damage",
+        "block_classes",
+        "enchantments",
+        "mining_bound"
+      ],
+      "sequence": [
+        "p1: select the tool in the hotbar and aim at the block",
+        "p1: hold attack until the break is observed",
+        "barrier: server removes the block and creates drops",
+        "p1: collect drops through real movement",
+        "p1: repeat on an incompatible block/class and with a tool near its limit"
+      ],
+      "server_observables": [
+        "mining_progress",
+        "tool_damage_components",
+        "drops_and_pickup",
+        "block_removal",
+        "tool_break_event"
+      ],
+      "client_observables": [
+        "break_progress_overlay",
+        "tool_durability_bar",
+        "drop_entity",
+        "inventory_after_pickup"
+      ],
+      "hypotheses_to_characterize": [
+        "the paxel follows the correct abilities for each class",
+        "durability limit and drops depend on enchantments/conditions"
+      ],
+      "negative_controls": [
+        "correct final drops with incorrect mining/timing must diverge",
+        "omitted durability must block the requirement"
+      ],
+      "completion": "breaking, loot, collection and durability have independent effects and traces for each variant",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [],
+      "requirement_mapping_status": "pending_case_level_review",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": []
+    },
+    {
+      "id": "SC-LAB-017",
+      "name": "Balloons attach to and detach from an entity",
+      "capability_ids": [
+        "MK-ADD-003",
+        "MK-UI-003"
+      ],
+      "topology": "LAB-JD2",
+      "module_profile": "core-additions",
+      "integration_level": "real_player_entity_interaction_and_sync",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Fixture entity and balloon items in an isolated world; variant/color chosen by discovery, with no balloon already attached.",
+      "bindings": [
+        "balloon_variant",
+        "supported_target_entity",
+        "attach_detach_input",
+        "physics_window"
+      ],
+      "sequence": [
+        "p1: use the balloon on the target with a real hit",
+        "barrier: server identifies the attachment and both clients apply it",
+        "clock: observe movement/physics over a bounded window",
+        "p2: perform the applicable detach/break action",
+        "clock: observe attachment removal, drops and client rendering"
+      ],
+      "server_observables": [
+        "balloon_entity_and_attachment",
+        "positions_velocities",
+        "item_consumption",
+        "detach_and_drop_events"
+      ],
+      "client_observables": [
+        "color_attachment_geometry",
+        "entity_motion_both_clients",
+        "detach_visual"
+      ],
+      "hypotheses_to_characterize": [
+        "target support and physics are characterized",
+        "detach must not be assumed identical to killing the entity"
+      ],
+      "negative_controls": [
+        "an attachment changed to another entity must diverge",
+        "a screenshot alone without authoritative attachment does not pass"
+      ],
+      "completion": "real attach/motion/detach is observed on the server and two clients without arbitrarily equating ephemeral IDs",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [],
+      "requirement_mapping_status": "pending_case_level_review",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": []
+    },
+    {
+      "id": "SC-LAB-018",
+      "name": "Late join and reconnection to a machine in use",
+      "capability_ids": [
+        "MK-UI-001",
+        "MK-IO-003",
+        "MK-MAC-001"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_client_late_join_disconnect_reconnect",
+      "ingress": "client_event_queue",
+      "setup_provenance": "p1 starts processing and keeps the menu open; p2 is still disconnected; separate identities/menus.",
+      "bindings": [
+        "processing_checkpoint",
+        "join_deadline",
+        "menu_convergence",
+        "disconnect_action_boundary"
+      ],
+      "sequence": [
+        "p1: start processing and open the menu",
+        "runner/p2: start a new client and join the server",
+        "p2: open the same machine and check the initial state received",
+        "p2: start a transfer and disconnect at the declared boundary",
+        "server: record whether the action was applied or rejected",
+        "p2: reconnect with its identity and compare inventory/menu with the server"
+      ],
+      "server_observables": [
+        "players_distinct",
+        "container_viewers",
+        "action_transaction_outcome",
+        "inventory_and_progress"
+      ],
+      "client_observables": [
+        "p1_menu_unaffected",
+        "p2_join_snapshot",
+        "p2_inventory_after_reconnect",
+        "reopened_menu"
+      ],
+      "hypotheses_to_characterize": [
+        "an action at disconnect may commit or be rejected depending on the boundary",
+        "late-join initial state is current"
+      ],
+      "negative_controls": [
+        "a lost ACK does not authorize blind transfer replay",
+        "using p1's UUID for p2 must fail identity validation"
+      ],
+      "completion": "the action outcome is accounted for once and both views converge without reusing the previous menu cache",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-UI-001.R02",
+        "MK-IO-003.R02"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-UI-001.R02",
+          "aspects_exercised_by_design": [
+            "Two viewers of the same machine, late join and reconnect with separate menus."
+          ],
+          "remaining_aspects": [
+            "All concurrent settings and process edits need a specific schedule."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        },
+        {
+          "requirement_id": "MK-IO-003.R02",
+          "aspects_exercised_by_design": [
+            "Second-player transaction with disconnect at the boundary and a single outcome."
+          ],
+          "remaining_aspects": [
+            "A concurrent hopper, block removal and all contention schedules are not exercised."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-019",
+      "name": "Network crosses a chunk boundary and resumes after unload",
+      "capability_ids": [
+        "MK-ENE-002",
+        "MK-WOR-002",
+        "MK-NET-005"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_chunk_lifecycle_and_network",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Original network crosses a known chunk boundary; explicit tickets and stabilizer absent/present in separate variants.",
+      "bindings": [
+        "chunk_boundary",
+        "ticket_policy",
+        "player_view_simulation_distance",
+        "unload_witness",
+        "stabilizer_mode"
+      ],
+      "sequence": [
+        "p1: form the connection and confirm consumption on both sides",
+        "p1: move away to allow unload under the declared policy",
+        "barrier: server confirms real unload, not merely visual absence",
+        "clock: capture still-loaded nodes and persisted data",
+        "p1: return and wait for the chunk to be applied",
+        "clock: observe reconstruction/resumption and repeat with the stabilizer configured"
+      ],
+      "server_observables": [
+        "actual_loaded_chunks_and_tickets",
+        "network_membership",
+        "buffers_saved_and_live",
+        "post_load_transfer"
+      ],
+      "client_observables": [
+        "chunk_presence",
+        "network_render_after_return",
+        "consumer_state"
+      ],
+      "hypotheses_to_characterize": [
+        "unload may change distribution and timing",
+        "the stabilizer maintains only the defined tickets"
+      ],
+      "negative_controls": [
+        "visual teleport without unload does not satisfy the case",
+        "comparing only loaded nodes and deleting the others is invalid"
+      ],
+      "completion": "server-proven lifecycle with accounting across saved and live state",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-ENE-002.R03"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-ENE-002.R03",
+          "aspects_exercised_by_design": [
+            "Network crossing a chunk boundary with unload/reload and observed resumption."
+          ],
+          "remaining_aspects": [
+            "Persistence on restart and all tickets/reload orders require variants where not described."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-020",
+      "name": "Quantum Entangloporter connects a frequency across dimensions",
+      "capability_ids": [
+        "MK-NET-003",
+        "MK-SEC-002"
+      ],
+      "topology": "LAB-JD2",
+      "integration_level": "real_frequency_configuration_cross_dimension",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Two entangloporters in distinct dimensions, original world data and known owners; frequency not yet associated.",
+      "bindings": [
+        "dimensions",
+        "frequency_type",
+        "resource_classes_supported",
+        "side_modes",
+        "transfer_window"
+      ],
+      "sequence": [
+        "p1/p2: open their respective real menus",
+        "p1: create a frequency and have p2 select the same one with permission",
+        "p1/p2: configure input/output faces through the GUI",
+        "clock: observe the supported resource being transferred and shared",
+        "p2: change the frequency and observe disconnection",
+        "server: save/restart and have clients verify the association"
+      ],
+      "server_observables": [
+        "frequency_identity_owner",
+        "per_dimension_block_entities",
+        "shared_resource_state",
+        "side_modes",
+        "post_load_association"
+      ],
+      "client_observables": [
+        "selected_frequency_both_menus",
+        "resource_gauges",
+        "disconnect_feedback"
+      ],
+      "hypotheses_to_characterize": [
+        "frequencies with the same name may depend on owner/public visibility",
+        "resource classes have their own transfer behavior"
+      ],
+      "negative_controls": [
+        "normalizing names and merging distinct frequencies must diverge",
+        "an omitted dimension makes identity ambiguous and must fail"
+      ],
+      "completion": "association/disassociation and persistence account for resource and identity across both dimensions",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-NET-003.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-NET-003.R01",
+          "aspects_exercised_by_design": [
+            "Frequency across dimensions and owners with real endpoints."
+          ],
+          "remaining_aspects": [
+            "All same-name public/private pairs and all dimensions still require expansion."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-021",
+      "name": "Real generator powers a machine through the network",
+      "capability_ids": [
+        "MK-GEN-001",
+        "MK-ENE-002",
+        "MK-MAC-001"
+      ],
+      "topology": "LAB-JD1",
+      "module_profile": "core-generators",
+      "integration_level": "real_player_generator_network_consumer_chain",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Fuel source/environmental condition defined by discovery; generator/cable/machine placed by the player, without backend energy during measurement.",
+      "bindings": [
+        "heat_generator_recipe_or_environment",
+        "fuel",
+        "cable_tier",
+        "consumer_recipe",
+        "measurement_window"
+      ],
+      "sequence": [
+        "p1: place the generator, cable and machine through real input",
+        "p1: supply fuel/resource through the applicable menu",
+        "p1: insert the machine input",
+        "clock: capture generation, buffers, transfer and consumption",
+        "p1: interrupt the generator supply",
+        "clock: observe depletion and stopping/resumption when supply is restored"
+      ],
+      "server_observables": [
+        "generator_input_and_generation",
+        "cable_buffers",
+        "machine_energy_progress",
+        "all_output_and_resource_balances"
+      ],
+      "client_observables": [
+        "generator_and_machine_gauges",
+        "cable_connections",
+        "produced_output"
+      ],
+      "hypotheses_to_characterize": [
+        "the chain has real buffers and rounding",
+        "accounting considers generation, consumption and valid losses"
+      ],
+      "negative_controls": [
+        "fixture-injected energy invalidates the end-to-end chain claim",
+        "equal final consumption with false generation must diverge"
+      ],
+      "completion": "the operational chain originates from real actions and each source/sink is observed per tick",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-GEN-001.R02"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-GEN-001.R02",
+          "aspects_exercised_by_design": [
+            "Real generator connects through the network to a consumer with energy observed."
+          ],
+          "remaining_aspects": [
+            "All fuels/thermal environments and cubes/demand limits remain pending."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    },
+    {
+      "id": "SC-LAB-022",
+      "name": "Digital Miner filters, mines and replaces a block",
+      "capability_ids": [
+        "MK-WOR-001",
+        "MK-IO-001",
+        "MK-IO-002"
+      ],
+      "topology": "LAB-JD1",
+      "integration_level": "real_player_miner_configuration_and_world_effects",
+      "ingress": "client_event_queue",
+      "setup_provenance": "Small original area with target/nontarget blocks and a known boundary; miner assembled and resources available; no calls to an internal mining method.",
+      "bindings": [
+        "search_bounds",
+        "filter_types",
+        "matching_blocks",
+        "replacement_policy",
+        "power",
+        "bounded_job_ticks"
+      ],
+      "sequence": [
+        "p1: configure boundaries and filter through the menu",
+        "p1: start the search and record the discovered set/count",
+        "p1: start mining with observable resources",
+        "clock: record each block change and inventories",
+        "p1: enable the replacement policy and remove required material in a variant",
+        "clock: observe blocking/continuation and the area's final contents"
+      ],
+      "server_observables": [
+        "configured_bounds_filters",
+        "search_selection",
+        "mined_block_positions",
+        "replacement_states",
+        "energy_inventory_progress"
+      ],
+      "client_observables": [
+        "miner_config_widgets",
+        "search_counter",
+        "running_status",
+        "visible_world_changes"
+      ],
+      "hypotheses_to_characterize": [
+        "filter selection and replacement follow real order/semantics",
+        "lack of material is not equivalent to ignoring the policy"
+      ],
+      "negative_controls": [
+        "the same output with a nontarget block destroyed must diverge",
+        "a position missing from the trace invalidates the world diff"
+      ],
+      "completion": "every world selection and change has a position, reason, inventory/energy effect and client witness",
+      "status": "scenario_design_pending_bindings",
+      "executable": false,
+      "requirement_refs": [
+        "MK-WOR-001.R01"
+      ],
+      "requirement_mapping_status": "reviewed_partial_design",
+      "expected_trace_sha256": null,
+      "evidence_ids": [],
+      "executed": false,
+      "bounded_execution": {
+        "tick_budget": null,
+        "wall_deadlines": null,
+        "seed": null,
+        "phase_contract_sha256": null
+      },
+      "base_topology": null,
+      "actor_policy": "Distinct aliases and identities; instantiate additional actors when owner/trusted/stranger roles are required.",
+      "requirement_design_links": [
+        {
+          "requirement_id": "MK-WOR-001.R01",
+          "aspects_exercised_by_design": [
+            "Digital Miner uses filters/mining/replacement on a known layout."
+          ],
+          "remaining_aspects": [
+            "Inverse filter, all predicates, permission and area boundaries require variants."
+          ],
+          "mapping_basis": "reviewed_partial_design",
+          "execution_status": "not_executed",
+          "qualification_credit": false
+        }
+      ]
+    }
+  ],
+  "topologies_ref": "instance-profiles.template.json",
+  "scenario_mapping_policy": "Manual aspect-level links are reviewed_partial_design; remaining_aspects retains gaps. Composition does not equal executed coverage. requirement_refs indexes these links, never a crossjoin through the parent."
+}

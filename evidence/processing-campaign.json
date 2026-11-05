@@ -1,0 +1,446 @@
+{
+  "scope": "Original Java Core enrichment lifecycle and real-client Screen interaction; no Rust gameplay candidate",
+  "status": "functional_campaign_pass",
+  "fresh_server_runs_per_mode": 3,
+  "schema": 1,
+  "runs": [
+    {
+      "performance": {
+        "batch_wall_ns": "31781818900",
+        "bridge_pre_to_post_ns": {
+          "p50": 394400,
+          "p95": 1106600,
+          "p99": 2380100
+        },
+        "gc_collections": "1",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "319580768",
+        "optimization_proven": false,
+        "process_cpu_ns": "2359375000",
+        "snapshot_ns": {
+          "p50": 346800,
+          "p95": 945000,
+          "p99": 1682400
+        },
+        "snapshots": 635,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "c76e3bb906d16c717e27008549ee67527e53fc7a3a42c4aa16aad3aa194344d6",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "be338ffe31a9804b2fe8bcf17c88177342c71b9d962b4a9b6c91835ec81170ac",
+      "frames": 644,
+      "name": "detail-1",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "31801962500",
+        "bridge_pre_to_post_ns": {
+          "p50": 471500,
+          "p95": 1545300,
+          "p99": 3993200
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "311729048",
+        "optimization_proven": false,
+        "process_cpu_ns": "1421875000",
+        "snapshot_ns": {
+          "p50": 1008900,
+          "p95": 2516400,
+          "p99": 3993000
+        },
+        "snapshots": 36,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "9ce051e5d3268f8e9b149266bb50d6904111fbb8d0d3248671a235310e5cec28",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "adb5c38950e0a5ea291feb39575c81a6a4cef5d2d04ce280c0cbe3d4abdf02e3",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "2ef6164074b7b0218ccdadbd5e15983dcb1969bf498a272c950d2e629724a13b",
+      "frames": 45,
+      "name": "terminal-1",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "31783574900",
+        "bridge_pre_to_post_ns": {
+          "p50": 416600,
+          "p95": 1153200,
+          "p99": 2139400
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "345131488",
+        "optimization_proven": false,
+        "process_cpu_ns": "1921875000",
+        "snapshot_ns": {
+          "p50": 911700,
+          "p95": 2954900,
+          "p99": 4947500
+        },
+        "snapshots": 36,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "9ce051e5d3268f8e9b149266bb50d6904111fbb8d0d3248671a235310e5cec28",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "adb5c38950e0a5ea291feb39575c81a6a4cef5d2d04ce280c0cbe3d4abdf02e3",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "2ef6164074b7b0218ccdadbd5e15983dcb1969bf498a272c950d2e629724a13b",
+      "frames": 45,
+      "name": "terminal-2",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "31783133600",
+        "bridge_pre_to_post_ns": {
+          "p50": 484100,
+          "p95": 1255300,
+          "p99": 3496600
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "464439712",
+        "optimization_proven": false,
+        "process_cpu_ns": "2750000000",
+        "snapshot_ns": {
+          "p50": 450300,
+          "p95": 1131700,
+          "p99": 1806600
+        },
+        "snapshots": 635,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "c76e3bb906d16c717e27008549ee67527e53fc7a3a42c4aa16aad3aa194344d6",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "be338ffe31a9804b2fe8bcf17c88177342c71b9d962b4a9b6c91835ec81170ac",
+      "frames": 644,
+      "name": "detail-2",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "31744808700",
+        "bridge_pre_to_post_ns": {
+          "p50": 454400,
+          "p95": 1303000,
+          "p99": 3761100
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "360459816",
+        "optimization_proven": false,
+        "process_cpu_ns": "2765625000",
+        "snapshot_ns": {
+          "p50": 409700,
+          "p95": 1120100,
+          "p99": 1813100
+        },
+        "snapshots": 635,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "c76e3bb906d16c717e27008549ee67527e53fc7a3a42c4aa16aad3aa194344d6",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "be338ffe31a9804b2fe8bcf17c88177342c71b9d962b4a9b6c91835ec81170ac",
+      "frames": 644,
+      "name": "detail-3",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "31772050300",
+        "bridge_pre_to_post_ns": {
+          "p50": 386900,
+          "p95": 1099500,
+          "p99": 2079400
+        },
+        "gc_collections": "0",
+        "gc_pause_ms": "0",
+        "max_sampled_heap_used_bytes": "430982712",
+        "optimization_proven": false,
+        "process_cpu_ns": "2375000000",
+        "snapshot_ns": {
+          "p50": 871600,
+          "p95": 1684400,
+          "p99": 2004400
+        },
+        "snapshots": 36,
+        "ticks": 635
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "9ce051e5d3268f8e9b149266bb50d6904111fbb8d0d3248671a235310e5cec28",
+      "case": "enrichment-lifecycle-v2",
+      "case_sha256": "adb5c38950e0a5ea291feb39575c81a6a4cef5d2d04ce280c0cbe3d4abdf02e3",
+      "work": {
+        "advanced_ticks": 635,
+        "analysis_binary_sha256": "ceaf051b4999eff29151a39d8499851a2ef22a73afb280e9fd397050c5248317",
+        "dust_extracted": 64,
+        "dust_produced": 6,
+        "energy_consumed_fe": 12000,
+        "energy_received_fe": 16100,
+        "energy_removed_fe": 0,
+        "final_energy_fe": 4100,
+        "final_input": 0,
+        "final_output": 4,
+        "fixture_dust_added": 62,
+        "optimization_proven": false,
+        "ore_consumed": 3,
+        "ore_inserted": 3,
+        "reference_runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+        "scope": "fixed enrichment pilot, public unsided bindings, FE"
+      },
+      "execution_fingerprint": "2ef6164074b7b0218ccdadbd5e15983dcb1969bf498a272c950d2e629724a13b",
+      "frames": 45,
+      "name": "terminal-3",
+      "status": "functional_pass",
+      "persisted_machine_sha256": "c4e231bd3a3ad753976dbe2dad911d9a047c57d2c8403344b430182143b8c717"
+    },
+    {
+      "performance": {
+        "batch_wall_ns": "10011907700",
+        "bridge_pre_to_post_ns": {
+          "p50": 2077200,
+          "p95": 5099200,
+          "p99": 11535900
+        },
+        "gc_collections": "1",
+        "gc_pause_ms": "12",
+        "max_sampled_heap_used_bytes": "482840672",
+        "optimization_proven": false,
+        "process_cpu_ns": "3203125000",
+        "snapshot_ns": {
+          "p50": 755100,
+          "p95": 1882400,
+          "p99": 2869400
+        },
+        "snapshots": 200,
+        "ticks": 200
+      },
+      "runner_sha256": "77f280b70796a07c0c92ce90ba180180a5ccfe6da8a6b959b9a9b3ce79f858e9",
+      "artifact_fingerprint": "8f449a3bf59c5009354059ce77b7dd6021bfedcde037dc702e5bfe903a1043e0",
+      "trace_sha256": "8886d4a2b750ad6a60f316380a2ea1e89daad4144883feaafabb169405e395b5",
+      "case": "LAB-MEK-CLIENT-PROCESSING-001",
+      "case_sha256": "58e6d8529d1c151d022f70d9c974c7fbfa0ae704684f9cbc96607825ad3a5a12",
+      "work": null,
+      "execution_fingerprint": "903916d7a6495d9bd22b01bbaca736bd7f1b44440c4da461a68ff4429382effe",
+      "frames": 223,
+      "name": "client-regression",
+      "status": "functional_pass"
+    }
+  ],
+  "observer_pairs": [
+    {
+      "independent_persistence": true,
+      "observer_endpoint_equivalent": true,
+      "optimization_proven": false,
+      "port_equivalence_proven": false,
+      "qualified": false,
+      "scope": "every-tick versus terminal capture with the same bridge/controller",
+      "step_batches_per_mode": 36
+    },
+    {
+      "independent_persistence": true,
+      "observer_endpoint_equivalent": true,
+      "optimization_proven": false,
+      "port_equivalence_proven": false,
+      "qualified": false,
+      "scope": "every-tick versus terminal capture with the same bridge/controller",
+      "step_batches_per_mode": 36
+    },
+    {
+      "independent_persistence": true,
+      "observer_endpoint_equivalent": true,
+      "optimization_proven": false,
+      "port_equivalence_proven": false,
+      "qualified": false,
+      "scope": "every-tick versus terminal capture with the same bridge/controller",
+      "step_batches_per_mode": 36
+    }
+  ],
+  "rust_checks": {
+    "tests_passed": 114,
+    "regression_log": "evidence/tdd/77-final-regression.log",
+    "fmt": "pass",
+    "ignored": 0,
+    "clippy_log": "evidence/tdd/78-clippy.log",
+    "clippy": "pass"
+  },
+  "port_equivalence_proven": false,
+  "measurement_limits": [
+    "Functional campaign, not a warmed or statistically qualified benchmark",
+    "Same bridge/controller in every_tick and terminal; not bridge-absent neutrality",
+    "Pre/Post excludes final JSON transport and controller processing",
+    "Sampled JVM heap is not total native memory or RSS",
+    "No Java/Rust candidate comparison"
+  ],
+  "optimization_proven": false,
+  "host_profile": {
+    "cpu": "Intel(R) Core(TM) Ultra 9 185H",
+    "total_memory_kib": 33051344,
+    "phase": "functional_campaign",
+    "quiescent_host_proven": false,
+    "logical_processors": 22,
+    "sampled_utc": "2026-11-05T07:30:50.4327105Z",
+    "free_memory_kib": 8585012,
+    "os_build": "26200"
+  },
+  "qualified": false,
+  "reference": {
+    "jdk": "Temurin21.0.13+9",
+    "mekanism": "10.7.19.85",
+    "mekanism_sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.200"
+  },
+  "same_mode_comparisons": [
+    {
+      "first": 1,
+      "mode": "detail",
+      "result": {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 644
+      },
+      "other": 2
+    },
+    {
+      "first": 1,
+      "mode": "detail",
+      "result": {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 644
+      },
+      "other": 3
+    },
+    {
+      "first": 1,
+      "mode": "terminal",
+      "result": {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 45
+      },
+      "other": 2
+    },
+    {
+      "first": 1,
+      "mode": "terminal",
+      "result": {
+        "equal": true,
+        "first_difference": null,
+        "compared_frames": 45
+      },
+      "other": 3
+    }
+  ]
+}

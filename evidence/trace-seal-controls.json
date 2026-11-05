@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "verified_reference_runs": 2,
+  "artifact_fingerprint": "067a5b6b652be5e8fb86ba90989bd04c28c71966ccd0217d97c7cb1ac1017696",
+  "verified_trace_seal": {
+    "bytes": 2005,
+    "frames": 4,
+    "sha256": "22855ac741a965e47001bb8e6c1294182796955b6e7b1cd812ea4be9a0521005"
+  },
+  "controls": [
+    {
+      "case": "shortened",
+      "exit_code": 1,
+      "diagnostic": "sealed trace frame count mismatch"
+    },
+    {
+      "case": "same_length_edit",
+      "exit_code": 1,
+      "diagnostic": "sealed trace hash mismatch"
+    },
+    {
+      "case": "stale_result",
+      "exit_code": 1,
+      "diagnostic": "sealed run and result differ at attempt_id"
+    },
+    {
+      "case": "missing_seal",
+      "exit_code": 1,
+      "diagnostic": "missing or invalid trace seal: invalid type: null, expected struct Seal"
+    }
+  ],
+  "qualified": false,
+  "port_equivalence_proven": false,
+  "optimization_proven": false
+}

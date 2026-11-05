@@ -1,0 +1,480 @@
+{
+  "schema": 1,
+  "status": "functional_pass",
+  "artifact_fingerprint": "e3cc96cdd25985d1fb328f50fbf6d03724b276df51ca6bb4afb1991b6a4317a0",
+  "qualified": false,
+  "port_equivalence_proven": false,
+  "optimization_proven": false,
+  "client_scope": "one_source_pickup_with_authoritative_menu_revision_and_hidden_render",
+  "client_trials": [
+    {
+      "presentation": "hidden_glfw",
+      "hidden_creation_marker": true,
+      "phases": [
+        "before_action",
+        "client_sent",
+        "server_applied",
+        "client_applied",
+        "client_rendered"
+      ],
+      "server_world_tick": "0",
+      "menu_id": 1,
+      "prior_revision": 1,
+      "client_sent_revision": 1,
+      "authoritative_revision": 2,
+      "client_applied_revision": 2,
+      "client_sent_tick": "100",
+      "client_applied_tick": "107",
+      "arm_frame": "219",
+      "capture_frame": "225",
+      "early_capture": {
+        "captured": false,
+        "gate": "blocked"
+      },
+      "early_predicted_cursor_count": 3,
+      "captured_png_bytes": 69848,
+      "captured_png_sha256": "deb356aeed71cb745c60e8d4632595e0150b0883f78d3d5d39254e8ab216a942",
+      "server_polls": 1,
+      "client_polls": 1,
+      "requests": [
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 29196100,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "click_slot",
+          "round_trip_ns": 29757800,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 63540600,
+          "capture_gate": "blocked"
+        },
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 26455800,
+          "capture_gate": null
+        },
+        {
+          "role": "server",
+          "action": "barrier_sync",
+          "round_trip_ns": 23554600,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "read",
+          "round_trip_ns": 24842600,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_arm",
+          "round_trip_ns": 24249000,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 79552400,
+          "capture_gate": "rendered"
+        }
+      ],
+      "trace_seal": {
+        "bytes": 351734,
+        "frames": 15,
+        "sha256": "0b07f889a3ea2b197e223dabed5d044ed19187b398b575c68da6839698097d33"
+      }
+    },
+    {
+      "presentation": "hidden_glfw",
+      "hidden_creation_marker": true,
+      "phases": [
+        "before_action",
+        "client_sent",
+        "server_applied",
+        "client_applied",
+        "client_rendered"
+      ],
+      "server_world_tick": "0",
+      "menu_id": 1,
+      "prior_revision": 1,
+      "client_sent_revision": 1,
+      "authoritative_revision": 2,
+      "client_applied_revision": 2,
+      "client_sent_tick": "117",
+      "client_applied_tick": "121",
+      "arm_frame": "211",
+      "capture_frame": "214",
+      "early_capture": {
+        "captured": false,
+        "gate": "blocked"
+      },
+      "early_predicted_cursor_count": 3,
+      "captured_png_bytes": 71003,
+      "captured_png_sha256": "ffae80051142ba7ad7c9ab229f3e174f951f05cdc8ea95a8dfbf9c8acabf66e5",
+      "server_polls": 1,
+      "client_polls": 1,
+      "requests": [
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 38528400,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "click_slot",
+          "round_trip_ns": 13729200,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 31737500,
+          "capture_gate": "blocked"
+        },
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 37677300,
+          "capture_gate": null
+        },
+        {
+          "role": "server",
+          "action": "barrier_sync",
+          "round_trip_ns": 38032900,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "read",
+          "round_trip_ns": 3509600,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_arm",
+          "round_trip_ns": 37606400,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 118478700,
+          "capture_gate": "rendered"
+        }
+      ],
+      "trace_seal": {
+        "bytes": 351748,
+        "frames": 15,
+        "sha256": "9fe49dfddbaaaab15fbf88af11e701a6e4d2e051408a931b33a53ead80f7126c"
+      }
+    },
+    {
+      "presentation": "hidden_glfw",
+      "hidden_creation_marker": true,
+      "phases": [
+        "before_action",
+        "client_sent",
+        "server_applied",
+        "client_applied",
+        "client_rendered"
+      ],
+      "server_world_tick": "0",
+      "menu_id": 1,
+      "prior_revision": 1,
+      "client_sent_revision": 1,
+      "authoritative_revision": 2,
+      "client_applied_revision": 2,
+      "client_sent_tick": "80",
+      "client_applied_tick": "84",
+      "arm_frame": "160",
+      "capture_frame": "167",
+      "early_capture": {
+        "captured": false,
+        "gate": "blocked"
+      },
+      "early_predicted_cursor_count": 3,
+      "captured_png_bytes": 73012,
+      "captured_png_sha256": "1301c9b5a85b3e4a1c3b9a1a17b07b00e6f3c62da00f3a488cb03b720aa292e7",
+      "server_polls": 1,
+      "client_polls": 1,
+      "requests": [
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 44287700,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "click_slot",
+          "round_trip_ns": 20967400,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 38072300,
+          "capture_gate": "blocked"
+        },
+        {
+          "role": "server",
+          "action": "read",
+          "round_trip_ns": 24811900,
+          "capture_gate": null
+        },
+        {
+          "role": "server",
+          "action": "barrier_sync",
+          "round_trip_ns": 42604700,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "read",
+          "round_trip_ns": 8532900,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_arm",
+          "round_trip_ns": 46234400,
+          "capture_gate": null
+        },
+        {
+          "role": "client",
+          "action": "barrier_capture",
+          "round_trip_ns": 84828100,
+          "capture_gate": "rendered"
+        }
+      ],
+      "trace_seal": {
+        "bytes": 351725,
+        "frames": 15,
+        "sha256": "21f6db73d30b8a1129c01c1367e9f317eb1e89d88dbde8dad553597944635261"
+      }
+    }
+  ],
+  "chunk_scope": "one_fresh_overworld_coordinate_and_three_tick_witness",
+  "chunk_profile": {
+    "repeats": 3,
+    "scope": "chunk_observation_controls",
+    "tick_rate": 100,
+    "workers": 2
+  },
+  "chunk_campaign_wall_ns": 82786304800,
+  "chunk_trials": [
+    {
+      "trial": "1-nonloading_read",
+      "allocating_read": false,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 0,
+      "delayed_load_events": 0,
+      "persisted_target_record": false,
+      "lookup_ns": 14300,
+      "request_ns": 11024500,
+      "boot_ns": 20876176500,
+      "flush_ns": 88253100,
+      "exit_ns": 1564856400,
+      "window_batch_wall_ns": 54747200
+    },
+    {
+      "trial": "1-allocating_read",
+      "allocating_read": true,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "33\nSt: §11minecraft:full§r\nCh: §11minecraft:full§r\n§1FULL§r",
+        "forced": false,
+        "holder": true,
+        "resident": true,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 1,
+      "delayed_load_events": 1,
+      "persisted_target_record": true,
+      "lookup_ns": 84791800,
+      "request_ns": 102963700,
+      "boot_ns": 20831591900,
+      "flush_ns": 821175600,
+      "exit_ns": 1175608800,
+      "window_batch_wall_ns": 100022700
+    },
+    {
+      "trial": "2-nonloading_read",
+      "allocating_read": false,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 0,
+      "delayed_load_events": 0,
+      "persisted_target_record": false,
+      "lookup_ns": 23200,
+      "request_ns": 15495400,
+      "boot_ns": 31653541900,
+      "flush_ns": 82572900,
+      "exit_ns": 1410129600,
+      "window_batch_wall_ns": 60631200
+    },
+    {
+      "trial": "2-allocating_read",
+      "allocating_read": true,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "33\nSt: §11minecraft:full§r\nCh: §11minecraft:full§r\n§1FULL§r",
+        "forced": false,
+        "holder": true,
+        "resident": true,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 1,
+      "delayed_load_events": 1,
+      "persisted_target_record": true,
+      "lookup_ns": 72566800,
+      "request_ns": 97765400,
+      "boot_ns": 31222000000,
+      "flush_ns": 897805800,
+      "exit_ns": 1223538600,
+      "window_batch_wall_ns": 102292800
+    },
+    {
+      "trial": "3-nonloading_read",
+      "allocating_read": false,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 0,
+      "delayed_load_events": 0,
+      "persisted_target_record": false,
+      "lookup_ns": 15100,
+      "request_ns": 13674400,
+      "boot_ns": 22545794900,
+      "flush_ns": 82565600,
+      "exit_ns": 1610493600,
+      "window_batch_wall_ns": 47011400
+    },
+    {
+      "trial": "3-allocating_read",
+      "allocating_read": true,
+      "before": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "0"
+      },
+      "after": {
+        "debug": "33\nSt: §11minecraft:full§r\nCh: §11minecraft:full§r\n§1FULL§r",
+        "forced": false,
+        "holder": true,
+        "resident": true,
+        "tick": "0"
+      },
+      "delayed": {
+        "debug": "null",
+        "forced": false,
+        "holder": false,
+        "resident": false,
+        "tick": "3"
+      },
+      "load_events": 1,
+      "delayed_load_events": 1,
+      "persisted_target_record": true,
+      "lookup_ns": 59406100,
+      "request_ns": 74288100,
+      "boot_ns": 22535042000,
+      "flush_ns": 883327700,
+      "exit_ns": 1239651600,
+      "window_batch_wall_ns": 89645100
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "optimization_proven": false,
+  "scope": "Offline comparator controls using an actual captured Java trace; not an in-game sensor fault campaign",
+  "schema": 1,
+  "port_equivalence_proven": false,
+  "controls": [
+    {
+      "control_pass": true,
+      "exit_code": 0,
+      "kind": "unchanged_roundtrip",
+      "reference_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "expected_equal": true,
+      "input_sha256": "f04ed3b17ecd4db3b4348cebf320c77885bf9b209e10423e50b4fc2c4640092a",
+      "first_difference": null
+    },
+    {
+      "control_pass": true,
+      "exit_code": 1,
+      "kind": "transient_progress",
+      "reference_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "expected_equal": false,
+      "input_sha256": "4ab16b8ef58875083dd623a110f33fd0821c4e48ac7ada6257fdd9e7a65d23ab",
+      "first_difference": "frames[432].state.machine.progress"
+    },
+    {
+      "control_pass": true,
+      "exit_code": 1,
+      "kind": "missing_intermediate_frame",
+      "reference_sha256": "5d579034ac6ce59c37246879282b0528058ccb39ecc9534105a5754e21d8ecb0",
+      "expected_equal": false,
+      "input_sha256": "b47c970e01fd0d39ebc7a923c771165d95bc3bca7e71683c9b9981eb9a5b22d9",
+      "first_difference": "frames[10].tick"
+    }
+  ],
+  "qualified": false
+}
