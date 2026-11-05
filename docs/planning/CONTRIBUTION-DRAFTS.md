@@ -107,14 +107,13 @@ Use a private simulated trace to introduce an intermediate difference while pres
 
 ## First PR draft
 
-### Document and verify the first dedicated Java reference run
+### Reconcile the first Core registry and recipe pair
 
-**Summary**
+**Closes [#1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1)**
 
-- Provide a Windows x64 setup path with PowerShell 7, an explicit JDK 21 path, and locked Rust dependencies.
-- Explain contribution scopes, evidence privacy, validator TDD, and the gameplay pre-port gate.
-- Walk through the existing `cases/server-inventory.json` case in a fresh directory. A pinned dedicated NeoForge/Mekanism process witnesses a barrel inventory transition and exact tick advancement. The strict verifier checks the resulting attempt-bound trace seal.
-- Keep the PR limited to onboarding, the reproducible case, and any minimal instructions or CI changes required to run it. Retain the existing pilot and all its evidence in the laboratory. The proposal assumes an approved lab baseline exists to review the small onboarding diff against.
+- Review `mekanism:enrichment_chamber` and `mekanism:processing/iron/dust/from_ore` against the pinned archive and the Core runtime catalog.
+- Add or refine one inventory row with the registered IDs, type, serializer, and evidence links. Keep tag resolution and behavior reference review explicit.
+- Keep the PR scoped to inventory and sanitized evidence. The existing Enrichment Chamber pilot remains the machine regression.
 
 **Verification plan**
 

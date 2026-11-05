@@ -1,6 +1,6 @@
 # Demonstrating optimization while preserving behavior
 
-The intended result is an independent Mekanism fork for Horizon that preserves an explicit behavior scope while reducing its execution cost. Current measurements do not establish that improvement. They exercise automation of the original Java runtime and collect an initial functional baseline.
+The intended result is a separate Mekanism-derived native mod for Horizon that preserves an explicit behavior scope while reducing its execution cost. Current measurements do not establish that improvement. They exercise automation of the original Java runtime and collect an initial functional baseline.
 
 ## Required comparisons
 

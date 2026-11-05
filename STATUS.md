@@ -1,6 +1,6 @@
 # Implementation status
 
-This independent local project contains the Rust validation engine and NeoForge bridge. It has no rewritten Mekanism gameplay and no Cargo dependency on Horizon. The future fork targets Horizon through a versioned adaptation boundary, while remaining outside the game's source tree. The repository-local [planning bundle](docs/planning/README.md) is canonical for contributors; workspace reports remain historical entry points.
+This independent local project contains the Rust validation engine and NeoForge bridge. It has no rewritten Mekanism gameplay and no Cargo dependency on Horizon. The future native mod targets Horizon through a versioned adaptation boundary, while remaining outside the game's source tree. The repository-local [planning bundle](docs/planning/README.md) is canonical for contributors; workspace reports remain historical entry points.
 
 ## Implemented and exercised
 
@@ -76,6 +76,6 @@ These rows describe evidence for subsets, not completion of entire work items. T
 2. Expand the typed protocol and effective catalog, including negotiated actions/observables and classified errors.
 3. Complete the pilot's invalid-input, batch, gauge and wider restart cases; review and seal Java expected behavior before any port gameplay.
 4. Extend time, memory and completed-work measurement with full instrumentation controls, warmup and repeated trials.
-5. Start the Horizon adapter and first Rust fork behavior only after the applicable scope gate, preserving the Java reference.
+5. Start the Horizon adapter and first Rust mod behavior only after the applicable scope gate, preserving the Java reference.
 
 Windows x64 is the exercised environment. Linux, the declared MSRV, complete transport/Job Object security, universal NBT support, shrinking, audio and interoperability are not qualified. The independent lab and first-wave issue queue are public. [Lab repository](https://github.com/GabrielNichols/mekanism-rust-lab) · [Umbrella issue](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7)

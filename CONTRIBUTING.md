@@ -1,13 +1,13 @@
 # Contributing
 
-This project builds a Rust compatibility validator before implementing an independent Mekanism fork for Horizon. The two required outcomes are equivalent behavior and measured lower execution cost. A language choice, a passing smoke test or reduced functionality cannot establish optimization.
+This project builds a Rust compatibility validator before implementing a Mekanism-derived native mod in a separate repository for Horizon. The two required outcomes are equivalent behavior and measured lower execution cost. A language choice, a passing smoke test or reduced functionality cannot establish optimization.
 
 Read [AGENTS.md](AGENTS.md), [STATUS.md](STATUS.md), [VALIDATOR-CONTRACT.md](VALIDATOR-CONTRACT.md) and [BENCHMARKS.md](BENCHMARKS.md) before changing a contract. Keep authored documentation, descriptive text, source comments and review descriptions in English. Preserve raw evidence exactly, including localized runtime or operating-system messages.
 
 ## Repository and runtime boundaries
 
 - This is its own Cargo workspace and local repository. Do not add Horizon dependencies or modify Horizon's source to implement the laboratory.
-- The future fork targets a compatible, pinned Horizon runtime through a versioned adapter. Repository independence does not remove that runtime dependency.
+- The future native mod targets a compatible, pinned Horizon runtime through a versioned adapter. Repository independence does not remove that runtime dependency.
 - The Java bridge is a development oracle adapter for the original runtime. It is not the player-facing Rust port.
 - Do not start gameplay porting before the applicable reference/validator qualification gate. A functional pilot does not qualify all Mekanism families.
 - Never commit game jars, prepared resources, native libraries, player data or generated worlds. Keep them under ignored `.lab/`.
@@ -124,6 +124,18 @@ The current Pre/Post and snapshot timers have explicit boundaries. A 20 TPS cap,
 
 
 
+
+## Isolate your workspace
+
+Clone the lab into a directory separate from Horizon and your ordinary Minecraft installation. Use a new branch and a new private output for each attempt.
+
+```powershell
+git switch -c docs/w1-cat-first-row
+./target/debug/mek-lab.exe run-reference .lab/environment.json cases/server-inventory.json .lab/evidence/w1-cat-first-run
+./target/debug/mek-lab.exe verify-reference .lab/evidence/w1-cat-first-run
+```
+
+Build and prepare the runtime with the setup commands above before the first run. Contributors running in parallel use separate checkouts or worktrees with their own ignored `.lab` directories. Coordinate bridge, runner and schema changes with the integrator. [Ownership and integration](docs/planning/FIRST-WAVE-WORKSTREAMS.md)
 
 ## Task to pull request
 
