@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "contributor_onboarding",
+  "checkout_commit": "2e3e7e19c97e33e324f0a7993a55005dab98fe6c",
+  "platform": "windows-x64",
+  "rust": "1.95.0",
+  "jdk": "21.0.13",
+  "source_checkout_clean": true,
+  "private_lab_cache_absent_before_setup": true,
+  "setup": "completed",
+  "case": "LAB-SERVER-INVENTORY-001",
+  "status": "functional_pass",
+  "artifact_fingerprint": "3e9c1672821c88ef06ea6cf4a446b927ae9a4f2729df0a3aa521143a4c8200e3",
+  "trace_seal": {
+    "bytes": 2353,
+    "frames": 4,
+    "sha256": "079dfff0ae0fb6f550375711359b05af57931ac86563fae75070ba3f18358d3d"
+  },
+  "issue_preview": {
+    "published": 7,
+    "repeat_preserved": 7,
+    "repeat_create_proposals": 0
+  },
+  "qualified": false
+}

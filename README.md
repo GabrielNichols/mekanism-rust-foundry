@@ -8,7 +8,7 @@ This is an independent community project. Not an official Minecraft product. Not
 
 ## Start with one small task
 
-1. Pick an open-sized slice from the [first-wave workstreams](docs/planning/FIRST-WAVE-WORKSTREAMS.md). A good first PR reconciles one Core registry and recipe key in the [inventory crosswalk](docs/planning/FIRST-WAVE-INVENTORY.md), with no runner change.
+1. Pick an open-sized slice from the [first-wave workstreams](docs/planning/FIRST-WAVE-WORKSTREAMS.md). A good first PR reconciles one Core registry and recipe key in the [inventory crosswalk](docs/planning/FIRST-WAVE-INVENTORY.md). [Starter issue #1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1) · [First-wave umbrella #7](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7)
 2. Run the dedicated smoke case below to learn the evidence path.
 3. Follow the [contribution guide](CONTRIBUTING.md#task-to-pull-request). Attach sanitized evidence and use the [PR template](.github/PULL_REQUEST_TEMPLATE.md).
 
@@ -17,15 +17,19 @@ This is an independent community project. Not an official Minecraft product. Not
 Use PowerShell 7, Rust 1.95.0, and a local JDK 21. Review the Minecraft EULA before running the reference. The setup script resolves pinned Minecraft 1.21.1, NeoForge 21.1.200 and Mekanism Core 10.7.19.85 into private local storage. [Minecraft EULA](https://www.minecraft.net/en-us/eula)
 
 ```powershell
+git clone https://github.com/GabrielNichols/mekanism-rust-lab.git
+Set-Location mekanism-rust-lab
 cargo build --locked
 ./adapters/neoforge/prepare-reference.ps1 -Jdk '<JDK21-directory>'
 ./target/debug/mek-lab.exe run-reference .lab/environment.json cases/server-inventory.json .lab/evidence/first-run
 ./target/debug/mek-lab.exe verify-reference .lab/evidence/first-run
 ```
 
-Choose a new output directory for every attempt. The dedicated smoke case verifies the barrel count, tick advancement and trace seal. A valid seal ties the exact trace to its attempt. It does not qualify a Mekanism family. Report the case ID, verdict and seal digest. Keep the raw world and logs private. [Evidence contract](VALIDATOR-CONTRACT.md#reference-trace-seals)
+Choose a new output directory for every attempt. The dedicated smoke case verifies the barrel count, tick advancement and trace seal. A valid seal ties the exact trace to its attempt. It does not qualify a Mekanism family. A successful result reports `functional_pass` in `.lab/evidence/first-run/result.json`. The verifier prints four frames, byte count and SHA-256. Report the case ID, verdict and seal digest. [Clean-checkout verification](evidence/contributor-quickstart.json) Keep the raw world and logs private. [Evidence contract](VALIDATOR-CONTRACT.md#reference-trace-seals)
 
 ## Current implementation
+
+The dedicated `run-catalog` bootstrap compares one serial 20 ticks/s run with three fresh 100 ticks/s workers. It exports selected registry, recipe and config identities. Treat the result as diagnostic discovery until the effective reference and behavior scope are reviewed. [Core catalog evidence](evidence/core-catalog-bootstrap.json)
 
 - SHA-256 artifact verification, runner and scenario identity, effective configuration fingerprints, and a new output directory for every attempt.
 - Typed traces with exact decimal i64 values, bitwise f64 values and structured state; first-difference comparison and rejection of empty or incomplete captures.

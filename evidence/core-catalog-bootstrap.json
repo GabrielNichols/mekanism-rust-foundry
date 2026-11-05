@@ -149,5 +149,23 @@
   "cross_profile_catalog_exact": true,
   "qualified": false,
   "port_equivalence_proven": false,
-  "optimization_proven": false
+  "optimization_proven": false,
+  "selected_recipe_bindings": {
+    "mekanism:processing/iron/dust/from_ore": {
+      "serializer": "mekanism:enriching",
+      "type": "mekanism:enriching"
+    },
+    "mekanism:crushing/cobblestone_to_gravel": {
+      "serializer": "mekanism:crushing",
+      "type": "mekanism:crushing"
+    },
+    "mekanism:transmitter/pressurized_tube/basic": {
+      "serializer": "minecraft:crafting_shaped",
+      "type": "minecraft:crafting"
+    },
+    "mekanism:transmitter/logistical_transporter/basic": {
+      "serializer": "minecraft:crafting_shaped",
+      "type": "minecraft:crafting"
+    }
+  }
 }

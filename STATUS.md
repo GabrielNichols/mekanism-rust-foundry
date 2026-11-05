@@ -78,4 +78,4 @@ These rows describe evidence for subsets, not completion of entire work items. T
 4. Extend time, memory and completed-work measurement with full instrumentation controls, warmup and repeated trials.
 5. Start the Horizon adapter and first Rust fork behavior only after the applicable scope gate, preserving the Java reference.
 
-Windows x64 is the exercised environment. Linux, the declared MSRV, complete transport/Job Object security, universal NBT support, shrinking, audio and interoperability are not qualified. This checkout has no commits or configured remote. A GitHub repository search on 2026-11-05 found no match for the lab name, so public engagement could not be attributed to this project.
+Windows x64 is the exercised environment. Linux, the declared MSRV, complete transport/Job Object security, universal NBT support, shrinking, audio and interoperability are not qualified. The independent lab and first-wave issue queue are public. [Lab repository](https://github.com/GabrielNichols/mekanism-rust-lab) · [Umbrella issue](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7)

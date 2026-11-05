@@ -44,6 +44,7 @@ These logs come from actual executions. Library tests, probe processes and Minec
 | Causal client barrier | `102-causal-barrier-red.log` | `104-causal-barrier-green.log` | Require fresh revision, correct owner and a later render. Refuse capture before the barrier |
 | Chunk observation controls | `103-chunk-controls-red.log` | `105-chunk-controls-green.log` | Distinguish unchanged residency and holder state from a loading lookup, with event and disk corroboration |
 | Delayed chunk observation | `106-delayed-chunk-red.log` | `107-delayed-chunk-green.log` | Detect delayed load events or holders across an exact three-tick window |
+| Effective catalog comparison | `110-effective-catalog-red.log` | `111-effective-catalog-green.log` | Reject missing registry entries, rebound recipes, module drift and generated configuration drift |
 
 ## Regression checkpoints
 
@@ -61,6 +62,8 @@ These logs come from actual executions. Library tests, probe processes and Minec
 - `101-final-regression.log`: 132 passing tests. `100-final-clippy.log` records warnings denied, and formatting passed.
 
 - `109-phase-chunk-regression.log`: 139 passing tests. `108-phase-chunk-clippy.log` records warnings denied, and formatting passed.
+
+- `113-catalog-regression.log`: 140 passing Rust tests. `112-catalog-clippy.log` records warnings denied. Raw execution logs stay in private local storage. This index preserves the local names and tested contracts.
 
 Earlier logs preserve the 33- and 38-test regressions. The bridge's own RED source states remain in `.java.txt` files; their jars remain in ignored `.lab/cache`.
 

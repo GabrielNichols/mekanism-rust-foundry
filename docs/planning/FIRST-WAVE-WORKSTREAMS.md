@@ -1,6 +1,6 @@
 # First-wave workstreams
 
-The six IDs below identify local workstreams. Canonical requirements, scenarios and qualification gates remain in the [planning baseline](README.md). The owner labels are proposed roles. Each lane remains open for a contributor to claim after publication approval. Drafting a lane, writing its case, observing Java, and approving its reference are separate steps.
+The six IDs below identify local workstreams. Canonical requirements, scenarios and qualification gates remain in the [planning baseline](README.md). The owner labels are proposed roles. The linked issues carry the current claim and assignment state. Drafting a lane, writing its case, observing Java, and approving its reference are separate steps.
 
 Use the [initial inventory crosswalk](FIRST-WAVE-INVENTORY.md) for object-level status, the [status tracker](../../STATUS.md) for existing evidence and the [draft issues](CONTRIBUTION-DRAFTS.md) for contributor assignments. Keep the Enrichment Chamber pilot and its negative controls as regressions. These lanes are follow-up contributions beyond the small setup and reproduction PR.
 
@@ -80,3 +80,17 @@ The existing Java observer campaign exercised 20 ticks/s with one worker and 100
 3. **Isolate worker count.** Compare 100/1 and 100/3 on the same job set, with one isolated Java instance per independent job. Keep every attempt and measure the increase before considering greater concurrency. Divergence, missing evidence, skipped work and resource-pressure failures block acceptance for that scenario/profile.
 4. **Separate measurements and semantics.** Report boot/readiness, scheduled and verified tick execution, observer cost and I/O, flush, exit and total campaign wall time. Distinguish overlap from summed worker time. Record host, worker count, warmup and setup assumptions. Observer modes require their own semantic comparison. Preserve raw clocks and causal relationships and declare any comparison projection.
 5. **Select by evidence.** A reviewed serial Java attempt and its verified controls anchor the scenario. Seal the selected trace and record its provenance, comparison scope and gaps. Keep `qualified`, `port_equivalence_proven`, and `optimization_proven` independent. Infrastructure errors and unsupported actions remain separate verdicts from gameplay mismatch. [TDD and reference selection](TDD.md)
+
+## Published first-wave issues
+
+| Track | Issue | Proposed owner |
+| --- | --- | --- |
+| Umbrella | [#7](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7) | Integration reviewer |
+| W1-CAT | [#1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1) | Reference catalog contributor |
+| W1-PROC | [#2](https://github.com/GabrielNichols/mekanism-rust-lab/issues/2) | Processing contributor |
+| W1-ENER | [#3](https://github.com/GabrielNichols/mekanism-rust-lab/issues/3) | Generation contributor |
+| W1-TRANS | [#4](https://github.com/GabrielNichols/mekanism-rust-lab/issues/4) | Transport contributor |
+| W1-LIFE | [#5](https://github.com/GabrielNichols/mekanism-rust-lab/issues/5) | Lifecycle contributor |
+| W1-ENG | [#6](https://github.com/GabrielNichols/mekanism-rust-lab/issues/6) | Validator contributor |
+
+The repeat preview preserved all seven issues and proposed zero duplicate creates. The wider backlog remains in the planning bundle.
