@@ -54,3 +54,6 @@ jobs:
 
       - name: Test GitHub metadata planning
         run: ./tools/test-github-labels.ps1
+
+      - name: Test milestone synchronization
+        run: ./tools/test-roadmap-milestones.ps1

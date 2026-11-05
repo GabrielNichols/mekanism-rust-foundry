@@ -42,3 +42,5 @@ From the repository root, preview the catalog or a proposed transition. A transi
 Catalog apply creates only reviewed missing labels on the pinned repository ID. It preserves different live descriptions and colors for maintainer review. Repeat a preview after an ambiguous response. Apply a transition using authenticated GitHub controls after verifying the target and its links. Re-preview after applying it. CI runs the same planner against local fixtures with no write access. No workflow processing fork code receives metadata credentials.
 
 [GitHub Discussions](https://docs.github.com/en/discussions/quickstart) · [Project item management](https://docs.github.com/en/issues/planning-and-tracking-with-projects/managing-items-in-your-project/adding-items-to-your-project)
+
+The Project auto-adds open issues. Add linked PRs through their Project sidebar and confirm their status independently. The default workflows that change an issue when a PR is linked or close an issue when its Project status becomes Done are disabled. [Milestone synchronization](MILESTONES.md)

@@ -31,7 +31,7 @@ Use Windows x64, PowerShell 7 and Rust 1.95.0 for the exercised baseline. Use a 
 | Change | Smallest useful local proof |
 | --- | --- |
 | Markdown or planning | Review rendered links and scope. Run `git diff --check` and `./tools/check-public-tree.ps1` after staging. |
-| Issue map, labels, or contributor tooling | Run `./tools/test-issue-preview.ps1`, `./tools/test-roadmap-sync.ps1`, and `./tools/test-github-labels.ps1` as affected. Use the read-only preview before a live metadata operation. |
+| Issue map, labels, or contributor tooling | Run `./tools/test-issue-preview.ps1`, `./tools/test-roadmap-sync.ps1`, and `./tools/test-github-labels.ps1` and `./tools/test-roadmap-milestones.ps1` as affected. Use the read-only preview before a live metadata operation. |
 | Rust contract or comparison | Start with `cargo test --locked --test contracts` or the matching integration target under `tests/`. Run `cargo fmt --check`, `cargo clippy --locked --all-targets -- -D warnings`, and `cargo test --locked` before review. |
 | Observer or evidence handling | Run the affected Rust test target and `cargo run --locked --bin mek-lab -- simulate-observer .lab/evidence/my-new-attempt`. Use the real reference when a change claims Java observation or world effects. |
 | Bridge, scenarios, or runtime pins | Build and prepare the private runtime, run the dedicated smoke case, then the relevant targeted characterization and its negative control. See the commands below. |

@@ -19,3 +19,5 @@ Private vulnerability reporting, dependency alerts, secret scanning, and provide
 The active version-tag ruleset blocks updates and deletion of `v*` tags. GitHub immutable releases also lock the published tag and assets. The maintainer creates releases from verified commits with an authenticated release session outside PR CI. Publish checksum and verification metadata with each first-party archive. Publish corrections as a new version.
 
 The only standing review exception is the zero independent approval count described above. Log a policy exception with its owner, scope, expiration, and restoration proof before applying one.
+
+CodeQL runs independently on standard GitHub-hosted runners. The first default-setup run completed analysis for Rust, Java and GitHub Actions. Treat individual analyzer status and findings as security evidence. A passing scan does not qualify parity. [CodeQL workflow](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql)

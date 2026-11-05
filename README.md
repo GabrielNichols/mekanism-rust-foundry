@@ -3,6 +3,7 @@
 ![Mekanism Rust Foundry Parity Lab, an original industrial casting line](assets/foundry-header.jpg)
 
 [![Rust contracts on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
+[![CodeQL on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql?query=branch%3Amain)
 [![Parity Lab Preview](https://img.shields.io/badge/Parity_Lab-Preview-c96d38)](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1)
 [![Rust 1.95.0](https://img.shields.io/badge/Rust-1.95.0-orange)](#quickstart-on-windows-x64)
 [![Java 21](https://img.shields.io/badge/Java-21-blue)](#quickstart-on-windows-x64)
@@ -30,7 +31,7 @@ This is an independent community project. Not an official Minecraft product. Not
 | Menus and player interactions | 28 / 58 | Three hidden client/server runs passed the Screen pickup barrier. [Campaign](evidence/phase-chunk-controls.json) | All three client traces sealed. Broader controls and OS input remain open. |
 | Shared runtime capabilities | 14 / 31 | Six chunk trials and nine live observer audit treatments. [Chunks](evidence/phase-chunk-controls.json) · [Observer](evidence/live-observer-audit.json) | Bounded phase and chunk evidence. Wider protocol, observer and recovery controls remain open. |
 
-The [work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) account for 117 inventoried families and 253 requirement outlines. A trace seal verifies the integrity of a specific run. Reviewed reference qualification remains open across all six packages. Rust gameplay parity and equivalent-work performance evidence remain pending. The Actions badge reports the Rust contract workflow on `main`.
+The [work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) account for 117 inventoried families and 253 requirement outlines. A trace seal verifies the integrity of a specific run. Reviewed reference qualification remains open across all six packages. Rust gameplay parity and equivalent-work performance evidence remain pending. The workflow badges report Rust contracts and CodeQL on `main`. Neither workflow assigns a parity verdict.
 
 [Parity Lab Preview 1](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1) distributes a Windows x64 ZIP through GitHub Releases. A fresh public download passed checksum verification, observer simulation, the four-frame headless Java smoke test, and processing analysis over 635 recorded ticks. [Public install evidence](evidence/published-preview-verification.json) A registry package awaits a concrete consumer, supported interface, and compatibility contract. [Distribution policy](docs/releases/README.md)
 ## Start with one small task

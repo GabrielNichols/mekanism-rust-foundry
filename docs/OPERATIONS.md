@@ -20,3 +20,5 @@ GitHub authenticated REST and GraphQL primary limits are exposed by `gh api rate
 CI uses GitHub-hosted Windows for Rust tests. Batch documentation and metadata changes when practical. Codex agent usage belongs to the goal runtime. GitHub Copilot quotas are separate and are not observable through the GitHub REST counters. This rollout uses no Copilot review automation. [GitHub REST rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
 
 Use only standard GitHub-hosted runners while this repository is public. GitHub provides their compute free and without drawing on the account's Actions compute allowance. Do not enable larger runners, paid services, uploaded CI artifacts, or paid review automation. Maintainers run game characterization and package verification locally. Keep untrusted fork code on ephemeral runners. [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
+
+[Milestone synchronization](planning/MILESTONES.md) uses the same verified issue IDs as roadmap synchronization. It previews missing milestones and assignments and preserves manual choices.
