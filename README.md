@@ -4,13 +4,13 @@
 
 [![Rust contracts on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
 [![CodeQL on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql?query=branch%3Amain)
-[![Parity Lab Preview](https://img.shields.io/badge/Parity_Lab-Preview-c96d38)](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1)
-[![Rust 1.95.0](https://img.shields.io/badge/Rust-1.95.0-orange)](#quickstart-on-windows-x64)
-[![Java 21](https://img.shields.io/badge/Java-21-blue)](#quickstart-on-windows-x64)
-[![Minecraft Java 1.21.1](https://img.shields.io/badge/Minecraft_Java-1.21.1-4b8c44)](#quickstart-on-windows-x64)
-[![NeoForge 21.1.200](https://img.shields.io/badge/NeoForge-21.1.200-e7752a)](#quickstart-on-windows-x64)
-[![Mekanism Core 10.7.19.85](https://img.shields.io/badge/Mekanism_Core-10.7.19.85-2676a8)](#quickstart-on-windows-x64)
-[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Parity Lab Preview](assets/badges/parity-lab.svg)](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1)
+[![Rust 1.95.0](assets/badges/rust.svg)](#quickstart-on-windows-x64)
+[![Java 21](assets/badges/java.svg)](#quickstart-on-windows-x64)
+[![Minecraft Java 1.21.1](assets/badges/minecraft-java.svg)](#quickstart-on-windows-x64)
+[![NeoForge 21.1.200](assets/badges/neoforge.svg)](#quickstart-on-windows-x64)
+[![Mekanism Core 10.7.19.85](assets/badges/mekanism-core.svg)](#quickstart-on-windows-x64)
+[![MIT License](assets/badges/license.svg)](LICENSE)
 
 Mekanism Rust Foundry is the independent, community-led home for a future native Rust port of Mekanism for Horizon. The current **Parity Lab** phase records and validates behavioral references from the pinned original Java JAR. Gameplay implementation starts only after the applicable scope passes pre-port qualification.
 
