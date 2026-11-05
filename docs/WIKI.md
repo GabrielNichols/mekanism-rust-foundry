@@ -15,3 +15,5 @@ This handbook is the Wiki landing page and points to versioned sources. The road
 Use Discussions General for introductions, Q&A for help, Ideas for proposals, and Announcements for verified release news. Keep roadmap changes in a PR and avoid editing a second copy of the specification.
 
 [Security reporting](../SECURITY.md) · [Security and quality operations](SECURITY-OPERATIONS.md)
+
+[GitHub taxonomy](planning/GITHUB-TAXONOMY.md) defines how Discussions, issues, and PRs share labels and how the [Project](https://github.com/users/GabrielNichols/projects/2) tracks each item independently.

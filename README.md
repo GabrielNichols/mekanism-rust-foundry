@@ -2,14 +2,37 @@
 
 ![Mekanism Rust Foundry Parity Lab, an original industrial casting line](assets/foundry-header.jpg)
 
+[![Rust contracts on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
+[![Parity Lab Preview](https://img.shields.io/badge/Parity_Lab-Preview-c96d38)](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1)
+[![Rust 1.95.0](https://img.shields.io/badge/Rust-1.95.0-orange)](#quickstart-on-windows-x64)
+[![Java 21](https://img.shields.io/badge/Java-21-blue)](#quickstart-on-windows-x64)
+[![Minecraft Java 1.21.1](https://img.shields.io/badge/Minecraft_Java-1.21.1-4b8c44)](#quickstart-on-windows-x64)
+[![NeoForge 21.1.200](https://img.shields.io/badge/NeoForge-21.1.200-e7752a)](#quickstart-on-windows-x64)
+[![Mekanism Core 10.7.19.85](https://img.shields.io/badge/Mekanism_Core-10.7.19.85-2676a8)](#quickstart-on-windows-x64)
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 Mekanism Rust Foundry is the independent, community-led home for a future native Rust port of Mekanism for Horizon. The current **Parity Lab** phase records and validates behavioral references from the pinned original Java JAR. Gameplay implementation starts only after the applicable scope passes pre-port qualification.
 
 The lab already exercises dedicated servers, hidden real-client fixtures, comparator and observer faults, chunk controls, and trace seals. The Enrichment Chamber is the bounded machine pilot. Runtime registry discovery is a separate evidence layer. [Status](STATUS.md) · [Roadmap](docs/planning/README.md) · [MIT license](LICENSE)
 
-[Start here](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/8) · [GitHub roadmap](docs/planning/GITHUB-ROADMAP.md) · [Work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) · [Wiki](https://github.com/GabrielNichols/mekanism-rust-foundry/wiki) · [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) · [Preview releases](docs/releases/README.md)
+[Start here](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/8) · [GitHub roadmap](docs/planning/GITHUB-ROADMAP.md) · [Work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) · [Wiki](https://github.com/GabrielNichols/mekanism-rust-foundry/wiki) · [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) · [Project](https://github.com/users/GabrielNichols/projects/2) · [Download Preview 1](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1) · [Install guide](docs/releases/README.md)
 
 This is an independent community project. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
 
+## Project status
+
+| Behavior group | Inventoried families / requirements | Pinned Java characterization | Trace seals and next gap |
+| --- | ---: | --- | --- |
+| Processing and factories | 29 / 62 | Enrichment Chamber ran three recipes per server attempt across six fresh attempts. [Campaign](evidence/processing-campaign.json) | Sealed pilot runs. Add invalid input, batch and player-driven output blockage controls. |
+| Energy and generation | 13 / 27 | Enrichment Chamber FE supply and energy starvation within the processing pilot. [Campaign](evidence/processing-campaign.json) | Witnessed in the sealed pilot. Heat Generator fuel and cable behavior remain open. |
+| Transport and chemicals | 17 / 37 | Core registration and recipe bindings. [Catalog](evidence/core-catalog-bootstrap.json) | Runtime discovery. Transport still needs independent source and sink balance controls. |
+| Multiblocks and lifecycle | 16 / 38 | Enrichment Chamber recovery passed 15 of 15 treatments across three cohorts. [Campaign](evidence/lifecycle-campaign.json) | Bounded recovery evidence. Dynamic Tank formation and continuation remain open. |
+| Menus and player interactions | 28 / 58 | Three hidden client/server runs passed the Screen pickup barrier. [Campaign](evidence/phase-chunk-controls.json) | All three client traces sealed. Broader controls and OS input remain open. |
+| Shared runtime capabilities | 14 / 31 | Six chunk trials and nine live observer audit treatments. [Chunks](evidence/phase-chunk-controls.json) · [Observer](evidence/live-observer-audit.json) | Bounded phase and chunk evidence. Wider protocol, observer and recovery controls remain open. |
+
+The [work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) account for 117 inventoried families and 253 requirement outlines. A trace seal verifies the integrity of a specific run. Reviewed reference qualification remains open across all six packages. Rust gameplay parity and equivalent-work performance evidence remain pending. The Actions badge reports the Rust contract workflow on `main`.
+
+[Parity Lab Preview 1](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1) distributes a Windows x64 ZIP through GitHub Releases. A fresh public download passed checksum verification, observer simulation, the four-frame headless Java smoke test, and processing analysis over 635 recorded ticks. [Public install evidence](evidence/published-preview-verification.json) A registry package awaits a concrete consumer, supported interface, and compatibility contract. [Distribution policy](docs/releases/README.md)
 ## Start with one small task
 
 1. Pick an open-sized slice from the [first-wave workstreams](docs/planning/FIRST-WAVE-WORKSTREAMS.md). A good first PR reconciles one Core registry and recipe key in the [inventory crosswalk](docs/planning/FIRST-WAVE-INVENTORY.md). [Starter issue #1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) · [First-wave umbrella #7](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7)

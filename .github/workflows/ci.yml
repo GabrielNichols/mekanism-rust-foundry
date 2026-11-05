@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: rust-contracts-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -45,3 +51,6 @@ jobs:
 
       - name: List locked dependency graph
         run: cargo tree --locked --all-features --edges normal,build,dev
+
+      - name: Test GitHub metadata planning
+        run: ./tools/test-github-labels.ps1

@@ -1,8 +1,22 @@
-# Default maintainer and security-sensitive paths
+# GabrielNichols maintains Foundry and has repository write access.
 * @GabrielNichols
-/.github/ @GabrielNichols
-/adapters/ @GabrielNichols
-/tools/ @GabrielNichols
+
+# Review identity, execution, publication, and security policy.
+/.github/CODEOWNERS @GabrielNichols
+/.github/workflows/ @GabrielNichols
+/.github/actions/ @GabrielNichols
+/SECURITY.md @GabrielNichols
+/docs/SECURITY-OPERATIONS.md @GabrielNichols
+/docs/releases/ @GabrielNichols
 /Cargo.toml @GabrielNichols
 /Cargo.lock @GabrielNichols
-/SECURITY.md @GabrielNichols
+
+# Review runner behavior, Java instrumentation, and evidence contracts.
+/tools/ @GabrielNichols
+/src/ @GabrielNichols
+/adapters/ @GabrielNichols
+/cases/ @GabrielNichols
+/evidence/ @GabrielNichols
+/VALIDATOR-CONTRACT.md @GabrielNichols
+/docs/planning/*.json @GabrielNichols
+/docs/planning/examples/*.json @GabrielNichols

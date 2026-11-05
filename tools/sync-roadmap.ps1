@@ -123,7 +123,7 @@ if($ApplyPreview){
     if($ready.Count){
         $known=gh label list --repo $Repository --limit 1000 --json name --jq '.[].name'
         if($LASTEXITCODE -ne 0){throw 'Label API read failed'}
-        foreach($label in @($ready|ForEach-Object labels|Sort-Object -Unique)){
+        foreach($label in @($ready|ForEach-Object { $_.labels }|Sort-Object -Unique)){
             if($label -in $known){continue}
             $color=switch -Wildcard ($label){'phase:*'{'bfdadc'} 'family:*'{'c5def5'} 'status:blocked'{'b60205'} default{'e4e669'}}
             gh label create $label --repo $Repository --color $color | Out-Null
@@ -131,9 +131,8 @@ if($ApplyPreview){
             Start-Sleep -Milliseconds 1150
         }
         foreach($task in $ready){
-            $args=@('--repo',$Repository,'--title',$task.title,'--body',$task.body)
-            foreach($label in $task.labels){$args+=@('--label',$label)}
-            $url=gh issue create @args
+            $payload=[ordered]@{title=$task.title;body=$task.body;labels=@($task.labels)}
+            $url=$payload|ConvertTo-Json -Depth 5|gh api --method POST "repos/$Repository/issues" --input - --jq .html_url
             if($LASTEXITCODE -ne 0 -or $url -notmatch '/issues/[0-9]+$'){throw "Issue creation failed for $($task.id). Re-preview before continuing."}
             Write-Host "$($task.id) $url"
             Start-Sleep -Milliseconds 1250
