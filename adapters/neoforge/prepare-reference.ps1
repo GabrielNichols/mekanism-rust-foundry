@@ -1,6 +1,7 @@
-param([Parameter(Mandatory=$true)][string]$Jdk,[ValidateRange(1,900)][int]$BootTimeoutSeconds=300)
+param([Parameter(Mandatory=$true)][string]$Jdk,[ValidateRange(1,900)][int]$BootTimeoutSeconds=300,[string]$Runner='./target/debug/mek-lab.exe')
 $ErrorActionPreference='Stop'
 $root=(Get-Location).Path
+$Runner=(Resolve-Path -LiteralPath $Runner).Path
 $Jdk=(Resolve-Path -LiteralPath $Jdk).Path
 if((Get-Content -LiteralPath (Join-Path $Jdk 'release') -Raw) -notmatch 'JAVA_VERSION="21\.') { throw 'A private JDK21 path is required' }
 $cache=Join-Path $root '.lab/cache'
@@ -31,7 +32,7 @@ foreach($target in @(@{path=$serverRoot;flag='--installServer';ready='libraries/
     & (Join-Path $Jdk 'bin/java.exe') -jar $installer $target.flag $target.path
     if($LASTEXITCODE -ne 0){throw 'NeoForge installation failed'}
 }
-& (Join-Path $root 'adapters/neoforge/prepare-client.ps1') -ClientRoot $clientRoot
+& (Join-Path $root 'adapters/neoforge/prepare-client.ps1') -ClientRoot $clientRoot -Runner $Runner
 & (Join-Path $root 'adapters/neoforge/build.ps1') -Jdk $Jdk
 $artifacts=[System.Collections.Generic.List[object]]::new()
 function AddArtifact($role,$path){$artifacts.Add(@{role=$role;path=$path;sha256=(Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant()})}
@@ -39,7 +40,7 @@ AddArtifact 'java' (Join-Path $Jdk 'bin/java.exe')
 AddArtifact 'jdk_release' (Join-Path $Jdk 'release')
 AddArtifact 'jdk_modules' (Join-Path $Jdk 'lib/modules')
 AddArtifact 'jvm' (Join-Path $Jdk 'bin/server/jvm.dll')
-AddArtifact 'runner' (Join-Path $root 'target/debug/mek-lab.exe')
+AddArtifact 'runner' $Runner
 AddArtifact 'bridge' (Join-Path $cache 'meklab-bridge.jar')
 AddArtifact 'mekanism' $mekanism
 $n=0

@@ -85,12 +85,12 @@ The existing Java observer campaign exercised 20 ticks/s with one worker and 100
 
 | Track | Issue | Proposed owner |
 | --- | --- | --- |
-| Umbrella | [#7](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7) | Integration reviewer |
-| W1-CAT | [#1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1) | Reference catalog contributor |
-| W1-PROC | [#2](https://github.com/GabrielNichols/mekanism-rust-lab/issues/2) | Processing contributor |
-| W1-ENER | [#3](https://github.com/GabrielNichols/mekanism-rust-lab/issues/3) | Generation contributor |
-| W1-TRANS | [#4](https://github.com/GabrielNichols/mekanism-rust-lab/issues/4) | Transport contributor |
-| W1-LIFE | [#5](https://github.com/GabrielNichols/mekanism-rust-lab/issues/5) | Lifecycle contributor |
-| W1-ENG | [#6](https://github.com/GabrielNichols/mekanism-rust-lab/issues/6) | Validator contributor |
+| Umbrella | [#7](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7) | Integration reviewer |
+| W1-CAT | [#1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) | Reference catalog contributor |
+| W1-PROC | [#2](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/2) | Processing contributor |
+| W1-ENER | [#3](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/3) | Generation contributor |
+| W1-TRANS | [#4](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/4) | Transport contributor |
+| W1-LIFE | [#5](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/5) | Lifecycle contributor |
+| W1-ENG | [#6](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/6) | Validator contributor |
 
 The repeat preview preserved all seven issues and proposed zero duplicate creates. The wider backlog remains in the planning bundle.

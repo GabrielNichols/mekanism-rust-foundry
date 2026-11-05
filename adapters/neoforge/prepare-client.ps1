@@ -1,11 +1,11 @@
-param([Parameter(Mandatory=$true)][string]$ClientRoot)
+param([Parameter(Mandatory=$true)][string]$ClientRoot,[string]$Runner='./target/debug/mek-lab.exe')
 $ErrorActionPreference = 'Stop'
 $ClientRoot = (Resolve-Path -LiteralPath $ClientRoot).Path
 $neo = Get-Content -LiteralPath (Join-Path $ClientRoot 'versions/neoforge-21.1.200/neoforge-21.1.200.json') -Raw | ConvertFrom-Json
 $base = Get-Content -LiteralPath (Join-Path $ClientRoot 'versions/1.21.1/1.21.1.json') -Raw | ConvertFrom-Json
 $allNames=@($neo.libraries.name)+@($base.libraries.name)
 $allNames | ConvertTo-Json | Set-Content -LiteralPath '.lab/cache/library-names.json'
-$selectedNames=& '.\target\debug\mek-lab.exe' select-windows-x64 '.lab/cache/library-names.json' | ConvertFrom-Json
+$selectedNames=& (Resolve-Path -LiteralPath $Runner).Path select-windows-x64 '.lab/cache/library-names.json' | ConvertFrom-Json
 if($LASTEXITCODE -ne 0){throw 'Rust platform selection failed'}
 function Allowed($entry) {
     if (-not $entry.rules) { return $true }

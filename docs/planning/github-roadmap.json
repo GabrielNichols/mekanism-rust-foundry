@@ -1,0 +1,868 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/GabrielNichols/mekanism-rust-foundry",
+  "roadmap": [
+    {
+      "id": "RF-SCOPE-01",
+      "issue": 9,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-02",
+      "issue": 10,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-03",
+      "issue": 11,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-04",
+      "issue": 12,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-05",
+      "issue": 13,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-06",
+      "issue": 14,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-07",
+      "issue": 15,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-SCOPE-08",
+      "issue": 16,
+      "phase": "M00",
+      "family": "SCOPE"
+    },
+    {
+      "id": "RF-MODEL-01",
+      "issue": 17,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-02",
+      "issue": 18,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-03",
+      "issue": 19,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-04",
+      "issue": 20,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-05",
+      "issue": 21,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-06",
+      "issue": 22,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-07",
+      "issue": 23,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-08",
+      "issue": 24,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-09",
+      "issue": 25,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-MODEL-10",
+      "issue": 26,
+      "phase": "M01",
+      "family": "MODEL"
+    },
+    {
+      "id": "RF-INSTANCE-01",
+      "issue": 27,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-02",
+      "issue": 28,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-03",
+      "issue": 29,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-04",
+      "issue": 30,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-05",
+      "issue": 31,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-06",
+      "issue": 32,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-07",
+      "issue": 33,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-08",
+      "issue": 34,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-09",
+      "issue": 35,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-INSTANCE-10",
+      "issue": 36,
+      "phase": "M02",
+      "family": "INSTANCE"
+    },
+    {
+      "id": "RF-BRIDGE-01",
+      "issue": 37,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-02",
+      "issue": 38,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-03",
+      "issue": 39,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-04",
+      "issue": 40,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-05",
+      "issue": 41,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-06",
+      "issue": 42,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-07",
+      "issue": 43,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-BRIDGE-08",
+      "issue": 44,
+      "phase": "M03",
+      "family": "BRIDGE"
+    },
+    {
+      "id": "RF-CLIENT-01",
+      "issue": 45,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-02",
+      "issue": 46,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-03",
+      "issue": 47,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-04",
+      "issue": 48,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-05",
+      "issue": 49,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-06",
+      "issue": 50,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-07",
+      "issue": 51,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLIENT-08",
+      "issue": 52,
+      "phase": "M11",
+      "family": "CLIENT"
+    },
+    {
+      "id": "RF-CLOCK-01",
+      "issue": 53,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-02",
+      "issue": 54,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-03",
+      "issue": 55,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-04",
+      "issue": 56,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-05",
+      "issue": 57,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-06",
+      "issue": 58,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-07",
+      "issue": 59,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-CLOCK-08",
+      "issue": 60,
+      "phase": "M03",
+      "family": "CLOCK"
+    },
+    {
+      "id": "RF-DISCOVER-01",
+      "issue": 61,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-02",
+      "issue": 62,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-03",
+      "issue": 63,
+      "phase": "M07",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-04",
+      "issue": 64,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-05",
+      "issue": 65,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-06",
+      "issue": 66,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-07",
+      "issue": 67,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-DISCOVER-08",
+      "issue": 68,
+      "phase": "M04",
+      "family": "DISCOVER"
+    },
+    {
+      "id": "RF-EVIDENCE-01",
+      "issue": 69,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-02",
+      "issue": 70,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-03",
+      "issue": 71,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-04",
+      "issue": 72,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-05",
+      "issue": 73,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-06",
+      "issue": 74,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-07",
+      "issue": 75,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-EVIDENCE-08",
+      "issue": 76,
+      "phase": "M06",
+      "family": "EVIDENCE"
+    },
+    {
+      "id": "RF-PILOT-01",
+      "issue": 77,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-02",
+      "issue": 78,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-03",
+      "issue": 79,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-04",
+      "issue": 80,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-05",
+      "issue": 81,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-06",
+      "issue": 82,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-07",
+      "issue": 83,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-08",
+      "issue": 84,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-09",
+      "issue": 85,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-PILOT-10",
+      "issue": 86,
+      "phase": "M08",
+      "family": "PILOT"
+    },
+    {
+      "id": "RF-LIFE-01",
+      "issue": 87,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-02",
+      "issue": 88,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-03",
+      "issue": 89,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-04",
+      "issue": 90,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-05",
+      "issue": 91,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-06",
+      "issue": 92,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-07",
+      "issue": 93,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-LIFE-08",
+      "issue": 94,
+      "phase": "M05",
+      "family": "LIFE"
+    },
+    {
+      "id": "RF-CONFIG-01",
+      "issue": 95,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-02",
+      "issue": 96,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-03",
+      "issue": 97,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-04",
+      "issue": 98,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-05",
+      "issue": 99,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-06",
+      "issue": 100,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-07",
+      "issue": 101,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-CONFIG-08",
+      "issue": 102,
+      "phase": "M08",
+      "family": "CONFIG"
+    },
+    {
+      "id": "RF-NET-01",
+      "issue": 103,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-02",
+      "issue": 104,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-03",
+      "issue": 105,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-04",
+      "issue": 106,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-05",
+      "issue": 107,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-06",
+      "issue": 108,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-07",
+      "issue": 109,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-NET-08",
+      "issue": 110,
+      "phase": "M09",
+      "family": "NET"
+    },
+    {
+      "id": "RF-DEEP-01",
+      "issue": 111,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-02",
+      "issue": 112,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-03",
+      "issue": 113,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-04",
+      "issue": 114,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-05",
+      "issue": 115,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-06",
+      "issue": 116,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-07",
+      "issue": 117,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-DEEP-08",
+      "issue": 118,
+      "phase": "M10",
+      "family": "DEEP"
+    },
+    {
+      "id": "RF-MODS-01",
+      "issue": 119,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-02",
+      "issue": 120,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-03",
+      "issue": 121,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-04",
+      "issue": 122,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-05",
+      "issue": 123,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-06",
+      "issue": 124,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-07",
+      "issue": 125,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-08",
+      "issue": 126,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-09",
+      "issue": 127,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-MODS-10",
+      "issue": 128,
+      "phase": "M10",
+      "family": "MODS"
+    },
+    {
+      "id": "RF-UX-01",
+      "issue": 129,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-02",
+      "issue": 130,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-03",
+      "issue": 131,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-04",
+      "issue": 132,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-05",
+      "issue": 133,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-06",
+      "issue": 134,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-07",
+      "issue": 135,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-UX-08",
+      "issue": 136,
+      "phase": "M11",
+      "family": "UX"
+    },
+    {
+      "id": "RF-AUDIT-01",
+      "issue": 137,
+      "phase": "M12",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-02",
+      "issue": 138,
+      "phase": "M12",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-03",
+      "issue": 139,
+      "phase": "M12",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-04",
+      "issue": 140,
+      "phase": "M12",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-05",
+      "issue": 141,
+      "phase": "M13",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-06",
+      "issue": 142,
+      "phase": "M13",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-07",
+      "issue": 143,
+      "phase": "M13",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-08",
+      "issue": 144,
+      "phase": "M13",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-09",
+      "issue": 145,
+      "phase": "M13",
+      "family": "AUDIT"
+    },
+    {
+      "id": "RF-AUDIT-10",
+      "issue": 146,
+      "phase": "M14",
+      "family": "AUDIT"
+    }
+  ],
+  "onboarding": [
+    {
+      "id": "W1",
+      "issue": 7
+    },
+    {
+      "id": "W1-CAT",
+      "issue": 1
+    },
+    {
+      "id": "W1-PROC",
+      "issue": 2
+    },
+    {
+      "id": "W1-ENER",
+      "issue": 3
+    },
+    {
+      "id": "W1-TRANS",
+      "issue": 4
+    },
+    {
+      "id": "W1-LIFE",
+      "issue": 5
+    },
+    {
+      "id": "W1-ENG",
+      "issue": 6
+    },
+    {
+      "id": "START-HERE",
+      "issue": 8
+    }
+  ]
+}

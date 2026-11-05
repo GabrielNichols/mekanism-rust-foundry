@@ -38,3 +38,10 @@ jobs:
         run: cargo test --locked
       - name: Test issue batch preview
         run: ./tools/test-issue-preview.ps1
+      - name: Test roadmap issue reconciliation
+        run: ./tools/test-roadmap-sync.ps1
+      - name: Check the public tree
+        run: ./tools/check-public-tree.ps1
+
+      - name: List locked dependency graph
+        run: cargo tree --locked --all-features --edges normal,build,dev

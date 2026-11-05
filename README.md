@@ -1,14 +1,18 @@
-# Mekanism parity lab
+# Mekanism Rust Foundry
 
-An independent Rust laboratory for developers who want to characterize Mekanism and improve the parity validator. Pinned Mekanism Java is the reference. This lab records and checks its behavior. A future native Horizon mod is a separate project that begins only after its Java reference scope is qualified.
+![Mekanism Rust Foundry Parity Lab, an original industrial casting line](assets/foundry-header.jpg)
 
-The lab already exercises dedicated servers, hidden real-client fixtures, comparison and fault controls, and trace seals. The Enrichment Chamber is the bounded machine pilot. The rest of the inventory includes mapped entries, discovery work and open qualification gaps. [Current status](STATUS.md) · [Roadmap and gates](docs/planning/README.md) · [MIT license](LICENSE)
+Mekanism Rust Foundry is the independent, community-led home for a future native Rust port of Mekanism for Horizon. The current **Parity Lab** phase records and validates behavioral references from the pinned original Java JAR. Gameplay implementation starts only after the applicable scope passes pre-port qualification.
+
+The lab already exercises dedicated servers, hidden real-client fixtures, comparator and observer faults, chunk controls, and trace seals. The Enrichment Chamber is the bounded machine pilot. Runtime registry discovery is a separate evidence layer. [Status](STATUS.md) · [Roadmap](docs/planning/README.md) · [MIT license](LICENSE)
+
+[Start here](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/8) · [GitHub roadmap](docs/planning/GITHUB-ROADMAP.md) · [Work packages](docs/planning/FOUNDRY-WORK-PACKAGES.md) · [Wiki](https://github.com/GabrielNichols/mekanism-rust-foundry/wiki) · [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) · [Preview releases](docs/releases/README.md)
 
 This is an independent community project. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
 
 ## Start with one small task
 
-1. Pick an open-sized slice from the [first-wave workstreams](docs/planning/FIRST-WAVE-WORKSTREAMS.md). A good first PR reconciles one Core registry and recipe key in the [inventory crosswalk](docs/planning/FIRST-WAVE-INVENTORY.md). [Starter issue #1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1) · [First-wave umbrella #7](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7)
+1. Pick an open-sized slice from the [first-wave workstreams](docs/planning/FIRST-WAVE-WORKSTREAMS.md). A good first PR reconciles one Core registry and recipe key in the [inventory crosswalk](docs/planning/FIRST-WAVE-INVENTORY.md). [Starter issue #1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) · [First-wave umbrella #7](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7)
 2. Run the dedicated smoke case below to learn the evidence path.
 3. Follow the [contribution guide](CONTRIBUTING.md#task-to-pull-request). Attach sanitized evidence and use the [PR template](.github/PULL_REQUEST_TEMPLATE.md).
 
@@ -17,8 +21,8 @@ This is an independent community project. Not an official Minecraft product. Not
 Use PowerShell 7, Rust 1.95.0, and a local JDK 21. Review the Minecraft EULA before running the reference. The setup script resolves pinned Minecraft 1.21.1, NeoForge 21.1.200 and Mekanism Core 10.7.19.85 into private local storage. [Minecraft EULA](https://www.minecraft.net/en-us/eula)
 
 ```powershell
-git clone https://github.com/GabrielNichols/mekanism-rust-lab.git
-Set-Location mekanism-rust-lab
+git clone https://github.com/GabrielNichols/mekanism-rust-foundry.git
+Set-Location mekanism-rust-foundry
 cargo build --locked
 ./adapters/neoforge/prepare-reference.ps1 -Jdk '<JDK21-directory>'
 ./target/debug/mek-lab.exe run-reference .lab/environment.json cases/server-inventory.json .lab/evidence/first-run
