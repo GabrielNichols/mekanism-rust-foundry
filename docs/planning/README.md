@@ -18,3 +18,5 @@ The baseline contains 117 behavior families, 253 requirements, 138 granular work
 The [umbrella issue](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7) links the six reviewed issues. The [starter issue](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) is suitable for a small crosswalk PR.
 
 Use the [collaboration plan](COLLABORATION-PLAN.md), [first-wave workstreams and starter tasks](FIRST-WAVE-WORKSTREAMS.md), [object-to-evidence crosswalk](FIRST-WAVE-INVENTORY.md), and [English contribution drafts](CONTRIBUTION-DRAFTS.md). The [issue queue](issue-queue.json) is the versioned input for the read-only [batch preview](../../CONTRIBUTING.md#preview-an-issue-batch).
+
+[Delivery milestones](MILESTONES.md) group canonical work by verifiable output. [GitHub taxonomy](GITHUB-TAXONOMY.md) connects Discussions, issues, and PRs to the public Project.

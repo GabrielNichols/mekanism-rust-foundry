@@ -1,0 +1,10 @@
+{
+  "downloaded_public_assets": 3,
+  "archive_sha256": "6f7c8d5228f696985eddd2b5bd78aa6c983462ae222b063812fc3070868b74a0",
+  "source_commit": "bf1f3aefa84e4cb29b19f6e60940f5c89dc49855",
+  "observer_simulation": "pass",
+  "reference_status": "functional_pass",
+  "sealed_frames": 4,
+  "analysis_ticks": 635,
+  "qualified": false
+}

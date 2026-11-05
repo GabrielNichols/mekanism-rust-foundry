@@ -157,3 +157,7 @@ The [versioned issue queue](docs/planning/issue-queue.json) contains the umbrell
 Review `prepare_create` entries before posting. Keep the stable HTML marker on any posted issue. A later preview uses that marker to preserve existing issues, including closed issues and maintainer edits. Resolve `conflict` entries manually. The preview reads the full issue list when using GitHub and never creates or updates issues.
 
 [Security policy](SECURITY.md) · [Merge and release controls](docs/SECURITY-OPERATIONS.md)
+
+Use the [GitHub taxonomy](docs/planning/GITHUB-TAXONOMY.md) to move a proposal from Discussion to a tracked issue or linked PR. Put acceptance and evidence in the issue, and use the [Project](https://github.com/users/GabrielNichols/projects/2) for operational status. Mark partial PRs with `Refs #N` and reserve `Closes #N` for work that satisfies every linked acceptance criterion.
+
+The [code owners](.github/CODEOWNERS) route specialist review for CI, publishing, security, dependency manifests, the Rust runner, the Java bridge, scenario inputs, and evidence schemas. Expect the maintainer to check provenance, isolation, first-divergence evidence, and failure behavior on those paths. GitHub requires passing checks for all PRs. Mandatory code-owner approval is deferred while one maintainer owns the project. [Review controls](docs/SECURITY-OPERATIONS.md)

@@ -1,0 +1,585 @@
+{
+  "schema": 1,
+  "repository": "GabrielNichols/mekanism-rust-foundry",
+  "repository_id": 1447583916,
+  "labels": [
+    {
+      "name": "area:processing",
+      "color": "1d76db",
+      "description": "Machine recipes, factories, and processing throughput",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:energy",
+      "color": "1d76db",
+      "description": "Generation, buffers, and electrical networks",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:chemicals",
+      "color": "1d76db",
+      "description": "Chemical identity, storage, and transfer",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:transport",
+      "color": "1d76db",
+      "description": "Item, fluid, and network routing",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:multiblocks",
+      "color": "1d76db",
+      "description": "Formation, topology, and persistent multiblock state",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:lifecycle",
+      "color": "1d76db",
+      "description": "Save, restart, recovery, and world lifecycle",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:client",
+      "color": "1d76db",
+      "description": "Client behavior, menus, and synchronization",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:parity-engine",
+      "color": "1d76db",
+      "description": "Trace comparison, timing, validation, and evidence",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "area:runtime",
+      "color": "1d76db",
+      "description": "Reference instances, loader, and runtime integration",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "type:behavior",
+      "color": "0e8a16",
+      "description": "A behavior contract or characterization requirement",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "type:scenario",
+      "color": "0e8a16",
+      "description": "An executable or proposed scenario and its controls",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "type:tooling",
+      "color": "0e8a16",
+      "description": "An implementation or maintenance change to lab tooling",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "type:docs",
+      "color": "0e8a16",
+      "description": "Documentation and contributor material",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "type:measurement",
+      "color": "0e8a16",
+      "description": "A performance or measurement methodology change",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "durable",
+      "authority": "maintainer"
+    },
+    {
+      "name": "workflow:needs-triage",
+      "color": "fbca04",
+      "description": "Awaiting initial maintainer triage",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "transition",
+      "authority": "maintainer"
+    },
+    {
+      "name": "workflow:needs-evidence",
+      "color": "d93f0b",
+      "description": "An explicit evidence request is still open",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "transition",
+      "authority": "maintainer"
+    },
+    {
+      "name": "status:ready-to-claim",
+      "color": "e4e669",
+      "description": "Discoverable unassigned starter work",
+      "surfaces": [
+        "issue"
+      ],
+      "policy": "mirror",
+      "authority": "maintainer"
+    },
+    {
+      "name": "status:blocked",
+      "color": "b60205",
+      "description": "Historical roadmap prerequisite classification",
+      "surfaces": [
+        "issue"
+      ],
+      "policy": "legacy",
+      "authority": "maintainer"
+    },
+    {
+      "name": "status:planned",
+      "color": "e4e669",
+      "description": "Historical roadmap planning classification",
+      "surfaces": [
+        "issue"
+      ],
+      "policy": "legacy",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M00",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M00",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M01",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M01",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M02",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M02",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M03",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M03",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M04",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M04",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M05",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M05",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M06",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M06",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M07",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M07",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M08",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M08",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M09",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M09",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M10",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M10",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M11",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M11",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M12",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M12",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M13",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M13",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "phase:M14",
+      "color": "bfdadc",
+      "description": "Compatibility roadmap milestone M14",
+      "surfaces": [
+        "issue",
+        "pull_request"
+      ],
+      "policy": "phase",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:audit",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream AUDIT",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:bridge",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream BRIDGE",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:client",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream CLIENT",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:clock",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream CLOCK",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:config",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream CONFIG",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:deep",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream DEEP",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:discover",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream DISCOVER",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:evidence",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream EVIDENCE",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:instance",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream INSTANCE",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:life",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream LIFE",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:model",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream MODEL",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:mods",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream MODS",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:net",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream NET",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:pilot",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream PILOT",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:scope",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream SCOPE",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    },
+    {
+      "name": "family:ux",
+      "color": "c5def5",
+      "description": "Compatibility roadmap workstream UX",
+      "surfaces": [
+        "discussion",
+        "issue",
+        "pull_request"
+      ],
+      "policy": "family",
+      "authority": "maintainer"
+    }
+  ]
+}
