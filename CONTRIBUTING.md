@@ -1,6 +1,6 @@
 # Contributing
 
-This project builds a Rust compatibility validator before implementing a Mekanism-derived native mod in a separate repository for Horizon. The two required outcomes are equivalent behavior and measured lower execution cost. A language choice, a passing smoke test or reduced functionality cannot establish optimization.
+This project builds a Rust compatibility validator before implementing a Mekanism-derived native mod in Foundry for Horizon. The two required outcomes are equivalent behavior and measured lower execution cost. A language choice, a passing smoke test or reduced functionality cannot establish optimization.
 
 Read [AGENTS.md](AGENTS.md), [STATUS.md](STATUS.md), [VALIDATOR-CONTRACT.md](VALIDATOR-CONTRACT.md) and [BENCHMARKS.md](BENCHMARKS.md) before changing a contract. Keep authored documentation, descriptive text, source comments and review descriptions in English. Preserve raw evidence exactly, including localized runtime or operating-system messages.
 
@@ -155,3 +155,5 @@ The [versioned issue queue](docs/planning/issue-queue.json) contains the umbrell
 ```
 
 Review `prepare_create` entries before posting. Keep the stable HTML marker on any posted issue. A later preview uses that marker to preserve existing issues, including closed issues and maintainer edits. Resolve `conflict` entries manually. The preview reads the full issue list when using GitHub and never creates or updates issues.
+
+[Security policy](SECURITY.md) · [Merge and release controls](docs/SECURITY-OPERATIONS.md)

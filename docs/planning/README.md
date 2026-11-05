@@ -11,8 +11,10 @@ The baseline contains 117 behavior families, 253 requirements, 138 granular work
 [Current implementation status](../../STATUS.md), the [validator contract](../../VALIDATOR-CONTRACT.md) and the [TDD evidence index](../../evidence/tdd/README.md) describe actual delivered scope. A functional run, a unit-test total or acceptance of one supporting work item does not close a broad gate or cover all dependent families. Gameplay porting begins only after the applicable validator/reference scope has passed its qualification gate.
 
 
+[GitHub issue index](GITHUB-ROADMAP.md) maps all 138 roadmap IDs to issues. [Foundry work packages](FOUNDRY-WORK-PACKAGES.md) group the inventory into contribution slices.
+
 ## First wave
 
-The [umbrella issue](https://github.com/GabrielNichols/mekanism-rust-lab/issues/7) links the six reviewed issues. The [starter issue](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1) is suitable for a small crosswalk PR.
+The [umbrella issue](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7) links the six reviewed issues. The [starter issue](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) is suitable for a small crosswalk PR.
 
 Use the [collaboration plan](COLLABORATION-PLAN.md), [first-wave workstreams and starter tasks](FIRST-WAVE-WORKSTREAMS.md), [object-to-evidence crosswalk](FIRST-WAVE-INVENTORY.md), and [English contribution drafts](CONTRIBUTION-DRAFTS.md). The [issue queue](issue-queue.json) is the versioned input for the read-only [batch preview](../../CONTRIBUTING.md#preview-an-issue-batch).

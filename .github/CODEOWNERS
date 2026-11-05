@@ -1,0 +1,8 @@
+# Default maintainer and security-sensitive paths
+* @GabrielNichols
+/.github/ @GabrielNichols
+/adapters/ @GabrielNichols
+/tools/ @GabrielNichols
+/Cargo.toml @GabrielNichols
+/Cargo.lock @GabrielNichols
+/SECURITY.md @GabrielNichols

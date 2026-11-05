@@ -6,9 +6,9 @@
 | --- | --- | --- |
 | Independent parity lab | Rust validator, Java reference profiles, inventory, scenarios, evidence contracts, contribution queue | Publish the reviewed source baseline here. Keep campaign tracking, triage, and all six workstreams here. |
 | Original Mekanism | Pinned Java behavioral reference | Link and verify the precise release and archive. Keep the upstream Java project as the reference. |
-| Future dedicated Rust mod | Native Horizon mod using the reviewed Java behavior as its specification | Create only after the applicable pre-port gate. Preserve provenance for any separately reviewed reused material. |
+| Foundry native mod phase | Native Horizon mod using the reviewed Java behavior as its specification | Begin only after the applicable pre-port gate. Preserve provenance for any separately reviewed reused material. |
 | Mekanism fork | Optional route if a concrete need emerges for upstream history or reusable files | Revisit after checking the exact revision and each reused file. A fork preserves lineage and notices but carries Java history, build files, and assets into a Rust-focused review. |
-| Horizon fork | Temporary integration bench if a concrete game change requires one | Keep lab and mod ownership separate. A scoped integration change can go upstream after coordination. |
+| Horizon fork | Temporary integration bench if a concrete game change requires one | Keep Foundry ownership separate from Horizon. A scoped integration change can go upstream after coordination. |
 
 Recruit inventory, Java scenario and infrastructure contributors in Horizon Discord after publication. Use the lab for tasks and results. Discuss future mod integration with Horizon modding maintainers. Route ideas through the Horizon hub or `/suggest`. Reserve an upstream issue or PR for a concrete problem or a bounded integration change after alignment. This is an independent community effort. [Horizon contribution policy](https://github.com/horizon-rust/horizon/blob/main/CONTRIBUTING.md) · [Horizon mod formats](https://github.com/horizon-rust/horizon/blob/main/docs/mods.md)
 

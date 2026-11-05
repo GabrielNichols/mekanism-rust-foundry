@@ -6,7 +6,7 @@ These are English drafts for review. The workstream IDs are planning identifiers
 
 ### Open the first Mekanism Java characterization wave
 
-We are building an independent Rust parity laboratory that observes pinned Mekanism Java behavior and prepares reviewed references for later reconstruction. The laboratory can stand on its own. Original Mekanism is the reference runtime, and a future Horizon adapter is the planned integration boundary. A dedicated gameplay-port repository is proposed for work that passes scoped pre-port qualification.
+We are building an independent Rust parity laboratory that observes pinned Mekanism Java behavior and prepares reviewed references for later reconstruction. The laboratory can stand on its own. Original Mekanism is the reference runtime, and a future Horizon adapter is the planned integration boundary. Gameplay implementation in Foundry starts after scoped pre-port qualification.
 
 The current Enrichment Chamber pilot and its positive and negative controls are the baseline for the first wave. Preserve the original artifacts and observations. The status tracker distinguishes validated infrastructure, observed behavior, and open qualification. [Current status](../../STATUS.md)
 
@@ -109,7 +109,7 @@ Use a private simulated trace to introduce an intermediate difference while pres
 
 ### Reconcile the first Core registry and recipe pair
 
-**Closes [#1](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1)**
+**Closes [#1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1)**
 
 - Review `mekanism:enrichment_chamber` and `mekanism:processing/iron/dust/from_ore` against the pinned archive and the Core runtime catalog.
 - Add or refine one inventory row with the registered IDs, type, serializer, and evidence links. Keep tag resolution and behavior reference review explicit.
@@ -135,4 +135,4 @@ Use Horizon Discord to invite contributors and discuss a future native mod inter
 
 ## Horizon Discord message draft
 
-We are opening an independent Rust parity lab for Mekanism. It uses pinned Mekanism Java as its reference and aims for a future native Horizon mod after scope qualification. You can help by [reconciling one registry and recipe key](https://github.com/GabrielNichols/mekanism-rust-lab/issues/1), [drafting a factory lane fixture](https://github.com/GabrielNichols/mekanism-rust-lab/issues/2), or [adding a worker-evidence control](https://github.com/GabrielNichols/mekanism-rust-lab/issues/6). The [lab and task queue](https://github.com/GabrielNichols/mekanism-rust-lab) contain the setup and evidence requirements. We welcome discussion with Horizon modding maintainers about eventual integration. This is an independent community effort.
+We are opening an independent Rust parity lab for Mekanism. It uses pinned Mekanism Java as its reference and aims for a future native Horizon mod after scope qualification. You can help by [reconciling one registry and recipe key](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1), [drafting a factory lane fixture](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/2), or [adding a worker-evidence control](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/6). The [lab and task queue](https://github.com/GabrielNichols/mekanism-rust-foundry) contain the setup and evidence requirements. We welcome discussion with Horizon modding maintainers about eventual integration. This is an independent community effort.
