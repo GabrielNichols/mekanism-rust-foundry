@@ -1,0 +1,132 @@
+name: Foundry PR policy
+
+on:
+  pull_request:
+    branches: [main, foundry/ci-policy]
+  workflow_dispatch:
+    inputs:
+      full-platforms:
+        description: Run Windows, Linux, and macOS Rust validation
+        type: boolean
+        default: true
+
+concurrency:
+  group: foundry-policy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    name: Change selection and metadata
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    outputs:
+      mode: ${{ steps.select.outputs.mode }}
+      reason: ${{ steps.select.outputs.reason }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Select validation
+        id: select
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          FULL_PLATFORMS: ${{ inputs.full-platforms }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            [[ "$PR_BASE_SHA" =~ ^[0-9a-f]{40}$ ]]
+            [[ "$PR_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]
+            test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $PR_BASE_SHA $PR_HEAD_SHA"
+            if git cat-file -e "$PR_BASE_SHA:tools/ci_policy.py" 2>/dev/null; then
+              git show "$PR_BASE_SHA:tools/ci_policy.py" | python3 -I -B -
+            else
+              printf '%s\n' 'mode=rust' 'reason=base has no classifier' >> "$GITHUB_OUTPUT"
+            fi
+          else
+            python3 tools/ci_policy.py
+          fi
+
+      - name: Test change policy
+        run: python3 -B -m unittest discover -s tools -p test_ci_policy.py
+
+      - name: Verify public tree and metadata contracts
+        shell: pwsh
+        run: |
+          ./tools/check-public-tree.ps1
+          ./tools/test-issue-preview.ps1
+          ./tools/test-roadmap-sync.ps1
+          ./tools/test-github-labels.ps1
+          ./tools/test-roadmap-milestones.ps1
+          if ((Test-Path tools/preview-github-triage.ps1) -or (Test-Path tools/read-github-triage.ps1) -or (Test-Path tools/test-github-triage.ps1)) {
+            ./tools/test-github-triage.ps1
+          }
+
+  windows:
+    name: Windows x64
+    needs: metadata
+    if: ${{ needs.metadata.outputs.mode == 'rust' || needs.metadata.outputs.mode == 'matrix' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: windows-2022
+      target: x86_64-pc-windows-msvc
+
+  linux:
+    name: Linux x64
+    needs: metadata
+    if: ${{ needs.metadata.outputs.mode == 'matrix' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: ubuntu-24.04
+      target: x86_64-unknown-linux-gnu
+
+  macos:
+    name: macOS x64
+    needs: metadata
+    if: ${{ needs.metadata.outputs.mode == 'matrix' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: macos-15-intel
+      target: x86_64-apple-darwin
+
+  gate:
+    name: Foundry PR gate
+    if: ${{ always() }}
+    needs: [metadata, windows, linux, macos]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions: {}
+    steps:
+      - name: Require every selected result
+        shell: bash
+        env:
+          MODE: ${{ needs.metadata.outputs.mode }}
+          REASON: ${{ needs.metadata.outputs.reason }}
+          METADATA: ${{ needs.metadata.result }}
+          WINDOWS: ${{ needs.windows.result }}
+          LINUX: ${{ needs.linux.result }}
+          MACOS: ${{ needs.macos.result }}
+        run: |
+          printf 'Revision %s\n\nSelection %s (%s)\n\nMetadata %s, Windows %s, Linux %s, macOS %s\n' \
+            "$GITHUB_SHA" "$MODE" "$REASON" "$METADATA" "$WINDOWS" "$LINUX" "$MACOS" >> "$GITHUB_STEP_SUMMARY"
+          test "$METADATA" = success
+          test -n "$REASON"
+          case "$MODE" in
+            light)
+              printf '\nRust intentionally skipped for the editorial allowlist.\n' >> "$GITHUB_STEP_SUMMARY"
+              test "$WINDOWS:$LINUX:$MACOS" = skipped:skipped:skipped
+              ;;
+            rust)
+              printf '\nLinux and macOS are available through manual full platform validation.\n' >> "$GITHUB_STEP_SUMMARY"
+              test "$WINDOWS:$LINUX:$MACOS" = success:skipped:skipped
+              ;;
+            matrix)
+              test "$WINDOWS:$LINUX:$MACOS" = success:success:success
+              ;;
+            *) exit 1 ;;
+          esac

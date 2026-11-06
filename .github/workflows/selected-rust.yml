@@ -1,0 +1,45 @@
+name: Selected Rust contracts
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        required: true
+        type: string
+      target:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    name: Rust contracts
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 20
+    env:
+      RUSTUP_TOOLCHAIN: 1.95.0-${{ inputs.target }}
+      RUST_TARGET: ${{ inputs.target }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Install pinned Rust
+        run: rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal --component rustfmt,clippy --no-self-update
+
+      - name: Verify checkout and runner
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          toolchain=$(rustc -vV | tr -d '\r')
+          grep -Fx "host: $RUST_TARGET" <<< "$toolchain"
+          printf 'Revision %s\n\nTarget %s\n' "$GITHUB_SHA" "$RUST_TARGET" >> "$GITHUB_STEP_SUMMARY"
+
+      - run: cargo fmt --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo build --locked --bins
+      - run: cargo test --locked
