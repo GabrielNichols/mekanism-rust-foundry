@@ -1,0 +1,268 @@
+name: Foundry PR policy
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      full-platforms:
+        description: Run Windows, Linux, and macOS Rust validation
+        type: boolean
+        default: true
+
+concurrency:
+  group: foundry-policy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  scope:
+    name: Change scope
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    env:
+      PR_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      FULL_PLATFORMS: ${{ inputs.full-platforms }}
+    outputs:
+      rust: ${{ steps.select.outputs.rust }}
+      metadata: ${{ steps.select.outputs.metadata }}
+      platforms: ${{ steps.select.outputs.platforms }}
+      reason: ${{ steps.select.outputs.reason }}
+      dependencies: ${{ steps.select.outputs.dependencies }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Select validation and check funding or prose
+        id: select
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            [[ "$PR_BASE_SHA" =~ ^[0-9a-f]{40}$ ]]
+            [[ "$PR_HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]
+            test "$(git rev-list --parents -n 1 HEAD)" = "$GITHUB_SHA $PR_BASE_SHA $PR_HEAD_SHA"
+            if git cat-file -e "$PR_BASE_SHA:tools/ci_policy.py" 2>/dev/null; then
+              git show "$PR_BASE_SHA:tools/ci_policy.py" | python3 -I -B -
+            else
+              printf '%s\n' 'rust=true' 'metadata=all' 'platforms=false' 'reason=base has no classifier' >> "$GITHUB_OUTPUT"
+            fi
+          else
+            python3 -I -B tools/ci_policy.py
+          fi
+
+      - name: Check changed editorial whitespace
+        if: ${{ steps.select.outputs.rust == 'false' && steps.select.outputs.metadata == 'none' }}
+        shell: bash
+        run: git diff --check "$PR_BASE_SHA" "$GITHUB_SHA"
+
+      - name: Report newly broken documentation links
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        continue-on-error: true
+        shell: bash
+        env:
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != pull_request ]]; then
+            python3 -I -B tools/check_doc_links.py
+          elif [[ "$PR_BASE_SHA" =~ ^[0-9a-f]{40}$ ]] &&
+               git cat-file -e "$PR_BASE_SHA:tools/check_doc_links.py" 2>/dev/null; then
+            git show "$PR_BASE_SHA:tools/check_doc_links.py" | python3 -I -B -
+          elif [[ "$HEAD_REPOSITORY" == "$GITHUB_REPOSITORY" ]]; then
+            python3 -I -B tools/check_doc_links.py
+          fi
+
+      - name: Test policy fixtures
+        if: ${{ steps.select.outputs.rust == 'true' || steps.select.outputs.metadata != 'none' }}
+        run: python3 -B -m unittest discover -s tools -p 'test_*policy.py'
+
+      - name: Verify public tree
+        if: ${{ steps.select.outputs.rust == 'true' || steps.select.outputs.metadata != 'none' }}
+        shell: pwsh
+        run: ./tools/check-public-tree.ps1
+
+  metadata:
+    name: Metadata contracts
+    needs: scope
+    if: ${{ needs.scope.outputs.metadata != 'none' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    env:
+      METADATA_CHECKS: ${{ needs.scope.outputs.metadata }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Verify catalog reconciliation fixtures
+        if: ${{ env.METADATA_CHECKS == 'catalog' || env.METADATA_CHECKS == 'all' }}
+        shell: pwsh
+        run: |
+          ./tools/test-issue-preview.ps1
+          ./tools/test-roadmap-sync.ps1
+          ./tools/test-github-labels.ps1
+          ./tools/test-roadmap-milestones.ps1
+
+      - name: Verify contributor triage fixture
+        if: ${{ env.METADATA_CHECKS == 'triage' || env.METADATA_CHECKS == 'all' }}
+        shell: pwsh
+        run: |
+          if ($env:METADATA_CHECKS -eq 'triage' -or (Test-Path tools/preview-github-triage.ps1) -or (Test-Path tools/read-github-triage.ps1) -or (Test-Path tools/test-github-triage.ps1)) {
+            ./tools/test-github-triage.ps1
+          } else {
+            Write-Host 'Contributor triage is absent from this revision.'
+          }
+
+  windows:
+    name: Windows x64
+    needs: scope
+    if: ${{ needs.scope.outputs.rust == 'true' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: windows-2022
+      target: x86_64-pc-windows-msvc
+
+  linux:
+    name: Linux x64
+    needs: scope
+    if: ${{ needs.scope.outputs.platforms == 'true' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: ubuntu-24.04
+      target: x86_64-unknown-linux-gnu
+
+  macos:
+    name: macOS x64
+    needs: scope
+    if: ${{ needs.scope.outputs.platforms == 'true' }}
+    uses: ./.github/workflows/selected-rust.yml
+    with:
+      runner: macos-15-intel
+      target: x86_64-apple-darwin
+
+  dependency-review:
+    name: Dependency review (advisory)
+    needs: scope
+    if: ${{ github.event_name == 'pull_request' && needs.scope.outputs.dependencies == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - name: Check added dependencies for known advisories
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Use the official action's comparison endpoint without its artifact fallback.
+          findings=$(gh api --paginate --slurp \
+            "repos/$GITHUB_REPOSITORY/dependency-graph/compare/$PR_BASE_SHA...$GITHUB_SHA" |
+            jq -ce '
+              if type != "array" or length == 0 or any(.[]; type != "array") then
+                error("Unexpected dependency comparison response")
+              else
+                [ .[][] | select(.change_type == "added") |
+                  {manifest, name, version, vulnerabilities: [
+                    .vulnerabilities[] | {severity, advisory_ghsa_id, advisory_url}
+                  ]} | select(.vulnerabilities | length > 0) ]
+              end
+            ')
+          count=$(jq -er 'length' <<< "$findings")
+          printf 'Dependency review (advisory) found %s added dependencies with known advisories.\n' \
+            "$count" >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$count" != 0 ]]; then
+            echo "::warning::Dependency review found added dependencies with known advisories. See the job log."
+            jq -c '.[]' <<< "$findings"
+          fi
+
+  gate:
+    name: Foundry PR gate
+    if: ${{ always() }}
+    needs: [scope, metadata, windows, linux, macos]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions: {}
+    steps:
+      - name: Require every selected result
+        shell: bash
+        env:
+          RUST_SELECTED: ${{ needs.scope.outputs.rust }}
+          METADATA_SELECTED: ${{ needs.scope.outputs.metadata }}
+          PLATFORMS_SELECTED: ${{ needs.scope.outputs.platforms }}
+          REASON: ${{ needs.scope.outputs.reason }}
+          SCOPE: ${{ needs.scope.result }}
+          METADATA: ${{ needs.metadata.result }}
+          WINDOWS: ${{ needs.windows.result }}
+          LINUX: ${{ needs.linux.result }}
+          MACOS: ${{ needs.macos.result }}
+        run: |
+          {
+            printf '## Required CI review summary\n\nTested revision: %s\n\n%s\n\n' "$GITHUB_SHA" "$REASON"
+            printf '| Lane | Result |\n| --- | --- |\n'
+            printf '| Scope | %s |\n| Metadata (%s) | %s |\n' "$SCOPE" "$METADATA_SELECTED" "$METADATA"
+            printf '| Windows Rust | %s |\n| Linux Rust | %s |\n| macOS Rust | %s |\n' "$WINDOWS" "$LINUX" "$MACOS"
+          } >> "$GITHUB_STEP_SUMMARY"
+          test "$SCOPE" = success
+          test -n "$REASON"
+          case "$METADATA_SELECTED" in
+            none)
+              printf '\nNo relevant metadata reconciliation changes.\n' >> "$GITHUB_STEP_SUMMARY"
+              test "$METADATA" = skipped ;;
+            catalog|triage|all) test "$METADATA" = success ;;
+            *) exit 1 ;;
+          esac
+          case "$RUST_SELECTED" in
+            false)
+              printf '\nNo relevant Rust contract changes.\n' >> "$GITHUB_STEP_SUMMARY"
+              test "$WINDOWS" = skipped ;;
+            true) test "$WINDOWS" = success ;;
+            *) exit 1 ;;
+          esac
+          case "$PLATFORMS_SELECTED" in
+            false)
+              printf '\nLinux and macOS Rust run on manual full validation.\n' >> "$GITHUB_STEP_SUMMARY"
+              test "$LINUX:$MACOS" = skipped:skipped ;;
+            true) test "$RUST_SELECTED:$LINUX:$MACOS" = true:success:success ;;
+            *) exit 1 ;;
+          esac
+
+      - name: Summarize declared PR evidence
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        continue-on-error: true
+        shell: bash
+        run: |
+          python3 -I -B - <<'PY'
+          import json
+          import os
+          import re
+
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event:
+              pr = json.load(event)["pull_request"]
+          head = pr["head"]["sha"]
+          if not re.fullmatch(r"[0-9a-f]{40}", head):
+              raise ValueError("Invalid PR head revision")
+          body = re.sub(r"<!--.*?-->", "", pr.get("body") or "", flags=re.S)
+          body = re.sub(r"(?ms)^ {0,3}(\x60{3,}|~{3,})[^\n]*\n.*?^ {0,3}\1[ \t]*$", "", body)
+          commits = re.findall(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence commit:[ \t]*(\S+)", body)
+          if commits:
+              status = "Matches PR head or tested merge" if len(commits) == 1 and commits[0].lower() in {
+                  head, os.environ["GITHUB_SHA"],
+              } else "Stale, invalid, or ambiguous commit declaration"
+          elif re.search(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence:[ \t]*Pending\b", body):
+              status = "Declared pending"
+          elif re.search(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence kind:[ \t]*Java\b", body):
+              status = "Java evidence declared without a commit"
+          else:
+              status = "No evidence commit declared"
+          checks = f'{os.environ["GITHUB_SERVER_URL"]}/{os.environ["GITHUB_REPOSITORY"]}/pull/{int(pr["number"])}/checks'
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write(f"\nPR head: {head}\n\nEvidence commit status: {status}.\n\n")
+              summary.write(f"[All PR checks, including advisory and security checks]({checks})\n")
+          PY

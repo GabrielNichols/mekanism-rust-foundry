@@ -1,0 +1,28 @@
+name: Cancel CI on PR closure
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  cancel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      # The checkout is the trusted base event revision. Never check out the PR.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: tools/github_maintenance.py
+          sparse-checkout-cone-mode: false
+      - name: Cancel only this PR's unfinished CI runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I -B tools/github_maintenance.py cancel

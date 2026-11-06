@@ -2,7 +2,7 @@
 
 ![Mekanism Rust Foundry Parity Lab, an original industrial casting line](assets/foundry-header.jpg)
 
-[![Rust contracts on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
+[![Foundry CI on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/pr-gate.yml/badge.svg?branch=main&event=push)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/pr-gate.yml?query=branch%3Amain+event%3Apush)
 [![CodeQL on main](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/GabrielNichols/mekanism-rust-foundry/actions/workflows/github-code-scanning/codeql?query=branch%3Amain)
 [![Parity Lab Preview](assets/badges/parity-lab.svg)](https://github.com/GabrielNichols/mekanism-rust-foundry/releases/tag/v0.1.0-preview.1)
 [![Rust 1.95.0](assets/badges/rust.svg)](#quickstart-on-windows-x64)

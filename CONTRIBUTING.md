@@ -72,7 +72,7 @@ cargo test --locked
 
 Socket tests require local loopback access. Once dependencies are cached, `--offline` can make dependency resolution explicit.
 
-The [contributor CI workflow](.github/workflows/ci.yml) is configured to run these Rust unit/contract checks on Windows x64 with Rust 1.95.0, rustfmt and Clippy. It installs the explicit toolchain through the hosted image's Rustup and pins [official checkout](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1) to an immutable commit, with read-only repository permissions and no persisted Git credentials. It does not download Minecraft, launch game instances, use repository secrets or publish anything. A green CI run does not qualify in-game parity, future-port equivalence or optimization. Real-runtime campaigns and their applicable gates remain separate requirements.
+The [contributor CI workflow](.github/workflows/pr-gate.yml) selects checks from the changed files. When Rust validation is selected, the default target is Windows x64 with Rust 1.95.0, rustfmt and Clippy. It installs the explicit toolchain through the hosted image's Rustup and pins [official checkout](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1) to an immutable commit, with read-only repository permissions and no persisted Git credentials. It does not download Minecraft, launch game instances, use repository secrets or publish anything. A green CI run does not qualify in-game parity, future-port equivalence or optimization. Real-runtime campaigns and their applicable gates remain separate requirements.
 
 While a Windows campaign is running, its binary and all pinned jars must remain unchanged. Use a separate target directory for development checks:
 
