@@ -578,6 +578,8 @@ enum Cut {
     AfterFlush,
 }
 
+type TrialEvidence = (Value, Value, Option<Value>);
+
 fn trial(
     environment: &Environment,
     output: &Path,
@@ -586,7 +588,7 @@ fn trial(
     observer: Observer,
     cut: Cut,
     tick_rate: u16,
-) -> LabResult<(Value, Value, Option<Value>)> {
+) -> LabResult<TrialEvidence> {
     let dir = output.join("instance");
     fs::create_dir_all(&dir).map_err(|error| error.to_string())?;
     let timer = Instant::now();
@@ -773,12 +775,33 @@ fn campaign(environment: &Environment, output: &Path, profile: Profile) -> LabRe
             "error":result.as_ref().err()});
         (result, timing)
     });
-    let attempts: Vec<_> = outcomes.iter().map(|(_, timing)| timing).collect();
+    let (outcomes, attempts): (Vec<_>, Vec<_>) = outcomes.into_iter().unzip();
     lab::atomic_json(&output.join("attempts.json"), &attempts)?;
+    let results = compare_campaign_trials(&jobs, outcomes)?;
+    lab::atomic_json(
+        &output.join("campaign.json"),
+        &json!({
+            "repeats":profile.repeats,"profile":profile.describe(),"campaign_wall_ns":elapsed_ns(campaign_start),
+            "trials":results,
+        }),
+    )
+}
+
+fn compare_campaign_trials(
+    jobs: &[(String, Observer, Cut)],
+    outcomes: Vec<LabResult<TrialEvidence>>,
+) -> LabResult<Vec<Value>> {
+    if outcomes.len() != jobs.len() {
+        return Err(format!(
+            "campaign.trials: expected {} worker results, received {}",
+            jobs.len(),
+            outcomes.len()
+        ));
+    }
     let mut results = Vec::new();
     let mut reference = None;
     let mut reference_cut = None;
-    for ((treatment, _, _), (outcome, _)) in jobs.into_iter().zip(outcomes) {
+    for ((treatment, _, _), outcome) in jobs.iter().zip(outcomes) {
         let (result, terminal, durable_cut) =
             outcome.map_err(|error| format!("{treatment}: {error}"))?;
         let checkpoints = [
@@ -803,13 +826,7 @@ fn campaign(environment: &Environment, output: &Path, profile: Profile) -> LabRe
         }
         results.push(json!({"treatment":treatment,"evidence":result}));
     }
-    lab::atomic_json(
-        &output.join("campaign.json"),
-        &json!({
-            "repeats":profile.repeats,"profile":profile.describe(),"campaign_wall_ns":elapsed_ns(campaign_start),
-            "trials":results,
-        }),
-    )
+    Ok(results)
 }
 
 pub fn run(environment_path: &Path, output: &Path, repeats: u8) -> LabResult<()> {
@@ -942,6 +959,47 @@ mod tests {
                 }}
             }}]}
         }})
+    }
+
+    #[test]
+    fn observer_campaign_rejects_missing_worker_evidence() {
+        let jobs = [
+            (
+                "1-absent-continuous".into(),
+                Observer::Absent,
+                Cut::Continuous,
+            ),
+            (
+                "1-installed-disabled".into(),
+                Observer::Disabled,
+                Cut::Continuous,
+            ),
+            (
+                "1-enabled-every-tick".into(),
+                Observer::EveryTick,
+                Cut::Continuous,
+            ),
+        ];
+        let trial = json!({
+            "initial": {"progress": 0},
+            "cut": {"progress": 73},
+            "first_resume": {"progress": 74},
+            "terminal": {"progress": 0},
+        });
+        let terminal = machine("0", "1", "mekanism:dust_iron", "2");
+        let mut outcomes = vec![Ok((trial, terminal, None)); jobs.len()];
+        assert_eq!(
+            compare_campaign_trials(&jobs, outcomes.clone())
+                .unwrap()
+                .len(),
+            jobs.len()
+        );
+
+        assert!(outcomes.remove(1).is_ok());
+        assert_eq!(
+            compare_campaign_trials(&jobs, outcomes).unwrap_err(),
+            "campaign.trials: expected 3 worker results, received 2"
+        );
     }
 
     #[test]
