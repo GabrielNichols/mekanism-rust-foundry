@@ -5,11 +5,41 @@ use crate::LabResult;
 use serde_json::{Value, json};
 use std::{fs, path::Path, time::Instant};
 
+const ENRICHMENT_CHAMBER: &str = "mekanism:enrichment_chamber";
+const IRON_FROM_ORE: &str = "mekanism:processing/iron/dust/from_ore";
+const ENRICHING: &str = "mekanism:enriching";
+
+fn validate_enrichment_binding(catalog: &Value) -> LabResult<()> {
+    let blocks = &catalog["registries"]["blocks"];
+    if !blocks
+        .as_array()
+        .is_some_and(|blocks| blocks.iter().any(|block| block == ENRICHMENT_CHAMBER))
+    {
+        return Err(format!(
+            "effective catalog drift: missing block {ENRICHMENT_CHAMBER}"
+        ));
+    }
+    let recipe = catalog["recipes"]
+        .get(IRON_FROM_ORE)
+        .ok_or_else(|| format!("effective catalog drift: missing recipe {IRON_FROM_ORE}"))?;
+    for field in ["type", "serializer"] {
+        let actual = &recipe[field];
+        if actual.as_str() != Some(ENRICHING) {
+            return Err(format!(
+                "effective catalog drift: recipe {IRON_FROM_ORE} {field} expected {ENRICHING}, found {actual}"
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn compare(baseline: &Value, candidate: &Value) -> LabResult<()> {
-    let baseline = baseline.as_object().ok_or("missing baseline catalog")?;
-    let candidate = candidate.as_object().ok_or("missing candidate catalog")?;
-    for field in baseline.keys().chain(candidate.keys()) {
-        if baseline.get(field) != candidate.get(field) {
+    let baseline_fields = baseline.as_object().ok_or("missing baseline catalog")?;
+    let candidate_fields = candidate.as_object().ok_or("missing candidate catalog")?;
+    validate_enrichment_binding(baseline)?;
+    validate_enrichment_binding(candidate)?;
+    for field in baseline_fields.keys().chain(candidate_fields.keys()) {
+        if baseline_fields.get(field) != candidate_fields.get(field) {
             return Err(format!("effective catalog differs at {field}"));
         }
     }
@@ -143,8 +173,49 @@ mod tests {
     fn fixture() -> Value {
         json!({"modules":{"mekanism":"10.7.19"},
             "registries":{"blocks":["mekanism:enrichment_chamber","mekanism:metallurgic_infuser"]},
-            "recipes":{"mekanism:enriching/example":{"type":"mekanism:enriching","serializer":"mekanism:enriching"}},
+            "recipes":{(IRON_FROM_ORE):{"type":"mekanism:enriching","serializer":"mekanism:enriching"},
+                "mekanism:enriching/example":{"type":"mekanism:enriching","serializer":"mekanism:enriching"}},
             "packs":["vanilla"],"effective_config":{"mekanism-common.toml":"pinned"}})
+    }
+
+    #[test]
+    fn rejects_identical_catalogs_missing_enrichment_chamber() {
+        let mut catalog = fixture();
+        catalog["registries"]["blocks"] = json!(["mekanism:metallurgic_infuser"]);
+        assert_eq!(
+            compare(&catalog, &catalog),
+            Err("effective catalog drift: missing block mekanism:enrichment_chamber".into())
+        );
+    }
+
+    #[test]
+    fn rejects_identical_catalogs_missing_iron_from_ore() {
+        let mut catalog = fixture();
+        catalog["recipes"]
+            .as_object_mut()
+            .unwrap()
+            .remove(IRON_FROM_ORE);
+        assert_eq!(
+            compare(&catalog, &catalog),
+            Err(format!(
+                "effective catalog drift: missing recipe {IRON_FROM_ORE}"
+            ))
+        );
+    }
+
+    #[test]
+    fn rejects_rebound_iron_from_ore_type_or_serializer() {
+        let baseline = fixture();
+        for field in ["type", "serializer"] {
+            let mut candidate = fixture();
+            candidate["recipes"][IRON_FROM_ORE][field] = json!("mekanism:crushing");
+            assert_eq!(
+                compare(&baseline, &candidate),
+                Err(format!(
+                    "effective catalog drift: recipe {IRON_FROM_ORE} {field} expected mekanism:enriching, found \"mekanism:crushing\""
+                ))
+            );
+        }
     }
 
     #[test]
