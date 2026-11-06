@@ -210,5 +210,8 @@ fn empty_or_duplicate_artifact_roles_are_rejected() {
 
 #[test]
 fn shadow_ci_intentional_failure() {
-    assert_eq!("observed", "expected", "shadow CI must block a Rust test failure");
+    assert_eq!(
+        "observed", "expected",
+        "shadow CI must block a Rust test failure"
+    );
 }
