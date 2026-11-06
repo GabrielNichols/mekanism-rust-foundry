@@ -61,6 +61,22 @@ jobs:
         shell: bash
         run: git diff --check "$PR_BASE_SHA" "$GITHUB_SHA"
 
+      - name: Report newly broken documentation links
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        continue-on-error: true
+        shell: bash
+        env:
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != pull_request ]]; then
+            python3 -I -B tools/check_doc_links.py
+          elif [[ "$PR_BASE_SHA" =~ ^[0-9a-f]{40}$ ]] &&
+               git cat-file -e "$PR_BASE_SHA:tools/check_doc_links.py" 2>/dev/null; then
+            git show "$PR_BASE_SHA:tools/check_doc_links.py" | python3 -I -B -
+          elif [[ "$HEAD_REPOSITORY" == "$GITHUB_REPOSITORY" ]]; then
+            python3 -I -B tools/check_doc_links.py
+          fi
+
       - name: Test policy fixtures
         if: ${{ steps.select.outputs.rust == 'true' || steps.select.outputs.metadata != 'none' }}
         run: python3 -B -m unittest discover -s tools -p 'test_*policy.py'
@@ -150,8 +166,12 @@ jobs:
           LINUX: ${{ needs.linux.result }}
           MACOS: ${{ needs.macos.result }}
         run: |
-          printf 'Revision %s\n\n%s\n\nScope %s, metadata %s (%s), Windows %s, Linux %s, macOS %s\n' \
-            "$GITHUB_SHA" "$REASON" "$SCOPE" "$METADATA" "$METADATA_SELECTED" "$WINDOWS" "$LINUX" "$MACOS" >> "$GITHUB_STEP_SUMMARY"
+          {
+            printf '## Required CI review summary\n\nTested revision: %s\n\n%s\n\n' "$GITHUB_SHA" "$REASON"
+            printf '| Lane | Result |\n| --- | --- |\n'
+            printf '| Scope | %s |\n| Metadata (%s) | %s |\n' "$SCOPE" "$METADATA_SELECTED" "$METADATA"
+            printf '| Windows Rust | %s |\n| Linux Rust | %s |\n| macOS Rust | %s |\n' "$WINDOWS" "$LINUX" "$MACOS"
+          } >> "$GITHUB_STEP_SUMMARY"
           test "$SCOPE" = success
           test -n "$REASON"
           case "$METADATA_SELECTED" in
@@ -175,3 +195,37 @@ jobs:
             true) test "$RUST_SELECTED:$LINUX:$MACOS" = true:success:success ;;
             *) exit 1 ;;
           esac
+
+      - name: Summarize declared PR evidence
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        continue-on-error: true
+        shell: bash
+        run: |
+          python3 -I -B - <<'PY'
+          import json
+          import os
+          import re
+
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event:
+              pr = json.load(event)["pull_request"]
+          head = pr["head"]["sha"]
+          if not re.fullmatch(r"[0-9a-f]{40}", head):
+              raise ValueError("Invalid PR head revision")
+          body = re.sub(r"<!--.*?-->", "", pr.get("body") or "", flags=re.S)
+          body = re.sub(r"(?ms)^ {0,3}(\x60{3,}|~{3,})[^\n]*\n.*?^ {0,3}\1[ \t]*$", "", body)
+          commits = re.findall(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence commit:[ \t]*(\S+)", body)
+          if commits:
+              status = "Matches PR head or tested merge" if len(commits) == 1 and commits[0].lower() in {
+                  head, os.environ["GITHUB_SHA"],
+              } else "Stale, invalid, or ambiguous commit declaration"
+          elif re.search(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence:[ \t]*Pending\b", body):
+              status = "Declared pending"
+          elif re.search(r"(?im)^[ \t]*(?:[-*][ \t]+)?Evidence kind:[ \t]*Java\b", body):
+              status = "Java evidence declared without a commit"
+          else:
+              status = "No evidence commit declared"
+          checks = f'{os.environ["GITHUB_SERVER_URL"]}/{os.environ["GITHUB_REPOSITORY"]}/pull/{int(pr["number"])}/checks'
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write(f"\nPR head: {head}\n\nEvidence commit status: {status}.\n\n")
+              summary.write(f"[All PR checks, including advisory and security checks]({checks})\n")
+          PY

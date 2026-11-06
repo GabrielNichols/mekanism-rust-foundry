@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1
+    groups:
+      action-versions:
+        applies-to: version-updates
+        patterns: ["*"]
+      action-security:
+        applies-to: security-updates
+        patterns: ["*"]

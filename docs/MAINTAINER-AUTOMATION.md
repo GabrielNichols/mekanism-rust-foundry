@@ -16,3 +16,11 @@ The advanced workflow never uploads a CodeQL database. The existing required Fou
 - For completed Java proof in a PR, add **Evidence kind: Java**, **Evidence commit: FULL_SHA** and **Negative control: OBSERVED_RESULT** under Verification or Qualification. The advisory checks that the supplied full SHA is the PR head or the tested merge revision. If the control does not apply, state why. Use **Evidence: Pending - REASON** for proof still owed. The maintainer verifies the evidence and applicable gates.
 - When a PR against main closes, the cancellation workflow cancels active pull-request runs only when their fork and branch match and the PR link matches, or when the unlinked run matches the current head and no open PR uses that fork and branch. Older runs with ambiguous associations are left alone. The job executes only trusted base code.
 - Comment **/claim** on an open unassigned issue with **status:ready-to-claim**. If GitHub accepts the contributor as an assignee, the bot removes the ready label. Maintainers handle Project status, releases of claims and exceptions. A Project status change remains a separate review decision.
+
+
+## Low-noise maintenance
+
+- Dependabot checks GitHub Actions monthly and groups version updates into at most one open routine PR. Action security updates have their own group and follow the repository's security update policy. Notification delivery follows personal GitHub settings.
+- GitHub can generate release notes from the existing PR type labels. Generating notes does not publish a release.
+- The PR policy's scope job reports newly broken repository-relative links and Markdown anchors in added or modified Markdown. It does not check external URLs or block the gate.
+- The existing gate summary shows the selected CI results and tested revision. On PRs it also shows whether the declared evidence commit matches that PR revision and links to the full checks page.
