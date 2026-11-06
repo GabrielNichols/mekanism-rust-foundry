@@ -10,7 +10,7 @@ Place one Basic Enriching Factory in a verified ticking chunk on the server. Kee
 
 - **A, blocked.** Seed one iron ore and a full stack of the recipe output in its output slot. Record the verified stack limit and fixture-added count separately from production.
 - **B, open.** Seed one iron ore and leave its output slot empty.
-- **Shared FE.** Precharge through a verified NeoForge energy capability with enough stored FE for B to finish under the effective factory config. Record the applied charge and starting buffer. Exclude external energy transfers, item transfers and any further fixture mutations during observation.
+- **Shared FE.** Precharge through a verified NeoForge energy capability with enough stored FE for both lanes to finish under the effective factory config. Record the applied charge and starting buffer. Exclude external energy transfers, item transfers and any further fixture mutations during observation.
 
 While frozen, verify the placed block, recipe, sorting state, lane stacks, zero progress in both lanes and the shared buffer. Require an independent inventory read through the mapped public handlers to corroborate the two output conditions. Advance the server at the serial 20 ticks/s baseline within a bounded tick budget agreed before the run.
 
@@ -24,6 +24,10 @@ Capture each tick on the authoritative server thread. Record the world tick and 
 | B completes, at its first observed output change | Input, full output and baseline progress unchanged. | One ore consumed and two dust produced. Record completion progress and its reset behavior as observed. | Record the ending buffer and total debit as starting FE minus ending FE. Preserve each per-tick buffer change. Check final lane stacks against independently decoded saved NBT after flushing. |
 
 Stop as incomplete if the preconditions, typed per-lane progress, independent output witnesses or either boundary cannot be established. Retain the first observed divergence if Java contradicts a hypothesis. A shared buffer measures the total debit and cannot attribute it to individual lanes.
+
+## Matched positive control
+
+Repeat from a fresh world with the same pinned profile, bindings, lane inputs, starting FE and tick budget. The only setup difference is that lane A starts with an empty output. Independently verify that A advances and produces the expected output. This control distinguishes output blockage from an invalid lane binding, configuration or energy budget. Keep its evidence separate from the blocked run.
 
 ## Negative control
 
