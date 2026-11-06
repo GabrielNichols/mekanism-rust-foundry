@@ -86,6 +86,7 @@ public final class ServerBridge {
                 JsonObject extra=new JsonObject();
                 switch(action) {
                     case "setup_machine": MachineProbe.setup(server);break;
+                    case "setup_factory": FactoryProbe.setup(server,cmd.get("blocked").getAsBoolean());break;
                     case "insert_input": MachineProbe.insert(server,cmd);break;
                     case "charge_machine": extra.add("energy_receipt",MachineProbe.charge(server,cmd));break;
                     case "drain_machine": extra.add("energy_receipt",MachineProbe.drain(server,cmd));break;
@@ -186,6 +187,7 @@ public final class ServerBridge {
         var blockEntity=server.overworld().getBlockEntity(TARGET);
         if(blockEntity!=null) out.addProperty("target_nbt",blockEntity.saveWithFullMetadata(server.registryAccess()).toString());
         if(blockEntity!=null&&BuiltInRegistries.BLOCK.getKey(server.overworld().getBlockState(TARGET).getBlock()).toString().equals("mekanism:enrichment_chamber"))out.add("machine",MachineProbe.snapshot(server));
+        if(blockEntity!=null&&out.get("target_block").getAsString().equals(FactoryProbe.BLOCK))out.add("factory",FactoryProbe.snapshot(server));
         var barrel=server.overworld().getBlockEntity(BARREL);
         out.addProperty("barrel_count",barrel instanceof Container c?c.getItem(0).getCount():0);
         JsonArray players=new JsonArray();

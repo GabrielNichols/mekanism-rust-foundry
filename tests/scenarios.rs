@@ -10,6 +10,19 @@ fn valid() -> Value {
 fn valid_case_is_accepted() {
     case(valid()).validate().unwrap();
 }
+
+#[test]
+fn factory_setup_requires_a_boolean_flag_on_a_dedicated_server() {
+    let mut v = valid();
+    v["actions"][0]["action"] = json!("setup_factory");
+    assert!(case(v.clone()).validate().is_err());
+    v["actions"][0]["args"] = json!({"blocked": "false"});
+    assert!(case(v.clone()).validate().is_err());
+    v["actions"][0]["args"] = json!({"blocked": false});
+    case(v.clone()).validate().unwrap();
+    v["client"] = json!(true);
+    assert!(case(v).validate().is_err());
+}
 #[test]
 fn case_with_no_assertions_is_rejected() {
     let mut v = valid();
