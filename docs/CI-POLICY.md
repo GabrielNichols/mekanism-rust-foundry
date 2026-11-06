@@ -1,6 +1,6 @@
 # Foundry CI policy
 
-The candidate workflow reports one verdict for pull requests against main. During shadow validation, the existing required Windows check and main workflow remain authoritative.
+The workflow reports one verdict for pull requests against main and for main pushes. The required Foundry PR gate checks that each selected job succeeded.
 
 | Lane | Selection | Evidence |
 | --- | --- | --- |

@@ -82,7 +82,7 @@ class PolicyTests(unittest.TestCase):
         self.check(changes(("M", "src/main.rs"), ("A", "tools/test-github-triage.ps1")), True, "triage")
         self.check(changes(("M", "docs/WIKI.md"), ("M", "src/main.rs")), True, "none")
         for path in (
-            "AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md",
+            "AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md", "docs/SECURITY-OPERATIONS.md",
             "docs/releases/README.md", "docs/planning/roadmap.json",
             "cases/server-inventory.json", "adapters/neoforge/build.ps1",
             "tools/check-public-tree.ps1", ".github/CODEOWNERS", ".github/workflows/ci.yml",
