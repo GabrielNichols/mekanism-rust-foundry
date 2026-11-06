@@ -70,7 +70,28 @@ cargo test --locked
 
 Socket tests require local loopback access. Once dependencies are cached, `--offline` can make dependency resolution explicit.
 
-The [contributor CI workflow](.github/workflows/ci.yml) is configured to run these Rust unit/contract checks on Windows x64 with Rust 1.95.0, rustfmt and Clippy. It installs the explicit toolchain through the hosted image's Rustup and pins [official checkout](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1) to an immutable commit, with read-only repository permissions and no persisted Git credentials. It does not download Minecraft, launch game instances, use repository secrets or publish anything. A green CI run does not qualify in-game parity, future-port equivalence or optimization. Real-runtime campaigns and their applicable gates remain separate requirements.
+The [contributor CI workflow](.github/workflows/ci.yml) keeps the required `Windows x64 / Rust 1.95.0` job on `windows-2022`. It also defines a Rust-only matrix for Ubuntu 24.04 x64 (`ubuntu-24.04`) and macOS 15 x64 (`macos-15-intel`). Each Unix job records its OS, architecture, native Rust target, Git event and checked-out revision. On a pull request, the default checkout tests GitHub's synthetic merge commit. Inspect the job's revision, event and executed build and test steps before citing a pass.
+
+On Ubuntu or Intel macOS, run the same checks from the repository root in Bash:
+
+```bash
+# Ubuntu x64. Use x86_64-apple-darwin on Intel macOS.
+target=x86_64-unknown-linux-gnu
+export RUSTUP_TOOLCHAIN="1.95.0-$target"
+rustup toolchain install "$RUSTUP_TOOLCHAIN" --profile minimal --component rustfmt,clippy --no-self-update
+uname -sr
+uname -m
+git rev-parse HEAD
+rustc -vV
+cargo fmt --check
+cargo clippy --locked --target "$target" --all-targets -- -D warnings
+cargo build --locked --target "$target" --bins
+cargo test --locked --target "$target"
+```
+
+To run the same workflow on a public fork, enable Actions there and push the workflow to the fork's `main`. You can also run **Rust contracts** from the fork's Actions tab after the workflow is on its default branch. Fork results are independent of the required check on the upstream pull request.
+
+The workflow uses standard [GitHub-hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners), which are free for public repositories. Each job has a 20-minute timeout. At most two Unix jobs run concurrently in each workflow run, and a newer run for the same PR or ref cancels the older one. The workflow pins [official checkout](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1), uses read-only repository permissions, and leaves no Git credentials in the checkout. It passes no repository secrets, caches or uploads no artifacts, and runs only the Rust checks and Windows contributor checks. Dedicated Java, client graphics and distribution each require their own evidence.
 
 While a Windows campaign is running, its binary and all pinned jars must remain unchanged. Use a separate target directory for development checks:
 

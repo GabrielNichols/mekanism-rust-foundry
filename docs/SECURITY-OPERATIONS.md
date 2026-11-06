@@ -8,7 +8,7 @@ CODEOWNERS requests the maintainer on contributor PRs. The maintainer reviews co
 
 ## Untrusted contributions
 
-Pull requests run on GitHub-hosted ephemeral Windows runners using `pull_request`. The workflow grants `contents: read`, passes no repository secrets and keeps Git credentials out of the checkout. Actions use immutable commits. The job checks formatting, Clippy, Rust contracts and offline issue mapping. It does not run a game or publish assets. Do not add privileged pull request triggers, persistent runners, shared credentials, or release permissions to this job. [GitHub Actions secure use](https://docs.github.com/en/actions/reference/security/secure-use)
+Pull requests use `pull_request` on standard GitHub-hosted Windows, Ubuntu x64 and macOS x64 runners. The Windows job remains the required check. The workflow grants `contents: read`, passes no repository secrets and keeps Git credentials out of the checkout. Actions use immutable commits. The Windows job checks formatting, Clippy, Rust contracts and offline issue mapping. The Ubuntu and macOS jobs check formatting and Clippy, build the Rust binaries and run the Rust tests. All jobs run without Minecraft or publishing permissions. Do not add privileged pull request triggers, persistent runners, shared credentials, or release permissions to this job. [GitHub Actions secure use](https://docs.github.com/en/actions/reference/security/secure-use)
 
 Maintainers review edits to workflows and build scripts before trusting their results. The check app binding authenticates the check producer. Review is still required for changes to what the workflow actually runs.
 

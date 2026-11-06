@@ -74,9 +74,10 @@ impl ManagedProcess {
             use std::os::unix::process::CommandExt;
             command.process_group(0);
         }
-        let mut child = command.spawn().map_err(|e| format!("spawn: {e}"))?;
+        let child = command.spawn().map_err(|e| format!("spawn: {e}"))?;
         #[cfg(windows)]
         {
+            let mut child = child;
             use std::os::windows::io::AsRawHandle;
             use windows_sys::Win32::{Foundation::CloseHandle, System::JobObjects::*};
             // The job handle is owned here; the process handle is borrowed from Child.
