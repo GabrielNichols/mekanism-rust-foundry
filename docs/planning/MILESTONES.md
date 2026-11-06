@@ -64,6 +64,8 @@ Scoped audit and reproducibility. Exit with the declared platform matrix, exclus
 
 Future Java/Rust TDD entry. Exit with a reviewed fixture and sealed Java expectation that can expose the first real candidate behavior mismatch. This milestone grants no earlier implementation authority.
 
+Use the [Next Release view design](CONTRIBUTOR-TRIAGE.md#project-views) to track a reviewed release slice across phase milestones.
+
 ## Maintainer synchronization
 
 Preview from a reviewed checkout. Use an optional `-Ids RF-SCOPE-01` to limit the batch. Existing manual assignments are surfaced and preserved. A missing identity, a closed destination for an unassigned issue, or an unreviewed write stops application.

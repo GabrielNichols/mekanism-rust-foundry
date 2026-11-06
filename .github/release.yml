@@ -1,0 +1,12 @@
+changelog:
+  categories:
+    - title: Behavior and scenario coverage
+      labels: ['type:behavior', 'type:scenario']
+    - title: Measurements
+      labels: ['type:measurement']
+    - title: Tooling and automation
+      labels: ['type:tooling']
+    - title: Documentation
+      labels: ['type:docs']
+    - title: Other changes
+      labels: ['*']
