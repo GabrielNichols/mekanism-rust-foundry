@@ -16,6 +16,8 @@ Describe the smallest change and any remaining binding gaps.
 - [ ] Sanitized evidence and seal linked
 - [ ] Private worlds, captures, raw logs, binaries and runtime data excluded
 
+Evidence: <!-- Link a sanitized summary, or state Pending or Not applicable and explain why. -->
+
 ## Qualification
 
 State the exact profile and behavior demonstrated. Explain any open gates.

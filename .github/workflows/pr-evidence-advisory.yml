@@ -1,0 +1,86 @@
+name: Foundry PR evidence advisory
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, edited, synchronize, ready_for_review]
+
+permissions: {}
+
+concurrency:
+  group: foundry-pr-evidence-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  evidence:
+    name: PR evidence advisory
+    if: ${{ github.event.pull_request.draft == false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Check declared verification and evidence
+        shell: bash
+        run: |
+          python3 -I -B - <<'PY'
+          import json
+          import os
+          import re
+
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event:
+              pull_request = json.load(event).get("pull_request", {})
+
+          # Treat contributor text as data. Only fixed messages reach the log.
+          body = re.sub(r"<!--.*?-->", "", pull_request.get("body") or "", flags=re.S)
+          body = re.sub(r"(?ms)^ {0,3}(`{3,}|~{3,})[^\n]*\n.*?^ {0,3}\1[ \t]*$", "", body)
+          sections = {}
+          current = None
+          for line in body.splitlines():
+              heading = re.match(r"^ {0,3}#{1,2}\s+(.+?)\s*#*\s*$", line)
+              if heading:
+                  current = heading[1].casefold()
+                  sections.setdefault(current, [])
+              elif current and line.strip() and not re.match(r"^\s*[-*]\s+\[[ xX]\]", line):
+                  sections[current].append(line.strip())
+
+          prompts = {
+              "task": {"closes #", "task id and declared scope"},
+              "change": {"describe the smallest change and any remaining binding gaps."},
+              "verification": {"evidence:"},
+              "qualification": {"evidence:", "state the exact profile and behavior demonstrated. explain any open gates."},
+          }
+          findings = []
+          for name, placeholders in prompts.items():
+              lines = sections.get(name, [])
+              if not any(line.casefold() not in placeholders for line in lines):
+                  findings.append(f"Fill in the {name.title()} section with a concrete response.")
+
+          evidence_lines = sections.get("verification", []) + sections.get("qualification", [])
+          declaration = re.compile(r"^(?:[-*]\s+)?(?:sanitized )?evidence:\s*(.+)$", re.I)
+          locator = re.compile(
+              r"^(?:\[[^\]\n]+\]\((?:https://[^\s)]+|(?:\./)?evidence/[^\s)]+)\)"
+              r"|https://\S+|(?:\./)?evidence/\S+)(?:\s|$)"
+          )
+          explanation = re.compile(r"^(?:not applicable|pending)\s*(?:[-\u2013\u2014:]\s*|because\s+)\w", re.I)
+          evidence_found = any(
+              match and (locator.match(match[1]) or explanation.match(match[1]))
+              for match in map(declaration.match, evidence_lines)
+          )
+          if not evidence_found:
+              findings.append(
+                  "Add an Evidence: line under Verification or Qualification. Link a sanitized "
+                  "summary, or state Pending or Not applicable and explain why."
+              )
+
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write("## PR evidence advisory\n\n")
+              if findings:
+                  for finding in findings:
+                      print(f"::warning::{finding}")
+                      summary.write(f"- {finding}\n")
+              else:
+                  summary.write("The PR supplied the expected sections and an evidence declaration.\n")
+              summary.write(
+                  "\nA maintainer still checks whether the evidence supports the change "
+                  "and whether any pending qualification blocks merge.\n"
+              )
+          PY
