@@ -8,6 +8,7 @@ The workflow reports one verdict for pull requests against main and for main pus
 | Policy fixtures and public tree | Rust, metadata or conservative changes | Routing contracts and tracked file safety |
 | Metadata | Changed catalog or triage inputs, conservative changes and manual validation | Relevant offline fixtures. A triage change runs its triage fixture. A catalog change runs its catalog fixtures. |
 | Windows Rust | Rust, conservative changes and manual validation | Pinned formatting, Clippy, locked build and contracts |
+| Dependency review | PRs with root Cargo.toml or Cargo.lock changes in the tested merge | Known advisories on added dependencies from the GitHub dependency graph. Findings warn, and service errors fail the separate advisory job. |
 | Linux and macOS Rust | Manual full validation | Independent x64 results with the same locked Rust commands |
 | Headless Java and parity | Reviewed refs in isolated environments | Pinned reference, semantic witnesses, seals and teardown. [Platform audit](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/141). |
 | Release and packaging | Maintainer review and explicit publication | Verified immutable tag, installed artifacts, checksums and provenance. [Release policy](releases/README.md). |
@@ -17,6 +18,12 @@ Funding and prose-only changes to ordinary Markdown at the repository root or un
 The base branch supplies the classifier for PR selection. The classifier uses local Git, including both the proposed diff and the effect on the tested merge. It issues no GraphQL or REST calls. Initial PR adoption runs Rust and metadata. Main pushes classify the complete previous-to-landed range with the landed policy and run conservative validation for an unverifiable range. A mismatch between the checked-out merge and the event fails the gate. A conflicting PR may have no merge ref and requires conflict resolution before validation.
 
 The final gate requires success for every selected job. It permits a skip only when the policy explicitly leaves that job unselected. A failed, cancelled or unexpectedly skipped selected job cannot produce a successful gate. PR work uses ephemeral standard runners, pinned checkout, a read-only token and no persisted checkout credentials or Actions artifacts. The gate has no token permissions and checks out no code. Workflow changes need maintainer review because binding a required check to the Actions app does not make proposed workflow YAML immutable. Keep trusted runners, private Java artifacts and publishing credentials outside PR workflows.
+
+## Advisory dependency review
+
+The advisory job uses a read-only Actions token to compare the verified PR base and tested merge in the GitHub dependency graph. It does not check out the PR, post comments or upload artifacts. The workflow calls the same REST endpoint as the official dependency review action. The current action can upload oversized summaries as artifacts, so this lane uses the endpoint directly. The required gate has the same dependencies and verdicts.
+
+Review the advisory job on the current revision when it runs. A service failure leaves the dependency review unavailable. An empty diff can also mean the graph did not recognize a change, so review the Cargo diff directly. This lane covers the root Cargo files. Java runtime pins retain their separate artifact verification. The PR that introduces this lane uses the existing base classifier and has no dependency review output until the new classifier is on main.
 
 ## CodeQL
 
