@@ -2,7 +2,7 @@
 
 ## Sources of truth
 
-The [roadmap](planning/roadmap.json) owns task contracts and dependencies. The [issue map](planning/GITHUB-ROADMAP.md) links each stable ID to one issue. Issues own claims and status. The [work packages](planning/FOUNDRY-WORK-PACKAGES.md) own the inventory crosswalk. GitHub Projects views are filters over that work. [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) host introductions, Q&A, ideas and announcements. The [handbook](WIKI.md) links the relevant versioned policies.
+The [roadmap](planning/roadmap.json) owns task contracts and dependencies. The [issue map](planning/GITHUB-ROADMAP.md) links each stable ID to one issue. Issues record claims, acceptance and evidence. Project Status tracks the current action. The [work packages](planning/FOUNDRY-WORK-PACKAGES.md) own the inventory crosswalk. GitHub Projects views are filters over that work. [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) host introductions, Q&A, ideas and announcements. The [handbook](WIKI.md) links the relevant versioned policies.
 
 ## Issue synchronization
 
@@ -12,6 +12,8 @@ Preview first, choose a batch with `-Ids` when appropriate, review the content, 
 ./tools/sync-roadmap.ps1 -Repository GabrielNichols/mekanism-rust-foundry -Ids RF-SCOPE-01 -PreviewPath .lab/reviewed.json
 ./tools/sync-roadmap.ps1 -Repository GabrielNichols/mekanism-rust-foundry -Ids RF-SCOPE-01 -ApplyPreview .lab/reviewed.json -ExpectedRepositoryId 1447583916
 ```
+
+[Contributor triage](planning/CONTRIBUTOR-TRIAGE.md) describes the view filters and the read-only reconciliation. Refresh the observed snapshot before reviewing changes.
 
 ## Quotas and cost
 

@@ -13,6 +13,8 @@ Read [AGENTS.md](AGENTS.md), [STATUS.md](STATUS.md), [VALIDATOR-CONTRACT.md](VAL
 - Never commit game jars, prepared resources, native libraries, player data or generated worlds. Keep them under ignored `.lab/`.
 - Preserve license/copyright notices and genuine human credits. Do not add automatic tool attribution, generated footers or agent coauthor trailers.
 
+Find a first task, the platform baseline and the release quickstart through the [Wiki index](docs/WIKI.md).
+
 ## Setup
 
 The exercised profile is Windows x64 with Rust 1.95.0, PowerShell 7.6.5, JDK 21.0.13, Minecraft 1.21.1, NeoForge 21.1.200 and Mekanism 10.7.19.85. PowerShell 7 is required by the scripts. Other platforms and the declared MSRV are not yet qualified.
