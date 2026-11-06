@@ -9,7 +9,9 @@ from typing import NamedTuple
 
 
 SHA = re.compile(r"[0-9a-f]{40}")
-GOVERNANCE_MARKDOWN = {"AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md"}
+GOVERNANCE_MARKDOWN = {
+    "AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md", "docs/SECURITY-OPERATIONS.md",
+}
 FUNDING = ".github/FUNDING.yml"
 FUNDING_LINE = re.compile(r"github:[ \t]*(?:GabrielNichols|\[\s*GabrielNichols\s*\])")
 CATALOG = {

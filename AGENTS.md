@@ -54,7 +54,7 @@ cargo build --locked
 
 ## CI and publication
 
-[Contributor CI](.github/workflows/ci.yml) uses standard ephemeral GitHub-hosted Windows for `pull_request` to `main`, pushes to `main`, and manual dispatch. It has read-only permissions, pinned Actions, no checkout credentials, and no published artifacts. Older runs for the same PR or ref are cancelled when superseded. Inspect the exact head, event and executed steps before citing a pass.
+[Contributor CI](.github/workflows/pr-gate.yml) selects relevant checks for pull requests and main pushes. Selected Rust checks use standard ephemeral GitHub-hosted Windows runners. Manual dispatch can run all supported Rust platforms. It has read-only permissions, pinned Actions, no checkout credentials, and no published artifacts. Older runs for the same PR or ref are cancelled when superseded. Inspect the exact head, event and executed steps before citing a pass.
 
 A contributor can run the same commands locally. To use their own fork's Actions, open its Actions tab, enable workflows if GitHub asks, then push to the fork's `main` or run **Rust contracts** manually from the workflow page. The workflow must be present on the fork's default branch for manual dispatch. That result belongs to the fork and does not satisfy Foundry's protected branch check. Keep the fork public when relying on standard public-runner compute pricing.
 
