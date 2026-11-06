@@ -63,7 +63,7 @@ jobs:
 
       - name: Test policy fixtures
         if: ${{ steps.select.outputs.rust == 'true' || steps.select.outputs.metadata != 'none' }}
-        run: python3 -B -m unittest discover -s tools -p test_ci_policy.py
+        run: python3 -B -m unittest discover -s tools -p 'test_*policy.py'
 
       - name: Verify public tree
         if: ${{ steps.select.outputs.rust == 'true' || steps.select.outputs.metadata != 'none' }}
