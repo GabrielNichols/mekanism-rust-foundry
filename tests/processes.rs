@@ -32,7 +32,12 @@ fn real_process_receives_exact_arguments_and_private_working_directory() {
         serde_json::json!(["a space", "$(not a shell);&"])
     );
     assert_eq!(observed["marker"], "isolated");
-    assert_eq!(Path::new(observed["cwd"].as_str().unwrap()), scratch.path());
+    assert_eq!(
+        Path::new(observed["cwd"].as_str().unwrap())
+            .canonicalize()
+            .unwrap(),
+        scratch.path().canonicalize().unwrap()
+    );
 }
 #[test]
 fn deadline_is_reported_instead_of_waiting_for_process_to_finish() {
