@@ -12,6 +12,7 @@ SHA = re.compile(r"[0-9a-f]{40}")
 GOVERNANCE_MARKDOWN = {
     "AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md", "docs/SECURITY-OPERATIONS.md",
 }
+CARGO_DEPENDENCY_FILES = {"Cargo.toml", "Cargo.lock"}
 FUNDING = ".github/FUNDING.yml"
 FUNDING_LINE = re.compile(r"github:[ \t]*(?:GabrielNichols|\[\s*GabrielNichols\s*\])")
 CATALOG = {
@@ -33,6 +34,7 @@ class Plan(NamedTuple):
     metadata: str
     platforms: bool
     reason: str
+    dependencies: bool = False
 
 
 def broad(reason: str) -> Plan:
@@ -123,7 +125,7 @@ def classify(raw: bytes, blob) -> Plan:
             metadata.add("catalog")
         elif path in TRIAGE:
             metadata.add("triage")
-        elif path in {"Cargo.toml", "Cargo.lock"} or re.fullmatch(r"(?:src|tests)/.+\.rs", path):
+        elif path in CARGO_DEPENDENCY_FILES or re.fullmatch(r"(?:src|tests)/.+\.rs", path):
             rust = True
         else:
             uncertain = True
@@ -177,9 +179,12 @@ def decide(event: str, expected: str, base: str, head: str, platforms: str) -> P
         proposed, tested = diff(merge_bases[0], head), diff(base, expected)
     except (OSError, subprocess.CalledProcessError, UnicodeError):
         return broad("Git could not produce the complete changed-file list")
+    # Review the exact merge range even when the policy takes a conservative lane.
+    tested_paths = tested.split(b"\0")[1:-1:2]
+    dependencies = any(path.encode("ascii") in tested_paths for path in CARGO_DEPENDENCY_FILES)
     if proposed != tested:
-        return broad("proposed and tested diffs differ")
-    return classify(tested, read_blob)
+        return broad("proposed and tested diffs differ")._replace(dependencies=dependencies)
+    return classify(tested, read_blob)._replace(dependencies=dependencies)
 
 
 def main() -> None:
@@ -190,7 +195,7 @@ def main() -> None:
     )
     with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as output:
         output.write(f"rust={str(plan.rust).lower()}\nmetadata={plan.metadata}\n"
-                     f"platforms={str(plan.platforms).lower()}\nreason={plan.reason}\n")
+                     f"platforms={str(plan.platforms).lower()}\nreason={plan.reason}\ndependencies={str(plan.dependencies).lower()}\n")
 
 
 if __name__ == "__main__":

@@ -127,5 +127,37 @@ class PolicyTests(unittest.TestCase):
                 decide("pull_request", merge, base, head, "")
 
 
+    def test_pr_dependency_review_uses_tested_merge_paths(self):
+        merge, base, head, ancestor = [letter * 40 for letter in "abcd"]
+        refs = [merge.encode(), f"{merge} {base} {head}".encode(), ancestor.encode()]
+        prose = changes(("M", "docs/WIKI.md"))
+        for path, expected in (
+            ("Cargo.toml", True),
+            ("Cargo.lock", True),
+            ("src/lib.rs", False),
+            (".github/FUNDING.yml", False),
+            ("docs/WIKI.md", False),
+            ("tools/Cargo.lock.example", False),
+        ):
+            tested = changes(("M", path))
+            for proposed in (tested, prose):
+                with self.subTest(path=path, same_diff=proposed == tested), patch(
+                    "ci_policy.git", side_effect=[*refs, proposed, tested]
+                ), patch("ci_policy.read_blob", side_effect=BLOBS.__getitem__):
+                    plan = decide("pull_request", merge, base, head, "")
+                    self.assertEqual(plan.dependencies, expected)
+        deleted = changes(("M", "Cargo.lock")).replace(b" M\0", b" D\0")
+        with patch("ci_policy.git", side_effect=[*refs, deleted, deleted]):
+            self.assertTrue(decide("pull_request", merge, base, head, "").dependencies)
+
+    def test_non_pr_dependency_changes_do_not_select_review(self):
+        base, head = "a" * 40, "b" * 40
+        locked = changes(("M", "Cargo.lock"))
+        with patch("ci_policy.git", side_effect=[head.encode(), b"", locked]):
+            self.assertFalse(decide("push", head, base, "", "").dependencies)
+        with patch("ci_policy.git", return_value=head.encode()):
+            self.assertFalse(decide("workflow_dispatch", head, "", "", "true").dependencies)
+
+
 if __name__ == "__main__":
     unittest.main()

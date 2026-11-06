@@ -1,26 +1,34 @@
-[CmdletBinding()]
+[CmdletBinding(DefaultParameterSetName='Release')]
 param(
     [Parameter(Mandatory)][string]$OutputDirectory,
-    [Parameter(Mandatory)][string]$ReferenceEnvironment,
-    [Parameter(Mandatory)][string]$WorkEvidence,
-    [switch]$LocalProof
+    [Parameter(Mandatory, ParameterSetName='Release')][string]$ReferenceEnvironment,
+    [Parameter(Mandatory, ParameterSetName='Release')][string]$WorkEvidence,
+    [Parameter(ParameterSetName='Release')][switch]$LocalProof,
+    [Parameter(Mandatory, ParameterSetName='DryRun')][switch]$DryRun,
+    [Parameter(Mandatory, ParameterSetName='DryRun')]
+    [ValidatePattern('^[a-fA-F0-9]{40}\z')][string]$ExpectedCommit
 )
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'preview-zip.ps1')
 $root = Split-Path -Parent $PSScriptRoot
 $output = [IO.Path]::GetFullPath($OutputDirectory)
-$reference = (Resolve-Path -LiteralPath $ReferenceEnvironment).Path
-$work = (Resolve-Path -LiteralPath $WorkEvidence).Path
+$isDryRun = $PSCmdlet.ParameterSetName -eq 'DryRun'
+if (-not $isDryRun) {
+    $reference = (Resolve-Path -LiteralPath $ReferenceEnvironment).Path
+    $work = (Resolve-Path -LiteralPath $WorkEvidence).Path
+}
 if (-not $IsWindows -or [System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture -ne 'X64') {
     throw 'Use Windows x64 PowerShell 7 to build and verify this preview'
 }
 if (Test-Path -LiteralPath $output) { throw 'Release output directory must be new' }
 
-$tag = 'v0.1.0-preview.1'
+$version = if ($isDryRun) { 'dry-run' } else { 'v0.1.0-preview.1' }
+$cargoLock = if ($isDryRun) { '--frozen' } else { '--locked' }
 $target = 'x86_64-pc-windows-msvc'
 $notes = 'docs/releases/v0.1.0-preview.1.md'
 $policy = 'docs/releases/README.md'
 $tracked = @('Cargo.toml','Cargo.lock','src','LICENSE','cases/server-inventory.json',
-    'adapters/neoforge','tools/package-preview.ps1',$notes,$policy)
+    'adapters/neoforge','tools/package-preview.ps1','tools/preview-zip.ps1',$notes,$policy)
 function Read-Json([string]$Path) {
     Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json -AsHashtable
 }
@@ -58,34 +66,51 @@ function Zip-Release([string]$Source, [string]$ZipPath) {
     }
 }
 
+function Assert-DryRunSource {
+    if ((Run-Checked 'git' @('rev-parse','HEAD')) -cne $ExpectedCommit.ToLowerInvariant()) {
+        throw 'Dry run HEAD does not match ExpectedCommit'
+    }
+    if (@(Run-Checked 'git' @('status','--porcelain=v1','--untracked-files=all')).Count) {
+        throw 'Dry run requires a clean checkout of ExpectedCommit'
+    }
+}
+
 Push-Location -LiteralPath $root
 try {
     $head = Run-Checked 'git' @('rev-parse','HEAD')
     $changes = @(Run-Checked 'git' (@('status','--porcelain','--untracked-files=all','--') + $tracked))
-    if ($changes.Count -and -not $LocalProof) {
+    if ($isDryRun) {
+        Assert-DryRunSource
+        $head = $ExpectedCommit.ToLowerInvariant()
+    } elseif ($changes.Count -and -not $LocalProof) {
         throw 'Commit the release inputs first, or use -LocalProof for an unpublished test'
     }
     $compiler = Run-Checked 'rustc' @('--version')
     if ($compiler -notmatch '^rustc 1\.95\.0 ') { throw 'This release requires the verified Rust 1.95.0 toolchain' }
     $scratch = Join-Path $root ('.lab/release-work/' + [Guid]::NewGuid().ToString('N'))
-    $build = Join-Path $root '.lab/release-target'
+    $buildDirectory = if ($isDryRun) { '.lab/dry-run-target' } else { '.lab/release-target' }
+    $build = Join-Path $root $buildDirectory
     $stage = Join-Path $scratch 'package'
     $installed = Join-Path $scratch 'installed'
     $privateChecks = Join-Path $scratch 'checks'
-    New-Item -ItemType Directory -Force $stage,$installed,$privateChecks | Out-Null
-    Run-Checked 'cargo' @('build','--locked','--release','--target',$target,'--target-dir',$build,
+    New-Item -ItemType Directory -Path $stage,$privateChecks -Force | Out-Null
+    Run-Checked 'cargo' @('build',$cargoLock,'--release','--target',$target,'--target-dir',$build,
         '--bin','mek-lab','--bin','mek-work') | Out-Host
     $bin = Join-Path $build "$target/release"
-    foreach ($file in 'mek-lab.exe','mek-work.exe') {
-        Copy-Item -LiteralPath (Join-Path $bin $file) -Destination $stage
+    $core = [ordered]@{
+        'mek-lab.exe' = Join-Path $bin 'mek-lab.exe'
+        'mek-work.exe' = Join-Path $bin 'mek-work.exe'
+        'LICENSE' = Join-Path $root 'LICENSE'
+        'server-inventory.json' = Join-Path $root 'cases/server-inventory.json'
+        'RELEASE-NOTES.md' = Join-Path $root $notes
+        'INSTALL.md' = Join-Path $root $policy
     }
-    Copy-Item -LiteralPath (Join-Path $root 'LICENSE') -Destination $stage
-    Copy-Item -LiteralPath (Join-Path $root 'cases/server-inventory.json') -Destination $stage
-    Copy-Item -LiteralPath (Join-Path $root $notes) -Destination (Join-Path $stage 'RELEASE-NOTES.md')
-    Copy-Item -LiteralPath (Join-Path $root $policy) -Destination (Join-Path $stage 'INSTALL.md')
+    foreach ($file in $core.GetEnumerator()) {
+        Copy-Item -LiteralPath $file.Value -Destination (Join-Path $stage $file.Key)
+    }
 
     # Keep original attribution notices for dependencies compiled with the locked Rust build.
-    $metadata = Run-Checked 'cargo' @('metadata','--locked','--format-version','1',
+    $metadata = Run-Checked 'cargo' @('metadata',$cargoLock,'--format-version','1',
         '--filter-platform',$target) | ConvertFrom-Json -AsHashtable
     $packages = @($metadata.packages | Where-Object { $_.id -ne $metadata.resolve.root } | Sort-Object name,version)
     $dependencyRows = @(foreach ($package in $packages) {
@@ -111,21 +136,22 @@ try {
             [ordered]@{path=[IO.Path]::GetRelativePath($stage, $_.FullName).Replace('\','/');
                 sha256=(File-Sha256 $_.FullName);bytes=$_.Length}
         })
-    Save-Json (Join-Path $stage 'MANIFEST.json') ([ordered]@{
-        schema=1;version=$tag;target=$target;source_commit=$head;rustc=$compiler;
+    $allowlist = @($core.Keys) + @($dependencyRows | ForEach-Object { $_.notices })
+    if ($files.Count -ne $allowlist.Count -or (Compare-Object $allowlist $files.path -CaseSensitive)) {
+        throw 'Staging files differ from the package allowlist'
+    }
+    $manifestPath = Join-Path $stage 'MANIFEST.json'
+    Save-Json $manifestPath ([ordered]@{
+        schema=1;version=$version;target=$target;source_commit=$head;rustc=$compiler;
         release_inputs_committed=($changes.Count -eq 0);files=$files;dependencies=$dependencyRows
     })
-    $name = "mekanism-rust-foundry-$tag-windows-x64.zip"
+    $manifestHash = File-Sha256 $manifestPath
+    $label = if ($isDryRun) { "$version-$head" } else { $version }
+    $name = "mekanism-rust-foundry-$label-windows-x64.zip"
     $zip = Join-Path $scratch $name
     Zip-Release $stage $zip
-    Expand-Archive -LiteralPath $zip -DestinationPath $installed
-    $manifest = Read-Json (Join-Path $installed 'MANIFEST.json')
-    $actualFiles = @(Get-ChildItem -LiteralPath $installed -Recurse -File)
-    if ($actualFiles.Count -ne ($manifest.files.Count + 1)) { throw 'Archive contains unexpected files' }
-    foreach ($file in $manifest.files) {
-        $path = Join-Path $installed $file.path
-        if ((File-Sha256 $path) -ne $file.sha256) { throw "Extracted hash mismatch: $($file.path)" }
-    }
+    $archiveHash = File-Sha256 $zip
+    Install-VerifiedPreviewZip $zip $installed $files $manifestHash $archiveHash
 
     Push-Location -LiteralPath $installed
     try {
@@ -138,45 +164,71 @@ try {
             throw 'Unexpected simulated observer verdict'
         }
 
-        $environment = Read-Json $reference
-        $runner = @($environment.lock.artifacts | Where-Object role -eq 'runner')
-        if ($runner.Count -ne 1) { throw 'Expected exactly one locked reference runner' }
-        # Keep all runtime pins; explicitly bind the extracted executable for this attempt.
-        $runner[0].path = $lab
-        $runner[0].sha256 = File-Sha256 $lab
-        $bound = Join-Path $privateChecks 'environment.json'
-        Save-Json $bound $environment
-        $run = Join-Path $privateChecks 'reference'
-        Run-Checked $lab @('run-reference',$bound,(Join-Path $installed 'server-inventory.json'),$run) | Out-Host
-        $seal = Run-Checked $lab @('verify-reference',$run) | ConvertFrom-Json -AsHashtable
-        $referenceResult = Read-Json (Join-Path $run 'result.json')
-        if ($referenceResult.status -ne 'functional_pass' -or $referenceResult.qualified -ne $false -or $seal.frames -lt 1) {
-            throw 'Unexpected reference verdict'
+        if ($isDryRun) {
+            & {
+                $PSNativeCommandUseErrorActionPreference = $false
+                $message = (& $analyzer 2>&1 | Out-String).Trim()
+                if ($LASTEXITCODE -ne 1 -or $message -cne 'usage: mek-work RUN_DIRECTORY') {
+                    throw 'Unexpected installed analyzer usage result'
+                }
+            }
+        } else {
+            $environment = Read-Json $reference
+            $runner = @($environment.lock.artifacts | Where-Object role -eq 'runner')
+            if ($runner.Count -ne 1) { throw 'Expected exactly one locked reference runner' }
+            # Keep all runtime pins; explicitly bind the extracted executable for this attempt.
+            $runner[0].path = $lab
+            $runner[0].sha256 = File-Sha256 $lab
+            $bound = Join-Path $privateChecks 'environment.json'
+            Save-Json $bound $environment
+            $run = Join-Path $privateChecks 'reference'
+            Run-Checked $lab @('run-reference',$bound,(Join-Path $installed 'server-inventory.json'),$run) | Out-Host
+            $seal = Run-Checked $lab @('verify-reference',$run) | ConvertFrom-Json -AsHashtable
+            $referenceResult = Read-Json (Join-Path $run 'result.json')
+            if ($referenceResult.status -ne 'functional_pass' -or $referenceResult.qualified -ne $false -or $seal.frames -lt 1) {
+                throw 'Unexpected reference verdict'
+            }
+            $analysis = Run-Checked $analyzer @($work) | ConvertFrom-Json -AsHashtable
+            $analysisHash = File-Sha256 $analyzer
+            if ($analysis.analysis_binary_sha256 -ne $analysisHash -or $analysis.advanced_ticks -lt 1) {
+                throw 'Extracted analyzer did not process the supplied evidence'
+            }
+            Save-Json (Join-Path $privateChecks 'work.json') $analysis
         }
-
-        $analysis = Run-Checked $analyzer @($work) | ConvertFrom-Json -AsHashtable
-        $analysisHash = File-Sha256 $analyzer
-        if ($analysis.analysis_binary_sha256 -ne $analysisHash -or $analysis.advanced_ticks -lt 1) {
-            throw 'Extracted analyzer did not process the supplied evidence'
-        }
-        Save-Json (Join-Path $privateChecks 'work.json') $analysis
     } finally {
         Pop-Location
     }
 
+    if ($isDryRun) { Assert-DryRunSource }
     New-Item -ItemType Directory -Path $output | Out-Null
     Copy-Item -LiteralPath $zip -Destination $output
-    $archiveHash = File-Sha256 (Join-Path $output $name)
-    [IO.File]::WriteAllText((Join-Path $output 'SHA256SUMS'), ("$archiveHash  $name" + [Environment]::NewLine))
-    Save-Json (Join-Path $output 'verification.json') ([ordered]@{
-        schema=1;version=$tag;target=$target;source_commit=$head;rustc=$compiler;
-        publication_candidate=(-not $LocalProof -and $changes.Count -eq 0);
+    $checksumPath = Join-Path $output 'SHA256SUMS'
+    [IO.File]::WriteAllText($checksumPath, ("$archiveHash  $name" + [Environment]::NewLine))
+    $copiedHash = File-Sha256 (Join-Path $output $name)
+    if ($copiedHash -cne $archiveHash -or
+        [IO.File]::ReadAllText($checksumPath) -cne ("$copiedHash  $name" + [Environment]::NewLine)) {
+        throw 'Output archive or SHA256SUMS mismatch'
+    }
+    $report = [ordered]@{
+        schema=1;version=$version;target=$target;source_commit=$head;rustc=$compiler;
+        publication_candidate=(-not $isDryRun -and -not $LocalProof -and $changes.Count -eq 0);
         archive=$name;archive_sha256=$archiveHash;extracted_hashes_verified=$true;
-        simulation_status=$simulationReport.status;simulation_cases=$simulationReport.cases.Count;
-        reference_case=$referenceResult.case;reference_status=$referenceResult.status;
-        reference_trace_seal=$seal;analysis_advanced_ticks=$analysis.advanced_ticks;
-        analysis_binary_sha256=$analysisHash;qualified=$false
-    })
+        simulation_status=$simulationReport.status;simulation_cases=$simulationReport.cases.Count
+    }
+    if ($isDryRun) {
+        $report.dry_run = $true
+        $report.manifest_sha256 = $manifestHash
+        $report.archive_entries = $files.Count + 1
+        $report.analyzer_usage_exit = 1
+    } else {
+        $report.reference_case = $referenceResult.case
+        $report.reference_status = $referenceResult.status
+        $report.reference_trace_seal = $seal
+        $report.analysis_advanced_ticks = $analysis.advanced_ticks
+        $report.analysis_binary_sha256 = $analysisHash
+    }
+    $report.qualified = $false
+    Save-Json (Join-Path $output 'verification.json') $report
     Write-Host "Verified preview in $output. Private logs remain in $privateChecks"
 } finally {
     Pop-Location

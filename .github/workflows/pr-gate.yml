@@ -33,6 +33,7 @@ jobs:
       metadata: ${{ steps.select.outputs.metadata }}
       platforms: ${{ steps.select.outputs.platforms }}
       reason: ${{ steps.select.outputs.reason }}
+      dependencies: ${{ steps.select.outputs.dependencies }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -144,6 +145,42 @@ jobs:
     with:
       runner: macos-15-intel
       target: x86_64-apple-darwin
+
+  dependency-review:
+    name: Dependency review (advisory)
+    needs: scope
+    if: ${{ github.event_name == 'pull_request' && needs.scope.outputs.dependencies == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - name: Check added dependencies for known advisories
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Use the official action's comparison endpoint without its artifact fallback.
+          findings=$(gh api --paginate --slurp \
+            "repos/$GITHUB_REPOSITORY/dependency-graph/compare/$PR_BASE_SHA...$GITHUB_SHA" |
+            jq -ce '
+              if type != "array" or length == 0 or any(.[]; type != "array") then
+                error("Unexpected dependency comparison response")
+              else
+                [ .[][] | select(.change_type == "added") |
+                  {manifest, name, version, vulnerabilities: [
+                    .vulnerabilities[] | {severity, advisory_ghsa_id, advisory_url}
+                  ]} | select(.vulnerabilities | length > 0) ]
+              end
+            ')
+          count=$(jq -er 'length' <<< "$findings")
+          printf 'Dependency review (advisory) found %s added dependencies with known advisories.\n' \
+            "$count" >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$count" != 0 ]]; then
+            echo "::warning::Dependency review found added dependencies with known advisories. See the job log."
+            jq -c '.[]' <<< "$findings"
+          fi
 
   gate:
     name: Foundry PR gate

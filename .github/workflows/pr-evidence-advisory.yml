@@ -14,7 +14,9 @@ concurrency:
 jobs:
   evidence:
     name: PR evidence advisory
-    if: ${{ github.event.pull_request.draft == false }}
+    if: ${{ !github.event.pull_request.draft && (github.event.action != 'edited' || github.event.changes.body != null) }}
+    permissions:
+      pull-requests: read
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     steps:
@@ -106,4 +108,82 @@ jobs:
                   "\nA maintainer still checks whether the evidence supports the change "
                   "and whether any pending qualification blocks merge.\n"
               )
+          PY
+
+      - name: Suggest labels and flag shared issue closures
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -I -B - <<'PY'
+          import json
+          import os
+          import re
+          import subprocess
+
+          repository = os.environ["GITHUB_REPOSITORY"]
+          with open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8") as event:
+              current = json.load(event)["pull_request"]
+
+          def read_pages(path):
+              response = subprocess.run(
+                  ["gh", "api", "--paginate", "--slurp", path],
+                  text=True, capture_output=True, check=True, timeout=35,
+              )
+              return [item for page in json.loads(response.stdout) for item in page]
+
+          def closing_issues(body):
+              body = re.sub(r"<!--.*?-->", "", body or "", flags=re.S)
+              body = re.sub(r"(?ms)^ {0,3}(\x60{3,}|~{3,})[^\n]*\n.*?^ {0,3}\1[ \t]*$", "", body)
+              slug = re.escape(repository)
+              target = rf"(?:#|{slug}#|https://github\.com/{slug}/issues/)"
+              pattern = rf"(?im)^[ \t]*(?:[-*][ \t]+)?(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)[ \t]+{target}([1-9][0-9]*)(?=$|[\s.,;)])"
+              return {int(match) for match in re.findall(pattern, body)}
+
+          def suggestions(paths):
+              labels = set()
+              if paths and all(path.endswith(".md") for path in paths):
+                  labels.add("type:docs")
+              elif any(path.startswith((".github/", "tools/")) for path in paths):
+                  labels.add("type:tooling")
+              if any(path.startswith("adapters/neoforge/") for path in paths):
+                  labels.add("area:runtime")
+              if any(path.startswith(("src/", "tests/")) for path in paths):
+                  labels.add("area:parity-engine")
+              return sorted(labels)
+
+          number = current["number"]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write("\n## PR triage suggestions\n\n")
+              try:
+                  files = read_pages(f"repos/{repository}/pulls/{number}/files?per_page=100")
+                  paths = [item["filename"] for item in files]
+                  paths.extend(item["previous_filename"] for item in files if "previous_filename" in item)
+                  labels = suggestions(paths)
+                  summary.write(f"- Suggested labels: {', '.join(labels) or 'none from paths'}.\n")
+              except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError):
+                  print("::warning::Could not read PR files for label suggestions.")
+                  summary.write("- Label suggestions unavailable.\n")
+
+              try:
+                  issues = closing_issues(current.get("body"))
+                  if not issues:
+                      summary.write("- No local issue closing declaration to compare.\n")
+                  else:
+                      matches = []
+                      for other in read_pages(f"repos/{repository}/pulls?state=open&per_page=100"):
+                          if other["number"] != number:
+                              for issue in sorted(issues & closing_issues(other.get("body"))):
+                                  matches.append((issue, other["number"]))
+                      if matches:
+                          print("::warning::Another open PR declares closure of the same issue.")
+                          for issue, other in sorted(matches)[:10]:
+                              summary.write(f"- Issue #{issue} is also declared for closure by PR #{other}.\n")
+                          if len(matches) > 10:
+                              summary.write(f"- {len(matches) - 10} more matches omitted.\n")
+                      else:
+                          summary.write("- No other open PR declares closure of the same issue.\n")
+              except (OSError, subprocess.SubprocessError, ValueError, KeyError, TypeError):
+                  print("::warning::Could not compare issue closures across open PRs.")
+                  summary.write("- Issue closure comparison unavailable.\n")
           PY
