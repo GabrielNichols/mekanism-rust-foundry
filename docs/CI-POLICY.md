@@ -19,6 +19,14 @@ The base branch supplies the classifier for PR selection. The classifier uses lo
 
 The final gate requires success for every selected job. It permits a skip only when the policy explicitly leaves that job unselected. A failed, cancelled or unexpectedly skipped selected job cannot produce a successful gate. PR work uses ephemeral standard runners, pinned checkout, a read-only token and no persisted checkout credentials or Actions artifacts. The gate has no token permissions and checks out no code. Workflow changes need maintainer review because binding a required check to the Actions app does not make proposed workflow YAML immutable. Keep trusted runners, private Java artifacts and publishing credentials outside PR workflows.
 
+## PR evidence and triage
+
+The advisory workflow checks the PR description and reports suggested labels from changed paths. It compares explicit closing declarations for local issues across open PRs. `Refs #N` indicates partial work and does not trigger an overlap notice. The job writes only its own summary and uses a read-only token for the GitHub API. Drafts and title-only edits do not start a runner. Maintainers review all suggestions before updating labels or coordinating with contributors.
+
+## Windows ZIP proof
+
+The separate ZIP proof runs on packaging and bundled documentation or fixture changes, or on manual dispatch at the reviewed revision. It runs archive controls and extracts and exercises the offline package on Windows. It does not publish or upload artifacts. The required PR gate and the Java-backed release proof remain independent. See the [ZIP dry run](releases/windows-zip-dry-run.md).
+
 ## Advisory dependency review
 
 The advisory job uses a read-only Actions token to compare the verified PR base and tested merge in the GitHub dependency graph. It does not check out the PR, post comments or upload artifacts. The workflow calls the same REST endpoint as the official dependency review action. The current action can upload oversized summaries as artifacts, so this lane uses the endpoint directly. The required gate has the same dependencies and verdicts.
