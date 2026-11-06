@@ -1,0 +1,47 @@
+name: Windows ZIP proof
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/windows-zip-proof.yml'
+      - 'tools/package-preview.ps1'
+      - 'tools/preview-zip.ps1'
+      - 'tools/test-preview-zip.ps1'
+      - 'docs/releases/**'
+      - 'cases/server-inventory.json'
+      - 'LICENSE'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundry-zip-proof-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: Verify Windows ZIP (offline package)
+    runs-on: windows-2022
+    timeout-minutes: 20
+    env:
+      RUSTUP_TOOLCHAIN: 1.95.0-x86_64-pc-windows-msvc
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust and fetch locked dependencies
+        run: |
+          rustup toolchain install $env:RUSTUP_TOOLCHAIN --profile minimal --no-self-update
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo fetch --locked --target x86_64-pc-windows-msvc
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run archive controls and verify the extracted preview
+        run: |
+          ./tools/test-preview-zip.ps1 -OutputDirectory .lab/packaging/controls
+          ./tools/package-preview.ps1 -DryRun -ExpectedCommit $env:GITHUB_SHA -OutputDirectory .lab/packaging/dry-run
+          Get-Content -LiteralPath .lab/packaging/dry-run/SHA256SUMS | Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY

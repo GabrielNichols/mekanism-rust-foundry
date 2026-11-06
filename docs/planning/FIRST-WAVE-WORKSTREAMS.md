@@ -30,7 +30,7 @@ Use the [initial inventory crosswalk](FIRST-WAVE-INVENTORY.md) for object-level 
 - **Roadmap.** MK-MAC-010.R01/R02, RF-DISCOVER-03/04/06 and RF-EVIDENCE-07. SC-LAB-003/004 provide pilot context.
 - **Acceptance and control.** Record lane input, output, progress and shared energy expenditure at completion and blocked boundaries. An actual blocked lane must have an independent witness. An offline transient lane mutant with unchanged final totals must fail at the first incorrect lane and phase. A separate real-client Screen scenario is needed for menu interaction credit.
 - **Evidence.** Recipe and lane bindings, initial state, ordered trajectory, work ledger and independent saved or client witness. Sorting, heterogeneous recipes, contention, upgrades and reload keep their own cases.
-- **Starter W1-PROC-01.** Draft one blocked-lane case with two boundary witnesses, and mark every unresolved bridge binding.
+- **Starter W1-PROC-01.** [Blocked-lane fixture draft](BLOCKED-FACTORY-LANE.md) with two boundary witnesses and the unresolved bridge bindings.
 
 ### W1-ENER · Fuel-driven Heat Generator
 

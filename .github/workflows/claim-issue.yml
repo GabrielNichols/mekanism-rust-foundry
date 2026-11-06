@@ -1,0 +1,29 @@
+name: Claim a ready issue
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  claim:
+    if: ${{ !github.event.issue.pull_request && github.event.comment.user.type == 'User' && github.event.comment.body == '/claim' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    concurrency:
+      group: foundry-issue-claim-${{ github.event.issue.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          sparse-checkout: tools/github_maintenance.py
+          sparse-checkout-cone-mode: false
+      - name: Assign a ready, unassigned issue to its claimant
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 -I -B tools/github_maintenance.py claim

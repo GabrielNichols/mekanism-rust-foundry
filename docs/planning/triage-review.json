@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "repository": "GabrielNichols/mekanism-rust-foundry",
+  "project": 2,
+  "items": [
+    {
+      "number": 3,
+      "task_id": "W1-ENER",
+      "expected_status": "Todo",
+      "expected_labels": [],
+      "milestone": null,
+      "status": "Ready",
+      "add_labels": [
+        "area:energy",
+        "type:scenario",
+        "status:ready-to-claim"
+      ],
+      "next_action": "Draft the Generators profile checklist and paired fuel and idle preconditions.",
+      "blockers": [
+        {
+          "issue": 1,
+          "missing": "Pinned Core + Generators profile and loaded Heat Generator and fuel bindings."
+        },
+        {
+          "issue": 6,
+          "missing": "Typed fuel debit and buffer observation with an independent idle baseline."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "task_id": "W1-TRANS",
+      "expected_status": "Todo",
+      "expected_labels": [],
+      "milestone": null,
+      "status": "Ready",
+      "add_labels": [
+        "area:chemicals",
+        "area:transport",
+        "type:scenario",
+        "status:ready-to-claim"
+      ],
+      "next_action": "Draw one straight chemical line and specify the incompatible terminal control.",
+      "blockers": [
+        {
+          "issue": 1,
+          "missing": "Loaded tube, chemical, source and sink identities and exact units."
+        },
+        {
+          "issue": 6,
+          "missing": "Typed source, network buffer and sink ledger with independent terminal reads."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "task_id": "W1-LIFE",
+      "expected_status": "Todo",
+      "expected_labels": [],
+      "milestone": null,
+      "status": "Ready",
+      "add_labels": [
+        "area:multiblocks",
+        "area:lifecycle",
+        "type:scenario",
+        "status:ready-to-claim"
+      ],
+      "next_action": "Draft the geometry checklist and missing-block control.",
+      "blockers": [
+        {
+          "issue": 1,
+          "missing": "Loaded Tank and valve identities and supported geometry."
+        },
+        {
+          "issue": 6,
+          "missing": "Formation and invalidation witnesses and independent saved-state and fresh-JVM checks."
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "task_id": "W1",
+      "expected_status": "Todo",
+      "expected_labels": [],
+      "milestone": null,
+      "status": "Todo",
+      "add_labels": [
+        "workflow:needs-triage"
+      ],
+      "next_action": "Have the integration reviewer link each workstream's accepted evidence and record gaps.",
+      "blockers": [
+        {
+          "issue": 1,
+          "missing": "Reviewed catalog crosswalk."
+        },
+        {
+          "issue": 2,
+          "missing": "Reviewed factory lane evidence."
+        },
+        {
+          "issue": 3,
+          "missing": "Reviewed Heat Generator evidence."
+        },
+        {
+          "issue": 4,
+          "missing": "Reviewed tube balance evidence."
+        },
+        {
+          "issue": 5,
+          "missing": "Reviewed Dynamic Tank evidence."
+        },
+        {
+          "issue": 6,
+          "missing": "Reviewed validator controls and evidence ledger."
+        }
+      ]
+    },
+    {
+      "number": 146,
+      "task_id": "RF-AUDIT-10",
+      "expected_status": "Todo",
+      "expected_labels": [
+        "status:blocked",
+        "phase:M14",
+        "family:audit"
+      ],
+      "milestone": "M14",
+      "status": "Blocked",
+      "add_labels": [],
+      "next_action": "Establish the first qualified candidate mismatch against a sealed Java expectation for the approved scope.",
+      "blockers": [
+        {
+          "issue": 145,
+          "missing": "Reviewed G8 scope verdict with zero required gaps."
+        },
+        {
+          "issue": 15,
+          "missing": "Reviewed expected-result provenance and sealed Java expectation."
+        }
+      ]
+    }
+  ]
+}

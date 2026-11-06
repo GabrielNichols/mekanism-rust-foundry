@@ -1,0 +1,22 @@
+# Foundry triage audit · 2026-11-06
+
+The live snapshot completed at 00:12 São Paulo time (03:12 UTC). The [Status board](https://github.com/users/GabrielNichols/projects/2/views/3) showed 142 Todo, four Ready, zero Blocked and two Done. The two Done rows were PRs [#148](https://github.com/GabrielNichols/mekanism-rust-foundry/pull/148) and [#149](https://github.com/GabrielNichols/mekanism-rust-foundry/pull/149). In Progress, Draft and In Review were empty. All 146 repository issues were open and present in the Project.
+
+- Ready issues #1, #2, #6 and #8 were unassigned and carried the discovery mirror. The planner found zero mirror discrepancies. [Ready issues](https://github.com/users/GabrielNichols/projects/2/views/4)
+- 137 issues carried the historical `status:blocked` label. All four unlabeled issues were Todo. [Issue list](https://github.com/GabrielNichols/mekanism-rust-foundry/issues)
+- Milestones M00–M14 were open with 138 open issues across them and zero closed. Issues #1–#8 had no milestone. [Milestones](https://github.com/GabrielNichols/mekanism-rust-foundry/milestones) · [Phase view](https://github.com/users/GabrielNichols/projects/2/views/1)
+- Wiki Home was reachable, Discussions had six categories and zero threads, and Preview 1 was the published prerelease. The Project had Phase, Family, Status and Ready to Claim views. [Wiki](https://github.com/GabrielNichols/mekanism-rust-foundry/wiki) · [Discussions](https://github.com/GabrielNichols/mekanism-rust-foundry/discussions) · [Releases](https://github.com/GabrielNichols/mekanism-rust-foundry/releases)
+
+## Proposed changes for review
+
+| Issue | Proposed status and labels | Draft scope or missing runtime evidence |
+| --- | --- | --- |
+| [#3 Heat Generator](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/3) | Ready. Add `area:energy`, `type:scenario` and `status:ready-to-claim`. | Draft paired fuel and idle preconditions. Runtime needs the pinned Generators profile and loaded bindings from [#1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) and typed fuel/buffer checkpoints from [#6](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/6). |
+| [#4 Pressurized Tube](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/4) | Ready. Add `area:chemicals`, `area:transport`, `type:scenario` and `status:ready-to-claim`. | Draft the topology and incompatible-terminal control. Runtime needs tube and chemical bindings from [#1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) and typed terminal and residual balances from [#6](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/6). |
+| [#5 Dynamic Tank](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/5) | Ready. Add `area:multiblocks`, `area:lifecycle`, `type:scenario` and `status:ready-to-claim`. | Draft the geometry and missing-block control. Runtime needs loaded block and valve bindings from [#1](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/1) and durable and fresh-JVM witnesses from [#6](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/6). |
+| [#7 First wave](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/7) | Keep Todo. Add `workflow:needs-triage`. | The integration reviewer can link accepted evidence from the six workstreams and record gaps. Clear the triage label after disposition and follow-ups are recorded. |
+| [#146 Future Java/Rust RED](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/146) | Blocked for G9 execution. Keep current labels and M14. | Execution needs [#145's G8 scope verdict](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/145) and [#15's reviewed expected-result provenance](https://github.com/GabrielNichols/mekanism-rust-foundry/issues/15) with a sealed Java expectation. Preparatory design can be reviewed separately. |
+
+Before a future Ready transition on #3–#5, make the draft-only action and its execution prerequisites visible in the issue. `W1-CAT` and `W1-ENG` identify workstreams. Check whether their existing narrow issues contain the full binding or witness needed, then link a follow-up for any remaining prerequisite.
+
+The [dry-run commands](CONTRIBUTOR-TRIAGE.md#reproduce-the-dry-run) captured and reconciled the live metadata. The baseline test failed on the missing bounded proposals. The completed planner passed replay, manual-drift and stale-blocker checks. Five issues received proposals with zero label removals or milestone reassignments. No GitHub writes were made.
