@@ -1,0 +1,102 @@
+name: CodeQL Advanced
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '43 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Upload results after Advanced is enabled
+        type: boolean
+        default: false
+
+permissions: {}
+
+concurrency:
+  group: codeql-advanced-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scope:
+    if: >-
+      ${{ vars.FOUNDRY_CODEQL_ADVANCED == 'true' || github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository &&
+           startsWith(github.head_ref, 'codeql-pilot/')) }}
+    name: Select CodeQL languages
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      languages: ${{ steps.select.outputs.languages }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Classify the verified diff
+        id: select
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == pull_request ]]; then
+            if [[ "$PR_BASE_SHA" =~ ^[0-9a-f]{40}$ ]] &&
+               git cat-file -e "$PR_BASE_SHA:tools/codeql_scope.py" 2>/dev/null; then
+              git show "$PR_BASE_SHA:tools/codeql_scope.py" | python3 -I -B -
+            else
+              printf '%s\n' 'languages=["actions","java-kotlin","python","rust"]' >> "$GITHUB_OUTPUT"
+            fi
+          else
+            python3 -I -B tools/codeql_scope.py
+          fi
+
+  analyze:
+    name: Advanced CodeQL (${{ matrix.language }})
+    needs: scope
+    if: ${{ needs.scope.outputs.languages != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ${{ fromJSON(needs.scope.outputs.languages) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Select build mode
+        id: build-mode
+        shell: bash
+        env:
+          CODEQL_LANGUAGE: ${{ matrix.language }}
+        run: |
+          mode=none
+          if [[ "$CODEQL_LANGUAGE" == java-kotlin && -n "$(git ls-files -- '*.kt')" ]]; then
+            mode=autobuild
+          fi
+          printf 'mode=%s\n' "$mode" >> "$GITHUB_OUTPUT"
+      - uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ steps.build-mode.outputs.mode }}
+      - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        with:
+          category: '/language:${{ matrix.language }}'
+          output: ${{ runner.temp }}/foundry-sarif
+          upload: ${{ vars.FOUNDRY_CODEQL_ADVANCED == 'true' && !startsWith(github.head_ref, 'codeql-pilot/') && (github.event_name != 'workflow_dispatch' || inputs.publish) && 'always' || 'never' }}
+          upload-database: false
+      - name: Summarize SARIF coverage
+        shell: bash
+        env:
+          SARIF_DIR: ${{ runner.temp }}/foundry-sarif
+        run: |
+          jq -s '{runs: ([.[].runs[]] | length), rules: ([.[].runs[].tool.driver.rules[]?.id] | unique | length), results: ([.[].runs[].results[]?] | length)}' "$SARIF_DIR"/*.sarif >> "$GITHUB_STEP_SUMMARY"
