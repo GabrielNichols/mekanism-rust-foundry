@@ -3,6 +3,8 @@ name: Foundry PR policy
 on:
   pull_request:
     branches: [main, foundry/ci-policy]
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       full-platforms:
@@ -23,7 +25,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 6
     env:
-      PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      PR_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
       PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       FULL_PLATFORMS: ${{ inputs.full-platforms }}
     outputs:

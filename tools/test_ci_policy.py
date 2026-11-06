@@ -35,6 +35,30 @@ class PolicyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             classify(changes(funding), lambda _: "patreon: example")
 
+    def test_editorial_markdown(self):
+        for path in ("README.md", "docs/OPERATIONS.md", "docs/planning/ROADMAP.md"):
+            with self.subTest(path=path):
+                self.check(changes(("M", path)), False, "none")
+        self.check(changes(("A", "docs/new-note.md")), False, "none")
+        self.check(changes(("M", "README.md"), ("M", "src/main.rs")), True, "none")
+        self.check(changes(("M", "docs/AGENTS.md")), True, "all")
+        plan = classify(changes(("M", "README.md")), {
+            "a" * 40: "Edit this text.\n",
+            "b" * 40: "Edit this command: `cargo test`.\n",
+        }.__getitem__)
+        self.assertEqual((plan.rust, plan.metadata), (True, "all"))
+
+    def test_push_range(self):
+        base, head = "a" * 40, "b" * 40
+        for path, rust in (("README.md", False), ("src/main.rs", True)):
+            with self.subTest(path=path), patch(
+                "ci_policy.git", side_effect=[head.encode(), b"", changes(("M", path))]
+            ) as git, patch("ci_policy.read_blob", side_effect=BLOBS.__getitem__):
+                self.assertEqual(decide("push", head, base, "", "").rust, rust)
+                git.assert_any_call("merge-base", "--is-ancestor", base, head)
+        with patch("ci_policy.git", side_effect=[head.encode(), subprocess.CalledProcessError(1, "git")]):
+            self.assertEqual(decide("push", head, base, "", "").metadata, "all")
+
     def test_prose_respects_executable_markup(self):
         for old, new in (
             ("```sh\ncargo test\n```\n", "```sh\ncargo check\n```\n"),
@@ -58,11 +82,10 @@ class PolicyTests(unittest.TestCase):
         self.check(changes(("M", "src/main.rs"), ("A", "tools/test-github-triage.ps1")), True, "triage")
         self.check(changes(("M", "docs/WIKI.md"), ("M", "src/main.rs")), True, "none")
         for path in (
-            "README.md", "AGENTS.md", "SECURITY.md", "docs/OPERATIONS.md",
+            "AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md",
             "docs/releases/README.md", "docs/planning/roadmap.json",
-            "docs/planning/GITHUB-ROADMAP.md", "cases/server-inventory.json",
-            "adapters/neoforge/build.ps1", "tools/check-public-tree.ps1",
-            ".github/CODEOWNERS", ".github/workflows/ci.yml", "new.md", "docs/wiki.md",
+            "cases/server-inventory.json", "adapters/neoforge/build.ps1",
+            "tools/check-public-tree.ps1", ".github/CODEOWNERS", ".github/workflows/ci.yml",
         ):
             with self.subTest(path=path):
                 self.check(changes(("M", path)), True, "all")

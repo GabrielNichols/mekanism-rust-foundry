@@ -9,7 +9,7 @@ from typing import NamedTuple
 
 
 SHA = re.compile(r"[0-9a-f]{40}")
-EDITORIAL = {"CONTRIBUTING.md", "docs/WIKI.md"}
+GOVERNANCE_MARKDOWN = {"AGENTS.md", "SECURITY.md", "docs/CI-POLICY.md"}
 FUNDING = ".github/FUNDING.yml"
 FUNDING_LINE = re.compile(r"github:[ \t]*(?:GabrielNichols|\[\s*GabrielNichols\s*\])")
 CATALOG = {
@@ -73,6 +73,16 @@ def prose_only(old: str, new: str) -> bool:
     )
 
 
+def editorial_markdown(path: str) -> bool:
+    return (
+        path.endswith(".md")
+        and ("/" not in path or path.startswith("docs/"))
+        and path not in GOVERNANCE_MARKDOWN
+        and not path.startswith("docs/releases/")
+        and not path.endswith("/AGENTS.md")
+    )
+
+
 def classify(raw: bytes, blob) -> Plan:
     """Interpret NUL-separated --raw --no-renames output."""
     try:
@@ -103,7 +113,9 @@ def classify(raw: bytes, blob) -> Plan:
                      if line.strip() and not line.lstrip().startswith("#")]
             if len(lines) != 1 or not FUNDING_LINE.fullmatch(lines[0]):
                 raise ValueError("funding must use the approved native GabrielNichols configuration")
-        elif path in EDITORIAL and status == "M" and prose_only(blob(old_sha), blob(new_sha)):
+        elif editorial_markdown(path) and prose_only(
+            "" if status == "A" else blob(old_sha), blob(new_sha)
+        ):
             continue
         elif path in CATALOG:
             metadata.add("catalog")
@@ -140,6 +152,15 @@ def decide(event: str, expected: str, base: str, head: str, platforms: str) -> P
         if platforms not in {"true", "false"}:
             raise ValueError("missing or invalid manual platform selection")
         return Plan(True, "all", platforms == "true", "manual validation")
+    if event == "push":
+        if not SHA.fullmatch(base) or base == "0" * 40:
+            return broad("push has no previous revision")
+        try:
+            git("merge-base", "--is-ancestor", base, expected)
+            tested = diff(base, expected)
+        except (OSError, subprocess.CalledProcessError):
+            return broad("Git could not verify the complete push range")
+        return classify(tested, read_blob)
     if event != "pull_request":
         raise ValueError("unsupported workflow event")
     if not SHA.fullmatch(base) or not SHA.fullmatch(head):
