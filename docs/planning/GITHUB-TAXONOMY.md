@@ -28,6 +28,8 @@ Use Q&A for support, Ideas for proposals, Announcements for project updates, and
 
 Copy eligible areas and roadmap families across reviewed links. For several issues, union their eligible areas and families. Conflicting type or phase values require a maintainer decision before propagation. A cross-cutting PR can retain direct links and an explicitly selected primary deliverable. Never propagate approvals, security checks, parity verdicts, evidence-request labels, or readiness from one item to another. Review each issue separately before closure.
 
+Use the [contributor triage guide](CONTRIBUTOR-TRIAGE.md) for the live board, ready and blocker filters, and the bounded reconciliation preview. Identify the current draft or execution action before choosing a status.
+
 ## Preview and apply
 
 From the repository root, preview the catalog or a proposed transition. A transition snapshot contains `surface`, `event`, `labels`, optional `project_status`, and any required `open`, `assigned`, or `sources` fields. A linked source contains `surface` and `labels`. The planner emits additions, removals, conflicts, and a proposed Project status.
