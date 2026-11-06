@@ -17,6 +17,7 @@ Describe the smallest change and any remaining binding gaps.
 - [ ] Private worlds, captures, raw logs, binaries and runtime data excluded
 
 Evidence: <!-- Link a sanitized summary, or state Pending or Not applicable and explain why. -->
+<!-- For completed Java proof, add Evidence kind: Java, Evidence commit: <full SHA>, and Negative control: <observed result or why it does not apply>. -->
 
 ## Qualification
 
