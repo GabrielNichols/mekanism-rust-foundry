@@ -135,6 +135,7 @@ impl Case {
                     "step",
                     "advance_until",
                     "setup_machine",
+                    "setup_factory",
                     "insert_input",
                     "charge_machine",
                     "save",
@@ -176,6 +177,7 @@ impl Case {
             }
             let allowed_args: &[&str] = match action.action.as_str() {
                 "step" => &["ticks"],
+                "setup_factory" => &["blocked"],
                 "advance_until" => &["max_ticks", "batch_ticks"],
                 "insert_input" => &["side", "slot", "item", "count"],
                 "charge_machine" | "drain_machine" => &["side", "amount"],
@@ -197,6 +199,18 @@ impl Case {
                 )
             {
                 return Err("invalid slot selector".into());
+            }
+            if action.action == "setup_factory"
+                && (self.client
+                    || action
+                        .args
+                        .get("blocked")
+                        .and_then(Value::as_bool)
+                        .is_none())
+            {
+                return Err(
+                    "factory setup requires a dedicated server and a boolean blocked flag".into(),
+                );
             }
             if action.action == "step"
                 && !matches!(
@@ -912,7 +926,16 @@ fn execute(
         atomic_json(&output.join("persisted-machine.json"), &saved)?;
         let projected = crate::nbt::persisted_projection(&saved)?;
         atomic_json(&output.join("persisted-machine-projected.json"), &projected)?;
-        if projected != last_server_state["machine"]["nbt"] {
+        let key = if case
+            .actions
+            .iter()
+            .any(|action| action.action == "setup_factory")
+        {
+            "factory"
+        } else {
+            "machine"
+        };
+        if projected != last_server_state[key]["nbt"] {
             return Err("independent persisted machine differs from final live NBT".into());
         }
     }

@@ -1,0 +1,42 @@
+{
+  "id": "LAB-FACTORY-BLOCKED-001",
+  "client": false,
+  "integration_level": "real_dedicated_server_administrative_factory_fixture",
+  "observer_mode": "every_tick",
+  "require_persisted_machine": true,
+  "actions": [
+    {"role":"server","action":"setup_factory","args":{"blocked":true},"expect":[
+      {"pointer":"/target_block","equals":"mekanism:basic_enriching_factory"},
+      {"pointer":"/factory/chunk_forced","equals":true},
+      {"pointer":"/factory/recipe","equals":"mekanism:processing/iron/dust/from_ore"},
+      {"pointer":"/factory/output_limit","equals":64},
+      {"pointer":"/factory/lanes/A/input/id","equals":"minecraft:iron_ore"},
+      {"pointer":"/factory/lanes/B/input/id","equals":"minecraft:iron_ore"},
+      {"pointer":"/factory/lanes/A/input/count","equals":1},
+      {"pointer":"/factory/lanes/B/input/count","equals":1},
+      {"pointer":"/factory/lanes/A/output/count","equals":64},
+      {"pointer":"/factory/lanes/A/output/id","equals":"mekanism:dust_iron"},
+      {"pointer":"/factory/lanes/B/output/count","equals":0},
+      {"pointer":"/factory/lanes/C/input/count","equals":0},
+      {"pointer":"/factory/lanes/C/output/count","equals":0},
+      {"pointer":"/factory/lanes/A/progress","equals":0},
+      {"pointer":"/factory/lanes/B/progress","equals":0},
+      {"pointer":"/factory/lanes/C/progress","equals":0},
+      {"pointer":"/factory/energy_fe","equals":"0"}
+    ]},
+    {"role":"server","action":"charge_machine","args":{"side":"up","amount":12000},"expect":[
+      {"pointer":"/factory/energy_fe","equals":"12000"}
+    ]},
+    {"role":"server","action":"advance_until","args":{"max_ticks":240,"batch_ticks":20},"expect":[
+      {"pointer":"/factory/lanes/B/output/count","equals":2},
+      {"pointer":"/factory/lanes/B/output/id","equals":"mekanism:dust_iron"},
+      {"pointer":"/factory/lanes/B/input/count","equals":0},
+      {"pointer":"/factory/lanes/A/output/count","equals":64},
+      {"pointer":"/factory/lanes/A/output/id","equals":"mekanism:dust_iron"},
+      {"pointer":"/factory/lanes/A/input/count","equals":1},
+      {"pointer":"/factory/lanes/A/progress","equals":0},
+      {"pointer":"/factory/lanes/B/progress","equals":0},
+      {"pointer":"/factory/lanes/C/progress","equals":0}
+    ]}
+  ]
+}

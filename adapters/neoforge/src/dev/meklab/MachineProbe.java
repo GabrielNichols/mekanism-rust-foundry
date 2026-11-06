@@ -12,10 +12,13 @@ import net.neoforged.neoforge.items.IItemHandler;
 /** Uses public game/NeoForge APIs only. No Mekanism implementation calls. */
 final class MachineProbe {
     static void setup(MinecraftServer server) {
+        setup(server, "mekanism:enrichment_chamber");
+    }
+    static void setup(MinecraftServer server, String block) {
         server.getCommands().performPrefixedCommand(server.createCommandSourceStack().withSuppressedOutput(),"forceload add 0 0");
         if(!server.overworld().getForcedChunks().contains(new net.minecraft.world.level.ChunkPos(ServerBridge.TARGET).toLong()))throw new IllegalStateException("target chunk anchor not established");
         var level=server.overworld();level.setBlock(ServerBridge.TARGET,Blocks.AIR.defaultBlockState(),3);
-        level.setBlock(ServerBridge.TARGET,BuiltInRegistries.BLOCK.get(ResourceLocation.parse("mekanism:enrichment_chamber")).defaultBlockState(),3);
+        level.setBlock(ServerBridge.TARGET,BuiltInRegistries.BLOCK.get(ResourceLocation.parse(block)).defaultBlockState(),3);
         var state=level.getBlockState(ServerBridge.TARGET);var stack=new ItemStack(state.getBlock().asItem());
         var entity=level.getBlockEntity(ServerBridge.TARGET);if(entity==null)throw new IllegalStateException("placement missing block entity");
         entity.applyComponentsFromItemStack(stack);

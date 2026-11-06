@@ -40,4 +40,17 @@ Use a copy of a complete trace and transfer B's positive progress to A at the fi
 | W1-CAT | Confirm the loaded factory and recipe, resolved input and output components, effective sorting and side configuration, stack limit, and the lane-to-handler and lane-to-NBT slot map. |
 | W1-ENG | Bind stable lane identities, typed per-lane progress, the post-tick sampling phase, the independent inventory witness, and the FE receive side, capacity and buffer measurement. Establish the charge and tick budget from the pinned profile. |
 
-The current [pilot observer](../../adapters/neoforge/src/dev/meklab/MachineProbe.java) exposes a single scalar progress value. This draft leaves the factory fields and slot indices open until they are witnessed. It covers administrative placement and output blocking only. Menu interaction, player-driven blockage, energy contention, auto-sort behavior, upgrades, reload and parity are outside this slice.
+The [factory observer](../../adapters/neoforge/src/dev/meklab/FactoryProbe.java) reads the typed `progress` int array and reconciles every inventory slot with the unsided NeoForge handler. The pinned layout maps lanes A, B and C to input/output pairs 0/1, 2/3 and 4/5. The fixture uses the upper FE capability and a shared starting buffer of 12,000 FE. The third lane stays empty. The runner independently reads the saved region after shutdown and compares the typed factory state with the last live snapshot.
+
+## Run the paired cases
+
+Prepare the pinned runtime with the current runner and bridge as described in the [contributor guide](../../CONTRIBUTING.md#setup). Choose new private output paths for each run.
+
+```powershell
+$runner = './target/debug/mek-lab.exe'
+& $runner run-reference .lab/environment.json cases/factory-blocked.json .lab/evidence/factory-blocked-001
+& $runner run-reference .lab/environment.json cases/factory-open.json .lab/evidence/factory-open-001
+./adapters/neoforge/verify-factory.ps1 -Runner $runner -BlockedRun .lab/evidence/factory-blocked-001 -OpenRun .lab/evidence/factory-open-001 -ControlOutput .lab/evidence/factory-controls-001
+```
+
+The verification script checks the seals and matched reference configuration, reports both observation points and the total FE debit, and runs the original and progress-swap copies through the comparator. The cases cover administrative placement and output blocking. Menu interaction, player-driven blockage, energy contention, auto-sort behavior, upgrades, reload and parity are outside this slice.
